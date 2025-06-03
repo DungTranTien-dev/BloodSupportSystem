@@ -2882,11 +2882,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SWP391\\BloodSupportSystemProject\\BLL\\BLL.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\BLL\\BLL.csproj",
       "projectName": "BLL",
-      "projectPath": "D:\\SWP391\\BloodSupportSystemProject\\BLL\\BLL.csproj",
+      "projectPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\BLL\\BLL.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\SWP391\\BloodSupportSystemProject\\BLL\\obj\\",
+      "outputPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2901,18 +2901,17 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\SWP391\\BloodSupportSystemProject\\Common\\Common.csproj": {
-              "projectPath": "D:\\SWP391\\BloodSupportSystemProject\\Common\\Common.csproj"
+            "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj"
             },
-            "D:\\SWP391\\BloodSupportSystemProject\\DAL\\DAL.csproj": {
-              "projectPath": "D:\\SWP391\\BloodSupportSystemProject\\DAL\\DAL.csproj"
+            "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\DAL\\DAL.csproj"
             }
           }
         }
@@ -2927,7 +2926,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -2954,7 +2953,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
