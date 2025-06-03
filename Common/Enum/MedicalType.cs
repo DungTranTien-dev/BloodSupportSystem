@@ -11,6 +11,7 @@ namespace Common.Enum
         PENDING,
         AVAILABLE,
         BLOCK,
-        COMPLETE
+        COMPLETE,
+        //CANCELLED,
     }
 }
