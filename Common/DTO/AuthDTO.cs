@@ -13,5 +13,12 @@ namespace Common.DTO
             public string Email { get; set; }
             public string Password { get; set; }
         }
+
+        public class RegisterDTO
+        {
+            public string Email { get; set; }
+            public string phone { get; set; }
+            public string Password { get; set; }
+        }
     }
 }
