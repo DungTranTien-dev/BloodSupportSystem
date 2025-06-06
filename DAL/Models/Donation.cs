@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace DAL.Models
         public int DonorId { get; set; }
         public int BloodRequestId { get; set; }
         public DateTime DonationDate { get; set; }
-        public string Status { get; set; } // scheduled, completed, canceled
+        public DonationStatus Status { get; set; } // Use enum for status
         public string Notes { get; set; }
 
         // Navigation properties

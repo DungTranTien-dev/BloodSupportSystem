@@ -12,7 +12,7 @@ namespace DAL.Models
         public int UserId { get; set; }
         public string Content { get; set; }
         public DateTime SubmittedAt { get; set; }
-        public string Status { get; set; } // new, resolved, ignored
+        public FeedbackStatus Status { get; set; } // Use enum for status
 
         // Navigation property
         public User User { get; set; }

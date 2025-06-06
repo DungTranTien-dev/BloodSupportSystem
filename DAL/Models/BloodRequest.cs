@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,14 @@ namespace DAL.Models
         public int BloodTypeId { get; set; }
         public string ComponentType { get; set; } // whole, plasma, rbc, platelet
         public string UrgencyLevel { get; set; }
-        public string Status { get; set; } // pending, matched, completed
+        public BloodRequestStatus Status { get; set; } // Use enum for status
         public DateTime RequestedDate { get; set; }
         public DateTime? ResolvedDate { get; set; }
+
+        // Navigation properties
+        public User Requester { get; set; }
+        public BloodType BloodType { get; set; }
+        public ICollection<Donation> Donations { get; set; }
+        public ICollection<BloodRequestStatusLog> StatusLogs { get; set; }
     }
 }
