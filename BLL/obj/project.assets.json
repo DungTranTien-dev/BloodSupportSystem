@@ -2876,23 +2876,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
+    "C:\\Users\\tlvp2\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SWP391\\BloodSupportSystemProject\\BLL\\BLL.csproj",
+      "projectUniqueName": "F:\\SWP301\\BloodSupportSystem\\BLL\\BLL.csproj",
       "projectName": "BLL",
-      "projectPath": "D:\\SWP391\\BloodSupportSystemProject\\BLL\\BLL.csproj",
-      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\SWP391\\BloodSupportSystemProject\\BLL\\obj\\",
+      "projectPath": "F:\\SWP301\\BloodSupportSystem\\BLL\\BLL.csproj",
+      "packagesPath": "C:\\Users\\tlvp2\\.nuget\\packages\\",
+      "outputPath": "F:\\SWP301\\BloodSupportSystem\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\tlvp2\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2901,18 +2901,17 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\SWP391\\BloodSupportSystemProject\\Common\\Common.csproj": {
-              "projectPath": "D:\\SWP391\\BloodSupportSystemProject\\Common\\Common.csproj"
+            "F:\\SWP301\\BloodSupportSystem\\Common\\Common.csproj": {
+              "projectPath": "F:\\SWP301\\BloodSupportSystem\\Common\\Common.csproj"
             },
-            "D:\\SWP391\\BloodSupportSystemProject\\DAL\\DAL.csproj": {
-              "projectPath": "D:\\SWP391\\BloodSupportSystemProject\\DAL\\DAL.csproj"
+            "F:\\SWP301\\BloodSupportSystem\\DAL\\DAL.csproj": {
+              "projectPath": "F:\\SWP301\\BloodSupportSystem\\DAL\\DAL.csproj"
             }
           }
         }
@@ -2927,7 +2926,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -2954,7 +2953,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
