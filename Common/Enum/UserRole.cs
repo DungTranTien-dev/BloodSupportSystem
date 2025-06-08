@@ -11,6 +11,5 @@ namespace Common.Enum
         Admin,
         Staff,
         Member,
-        Guest
     }
 }

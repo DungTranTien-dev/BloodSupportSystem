@@ -17,8 +17,9 @@ namespace DAL.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        // Navigation property
         public User Organizer { get; set; }
         public ICollection<EventParticipant> Participants { get; set; }
+        public ICollection<EventFeedback> Feedbacks { get; set; }
+        public ICollection<EventNotification> Notifications { get; set; }
     }
 }

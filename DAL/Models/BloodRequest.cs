@@ -12,13 +12,12 @@ namespace DAL.Models
         public int Id { get; set; }
         public int RequesterId { get; set; }
         public int BloodTypeId { get; set; }
-        public string ComponentType { get; set; } // whole, plasma, rbc, platelet
+        public string ComponentType { get; set; }
         public string UrgencyLevel { get; set; }
-        public BloodRequestStatus Status { get; set; } // Use enum for status
+        public string Status { get; set; }
         public DateTime RequestedDate { get; set; }
         public DateTime? ResolvedDate { get; set; }
 
-        // Navigation properties
         public User Requester { get; set; }
         public BloodType BloodType { get; set; }
         public ICollection<Donation> Donations { get; set; }
