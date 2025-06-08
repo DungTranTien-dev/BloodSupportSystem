@@ -68,139 +68,162 @@ namespace DAL.Data
             modelBuilder.Entity<Blog>()
                 .HasOne(b => b.Author)
                 .WithMany(u => u.Blogs)
-                .HasForeignKey(b => b.AuthorId);
+                .HasForeignKey(b => b.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // BloodRequest - User (Requester) (n-1)
             modelBuilder.Entity<BloodRequest>()
                 .HasOne(br => br.Requester)
                 .WithMany(u => u.BloodRequests)
-                .HasForeignKey(br => br.RequesterId);
+                .HasForeignKey(br => br.RequesterId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // BloodRequest - BloodType (n-1)
             modelBuilder.Entity<BloodRequest>()
                 .HasOne(br => br.BloodType)
                 .WithMany(bt => bt.BloodRequests)
-                .HasForeignKey(br => br.BloodTypeId);
+                .HasForeignKey(br => br.BloodTypeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Donation - User (Donor) (n-1)
             modelBuilder.Entity<Donation>()
                 .HasOne(d => d.Donor)
                 .WithMany(u => u.Donations)
-                .HasForeignKey(d => d.DonorId);
+                .HasForeignKey(d => d.DonorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Donation - BloodRequest (n-1)
             modelBuilder.Entity<Donation>()
                 .HasOne(d => d.BloodRequest)
                 .WithMany(br => br.Donations)
-                .HasForeignKey(d => d.BloodRequestId);
+                .HasForeignKey(d => d.BloodRequestId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // BloodRequestStatusLog - BloodRequest (n-1)
             modelBuilder.Entity<BloodRequestStatusLog>()
                 .HasOne(brsl => brsl.BloodRequest)
                 .WithMany(br => br.StatusLogs)
-                .HasForeignKey(brsl => brsl.BloodRequestId);
+                .HasForeignKey(brsl => brsl.BloodRequestId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // BloodRequestStatusLog - User (Staff) (n-1)
             modelBuilder.Entity<BloodRequestStatusLog>()
                 .HasOne(brsl => brsl.Staff)
                 .WithMany(u => u.StatusLogs)
-                .HasForeignKey(brsl => brsl.StaffId);
+                .HasForeignKey(brsl => brsl.StaffId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // User - BloodType (n-1)
             modelBuilder.Entity<User>()
                 .HasOne(u => u.BloodType)
                 .WithMany(bt => bt.Users)
-                .HasForeignKey(u => u.BloodTypeId);
+                .HasForeignKey(u => u.BloodTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // User - Location (n-1)
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Location)
                 .WithMany(l => l.Users)
-                .HasForeignKey(u => u.LocationId);
+                .HasForeignKey(u => u.LocationId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Feedback - User (n-1)
             modelBuilder.Entity<Feedback>()
                 .HasOne(fb => fb.User)
                 .WithMany(u => u.Feedbacks)
-                .HasForeignKey(fb => fb.UserId);
+                .HasForeignKey(fb => fb.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Notification - User (n-1)
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
-                .HasForeignKey(n => n.UserId);
+                .HasForeignKey(n => n.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Reminder - User (n-1)
             modelBuilder.Entity<Reminder>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reminders)
-                .HasForeignKey(r => r.UserId);
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Event - User (Organizer) (n-1)
             modelBuilder.Entity<Event>()
                 .HasOne(e => e.Organizer)
                 .WithMany(u => u.OrganizedEvents)
-                .HasForeignKey(e => e.OrganizerId);
+                .HasForeignKey(e => e.OrganizerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // EventFeedback - Event (n-1)
             modelBuilder.Entity<EventFeedback>()
                 .HasOne(ef => ef.Event)
                 .WithMany(e => e.Feedbacks)
-                .HasForeignKey(ef => ef.EventId);
+                .HasForeignKey(ef => ef.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // EventFeedback - User (n-1)
             modelBuilder.Entity<EventFeedback>()
                 .HasOne(ef => ef.User)
                 .WithMany(u => u.EventFeedbacks)
-                .HasForeignKey(ef => ef.UserId);
+                .HasForeignKey(ef => ef.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // EventParticipant - Event (n-1)
             modelBuilder.Entity<EventParticipant>()
                 .HasOne(ep => ep.Event)
                 .WithMany(e => e.Participants)
-                .HasForeignKey(ep => ep.EventId);
+                .HasForeignKey(ep => ep.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // EventParticipant - User (n-1)
             modelBuilder.Entity<EventParticipant>()
                 .HasOne(ep => ep.User)
                 .WithMany(u => u.EventParticipants)
-                .HasForeignKey(ep => ep.UserId);
+                .HasForeignKey(ep => ep.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // EventNotification - Event (n-1)
             modelBuilder.Entity<EventNotification>()
                 .HasOne(en => en.Event)
                 .WithMany(e => e.Notifications)
-                .HasForeignKey(en => en.EventId);
+                .HasForeignKey(en => en.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // EventNotification - User (n-1)
             modelBuilder.Entity<EventNotification>()
                 .HasOne(en => en.User)
                 .WithMany(u => u.EventNotifications)
-                .HasForeignKey(en => en.UserId);
+                .HasForeignKey(en => en.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // BloodUnit - BloodType (n-1)
             modelBuilder.Entity<BloodUnit>()
                 .HasOne(bu => bu.BloodType)
                 .WithMany(bt => bt.BloodUnits)
-                .HasForeignKey(bu => bu.BloodTypeId);
+                .HasForeignKey(bu => bu.BloodTypeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // DonationHistory - User (Member) (n-1)
             modelBuilder.Entity<DonationHistory>()
                 .HasOne(dh => dh.Member)
                 .WithMany()
-                .HasForeignKey(dh => dh.MemberId);
+                .HasForeignKey(dh => dh.MemberId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // DonationHistory - BloodType (n-1)
             modelBuilder.Entity<DonationHistory>()
                 .HasOne(dh => dh.BloodType)
                 .WithMany(bt => bt.DonationHistories)
-                .HasForeignKey(dh => dh.BloodTypeId);
+                .HasForeignKey(dh => dh.BloodTypeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // DonationHistory - Location (n-1)
             modelBuilder.Entity<DonationHistory>()
                 .HasOne(dh => dh.Location)
                 .WithMany(l => l.DonationHistories)
-                .HasForeignKey(dh => dh.LocationId);
+                .HasForeignKey(dh => dh.LocationId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(modelBuilder);
         }
