@@ -9,10 +9,13 @@ namespace DAL.Models
 {
     public class RefreshToken
     {
-        public Guid RefreshTokenId { get; set; } // Khóa chính cho RefreshToken
-        public Guid UserId { get; set; } // Khóa ngoại liên kết đến người dùng
-        public string RefreshTokenKey { get; set; } // Giá trị refresh token
+        public Guid RefreshTokenId { get; set; }
+        public Guid UserId { get; set; }
+        public string RefreshTokenKey { get; set; }
         public bool IsRevoked { get; set; }
-        public DateTime CreatedAt { get; set; } // Thời gian tạo refresh token
+        public DateTime CreatedAt { get; set; }
+
+        // Add the missing navigation property for User  
+        public User User { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace DAL.Models
     public class BloodRequest
     {
         public int Id { get; set; }
-        public int RequesterId { get; set; }
+        public Guid RequesterId { get; set; }
         public int BloodTypeId { get; set; }
         public string ComponentType { get; set; }
         public string UrgencyLevel { get; set; }

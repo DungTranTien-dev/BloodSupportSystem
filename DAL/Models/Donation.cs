@@ -10,7 +10,7 @@ namespace DAL.Models
     public class Donation
     {
         public int Id { get; set; }
-        public int DonorId { get; set; }
+        public Guid DonorId { get; set; } // Should be Guid to match User.Id
         public int BloodRequestId { get; set; }
         public DateTime DonationDate { get; set; }
         public DonationStatus Status { get; set; }

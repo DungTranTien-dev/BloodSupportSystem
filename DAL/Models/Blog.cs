@@ -12,7 +12,7 @@ namespace DAL.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int AuthorId { get; set; }
+        public Guid AuthorId { get; set; } // Should be Guid to match User.Id
 
         // Navigation property
         public User Author { get; set; }

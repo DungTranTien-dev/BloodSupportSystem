@@ -30,7 +30,7 @@ namespace BLL.Services.Implement
             }
 
             // kiem tra password
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.Password);
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.PasswordHash);
 
             if (!isPasswordValid)
             {
@@ -38,7 +38,7 @@ namespace BLL.Services.Implement
             }
 
             //kiểm tra refreshToken
-            var exitsRefreshToken = await _unitOfWork.TokenRepo.GetRefreshTokenByUserID(user.UserId);
+            var exitsRefreshToken = await _unitOfWork.TokenRepo.GetRefreshTokenByUserID(user.Id);
             if (exitsRefreshToken != null)
             {
                 exitsRefreshToken.IsRevoked = true;
@@ -49,8 +49,8 @@ namespace BLL.Services.Implement
             var claims = new List<Claim>
                 {
                     new Claim(JwtConstant.KeyClaim.Email, user.Email),
-                    new Claim(JwtConstant.KeyClaim.UserId, user.UserId.ToString()),
-                    new Claim(JwtConstant.KeyClaim.UserName, user.UserName),
+                    new Claim(JwtConstant.KeyClaim.UserId, user.Id.ToString()),
+                    new Claim(JwtConstant.KeyClaim.UserName, user.FullName),
                     //new Claim(JwtConstant.KeyClaim.Role, user.Role.ToString())
                 };
 
@@ -61,7 +61,7 @@ namespace BLL.Services.Implement
             var refreshToken = new RefreshToken
             {
                 RefreshTokenId = Guid.NewGuid(),
-                UserId = user.UserId,
+                UserId = user.Id,
                 RefreshTokenKey = refreshTokenKey,
                 IsRevoked = false,
                 CreatedAt = DateTime.UtcNow

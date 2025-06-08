@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:64325",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\BloodSupportSystemClient\\BloodSupportSystemClient.Server\\..\\bloodsupportsystemclient.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

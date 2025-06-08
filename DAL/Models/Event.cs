@@ -13,7 +13,7 @@ namespace DAL.Models
         public DateTime EventDate { get; set; }
         public string EventLocation { get; set; }
         public string Description { get; set; }
-        public int OrganizerId { get; set; }
+        public Guid OrganizerId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 

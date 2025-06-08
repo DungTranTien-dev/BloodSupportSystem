@@ -11,7 +11,7 @@ namespace DAL.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
@@ -20,7 +20,6 @@ namespace DAL.Models
         public int LocationId { get; set; }
         public DateTime LastDonationDate { get; set; }
         public DateTime CreatedAt { get; set; }
-
         public BloodType BloodType { get; set; }
         public Location Location { get; set; }
         public ICollection<BloodRequest> BloodRequests { get; set; }
@@ -33,6 +32,10 @@ namespace DAL.Models
         public ICollection<EventParticipant> EventParticipants { get; set; }
         public ICollection<EventFeedback> EventFeedbacks { get; set; }
         public ICollection<BloodRequestStatusLog> StatusLogs { get; set; }
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
+
+        // Add the missing EventNotifications property  
+        public ICollection<EventNotification> EventNotifications { get; set; }
     }
 
 }

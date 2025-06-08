@@ -9,7 +9,7 @@ namespace DAL.Models
     public class DonationHistory
     {
         public int Id { get; set; }
-        public int MemberId { get; set; }
+        public Guid MemberId { get; set; }
         public DateTime DonationDate { get; set; }
         public int BloodTypeId { get; set; }
         public int LocationId { get; set; }

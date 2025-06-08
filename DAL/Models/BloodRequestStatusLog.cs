@@ -10,7 +10,7 @@ namespace DAL.Models
     {
         public int Id { get; set; }
         public int BloodRequestId { get; set; }
-        public int StaffId { get; set; }
+        public Guid StaffId { get; set; }
         public string PreviousStatus { get; set; }
         public string NewStatus { get; set; }
         public DateTime UpdatedAt { get; set; }

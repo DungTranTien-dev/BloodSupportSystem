@@ -10,7 +10,7 @@ namespace DAL.Models
     {
         public int Id { get; set; }
         public int EventId { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string NotificationMessage { get; set; }
         public DateTime SentAt { get; set; }
 

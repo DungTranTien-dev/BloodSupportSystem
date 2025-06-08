@@ -10,8 +10,7 @@ namespace DAL.Models
     {
         public int Id { get; set; }
         public int EventId { get; set; }
-        public int UserId { get; set; }
-        public DateTime RegistrationDate { get; set; }
+        public Guid UserId { get; set; } // Should be Guid to match User.Id
 
         // Navigation properties
         public Event Event { get; set; }

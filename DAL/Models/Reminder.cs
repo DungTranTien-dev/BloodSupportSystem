@@ -10,7 +10,7 @@ namespace DAL.Models
     public class Reminder
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public DateTime ReminderDate { get; set; }
         public string Content { get; set; }
         public ReminderStatus Status { get; set; } // Use enum for status
