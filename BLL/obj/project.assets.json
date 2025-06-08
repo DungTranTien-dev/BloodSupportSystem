@@ -2882,9 +2882,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\BLL\\BLL.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\BLL\\BLL.csproj",
       "projectName": "BLL",
-      "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\BLL\\BLL.csproj",
+      "projectPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\BLL\\BLL.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\BLL\\obj\\",
       "projectStyle": "PackageReference",
@@ -2907,11 +2907,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj": {
-              "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj"
+            "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj"
             },
-            "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\DAL\\DAL.csproj": {
-              "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\DAL\\DAL.csproj"
+            "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\DAL\\DAL.csproj"
             }
           }
         }

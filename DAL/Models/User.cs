@@ -15,6 +15,7 @@ namespace DAL.Models
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
+        public int PhoneNumber { get; set; }
         public UserRole Role { get; set; }
         public int BloodTypeId { get; set; }
         public int LocationId { get; set; }
