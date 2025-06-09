@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\BLL\\BLL.csproj": {}
+    "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\BLL\\BLL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\BLL\\BLL.csproj": {
+    "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\BLL\\BLL.csproj",
+        "projectUniqueName": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\BLL\\BLL.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\BLL\\obj\\",
+        "projectPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\BLL\\BLL.csproj",
+        "packagesPath": "C:\\Users\\VI HAO\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\VI HAO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,11 +32,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj": {
-                "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj"
+              "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\Common\\Common.csproj": {
+                "projectPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\Common\\Common.csproj"
               },
-              "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\DAL\\DAL.csproj": {
-                "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\DAL\\DAL.csproj"
+              "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\DAL\\DAL.csproj": {
+                "projectPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\DAL\\DAL.csproj"
               }
             }
           }
@@ -51,7 +51,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -78,24 +78,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj": {
+    "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\Common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj",
+        "projectUniqueName": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\Common\\Common.csproj",
         "projectName": "Common",
-        "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\obj\\",
+        "projectPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\Common\\Common.csproj",
+        "packagesPath": "C:\\Users\\VI HAO\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\VI HAO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -122,7 +122,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -143,24 +143,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\DAL\\DAL.csproj": {
+    "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\DAL\\DAL.csproj",
+        "projectUniqueName": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\DAL\\obj\\",
+        "projectPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\VI HAO\\.nuget\\packages\\",
+        "outputPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\VI HAO\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -175,8 +175,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj": {
-                "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj"
+              "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\Common\\Common.csproj": {
+                "projectPath": "D:\\FPT\\FPT_ki5\\SWP\\github-fe\\BloodSupportSystem\\Common\\Common.csproj"
               }
             }
           }
@@ -191,7 +191,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -230,7 +230,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
