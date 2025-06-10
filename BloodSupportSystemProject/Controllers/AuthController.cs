@@ -12,7 +12,7 @@ namespace BloodSupportSystemProject.Controllers
     {
         private readonly IAuthService _authService;
 
-        public AuthController (IAuthService authService)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
         }
@@ -27,5 +27,13 @@ namespace BloodSupportSystemProject.Controllers
 
             return StatusCode(respone.StatusCode, respone);
         }
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
+        {
+            var respone = await _authService.Register(registerDTO);
+
+            return StatusCode(respone.StatusCode, respone);
+        }
+
     }
 }
