@@ -19,10 +19,12 @@ namespace DAL.UnitOfWork
             _context = context;
             UserRepo = new UserRepository(_context);
             TokenRepo = new TokenRepository(_context);
+            BloodRegistrationRepo = new BloodRegistrationRepository(_context);
         }
 
         public IUserRepository UserRepo { get; private set; }
         public ITokenRepository TokenRepo { get; private set; }
+        public IBloodRegistrationRepository BloodRegistrationRepo { get; private set; }
         public void Dispose()
         {
             _context.Dispose();

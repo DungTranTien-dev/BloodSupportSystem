@@ -10,5 +10,6 @@ namespace DAL.Models
     {
         public Guid BloodId { get; set; }
         public string BloodName { get; set; }
+        public int TotalQuantity { get; set; }
     }
 }
