@@ -3,3 +3,13 @@
 
 # Ignore build output folders
 obj/
+
+# Ignore build directories
+bin/
+obj/
+
+# Ignore cache files
+*.cache
+*.cs
+*.props
+*.json
