@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj": {}
+    "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj": {
+    "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj",
         "projectName": "Common",
-        "projectPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\Common.csproj",
+        "projectPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\source\\repos\\BloodSupportSystem\\Common\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\Source\\Repos\\BloodSupportSystem\\Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
