@@ -11,7 +11,6 @@ namespace DAL.UnitOfWork
     {
         IUserRepository UserRepo { get; }
         ITokenRepository TokenRepo { get; }
-        IBloodRegistrationRepository BloodRegistrationRepo { get; }
         Task<int> SaveAsync();
         Task<bool> SaveChangeAsync();
     }

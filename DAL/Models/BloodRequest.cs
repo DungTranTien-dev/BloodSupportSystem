@@ -10,24 +10,17 @@ namespace DAL.Models
     public class BloodRequest
     {
         public int Id { get; set; }
+        public Guid RequesterId { get; set; }
+        public int BloodTypeId { get; set; }
+        public string ComponentType { get; set; }
+        public string UrgencyLevel { get; set; }
+        public string Status { get; set; }
+        public DateTime RequestedDate { get; set; }
+        public DateTime? ResolvedDate { get; set; }
 
-        public string PatientName { get; set; } = string.Empty;
-        public int PatientAge { get; set; }
-        public string BloodType { get; set; } = string.Empty;
-
-        public string LocationName { get; set; } = string.Empty;
-
-        // Dùng enum ở đây
-        public LocationType LocationType { get; set; } = LocationType.HOSPITAL;
-
-        public int QuantityInUnits { get; set; }
-        public string UrgencyLevel { get; set; } = "Normal";
-        public DateTime RequestedTime { get; set; }
-
-        public string RequestedBy { get; set; } = string.Empty;
-        public string ContactPhone { get; set; } = string.Empty;
-
-        public string Notes { get; set; } = string.Empty;
+        public User Requester { get; set; }
+        public BloodType BloodType { get; set; }
+        public ICollection<Donation> Donations { get; set; }
+        public ICollection<BloodRequestStatusLog> StatusLogs { get; set; }
     }
-
 }

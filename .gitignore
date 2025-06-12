@@ -10,6 +10,7 @@ obj/
 
 # Ignore cache files
 *.cache
-*.cs
 *.props
 *.json
+*.cs
+*.csproj

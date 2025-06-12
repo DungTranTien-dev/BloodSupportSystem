@@ -1,4 +1,4 @@
-Ôªøusing BLL.Services.Implement;
+using BLL.Services.Implement;
 using BLL.Services.Interface;
 using DAL.Data;
 using DAL.UnitOfWork;
@@ -9,22 +9,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),
-   ServiceLifetime.Scoped
+    ServiceLifetime.Scoped
 );
 
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IBloodRegistrationService, BloodRegistrationService>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// **ThÍm dÚng n‡y: ??ng k˝ EventService**
+builder.Services.AddScoped<IEventService, EventService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// ƒêƒÉng k√Ω IHttpContextAccessor
-builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

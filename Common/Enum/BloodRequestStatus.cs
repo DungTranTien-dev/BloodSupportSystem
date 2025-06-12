@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace Common.Enum
 {
-    public class Blood
+    public enum BloodRequestStatus
     {
-        public Guid BloodId { get; set; }
-        public string BloodName { get; set; }
-        public int TotalQuantity { get; set; }
+        Pending,
+        Matched,
+        Completed
     }
 }

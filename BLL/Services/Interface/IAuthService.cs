@@ -11,8 +11,5 @@ namespace BLL.Services.Interface
     public interface IAuthService
     {
         Task<ResponseDTO> Login(LoginDTO loginDTO);
-        Task<ResponseDTO> Register(RegisterDTO registerDTO);
-
     }
-
 }

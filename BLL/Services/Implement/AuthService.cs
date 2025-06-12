@@ -1,5 +1,4 @@
-﻿using Azure.Identity;
-using BLL.Services.Interface;
+﻿using BLL.Services.Interface;
 using Common.Constants;
 using Common.DTO;
 using DAL.Models;
@@ -23,9 +22,7 @@ namespace BLL.Services.Implement
         }
         public async Task<ResponseDTO> Login(LoginDTO loginDTO)
         {
-
             var user = await _unitOfWork.UserRepo.FindByEmailAsync(loginDTO.Email);
-            
 
             if (user == null)
             {
@@ -79,81 +76,12 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Error saving refresh token: {ex.Message}", 500, false);
             }
 
-            return new ResponseDTO("Đăng nhập thành công" ,200, true, new
+            return new ResponseDTO("Đăng nhập thành công", 200, true, new
             {
                 AccessToken = accessTokenKey,
                 RefeshToken = refreshTokenKey,
             });
 
-        }
-
-        public async Task<ResponseDTO> Register(RegisterDTO registerDTO)
-        {
-            // Kiểm tra username không được null hoặc rỗng
-            if (string.IsNullOrWhiteSpace(registerDTO.UserName ))
-            {
-                return new ResponseDTO("Username is required.",400, false);
-            }
-
-            // Kiểm tra email không được null hoặc rỗng
-            if (string.IsNullOrWhiteSpace(registerDTO.Email))
-            {
-                return new ResponseDTO("Email is required.", 400, false);
-            }
-
-            // Kiểm tra định dạng email hợp lệ
-            if (!IsValidEmail(registerDTO.Email))
-            {
-                return new ResponseDTO("Invalid email format.", 400, false);
-            }
-
-            // Kiểm tra trùng email
-            var existingUser = await _unitOfWork.UserRepo.FindByEmailAsync(registerDTO.Email);
-            if (existingUser != null)
-            { 
-
-            
-                return new ResponseDTO("Email is already registered.", 400, false);
-            }
-
-            // Kiểm tra mật khẩu không được null
-            if (string.IsNullOrWhiteSpace(registerDTO.Password))
-            {
-                return new ResponseDTO("Password is required.", 400, false);
-            }
-
-            // Kiểm tra xác nhận mật khẩu
-            if (registerDTO.Password != registerDTO.ConfirmPassword)
-            {
-                return new ResponseDTO("Passwords do not match.", 400, false);
-            }
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDTO.Password);
-            // Tạo người dùng mới
-            var newUser = new User
-            {
-                UserId = Guid.NewGuid(),
-                UserName = registerDTO.UserName,
-                Email = registerDTO.Email,
-                Password = passwordHash
-            };
-
-            await _unitOfWork.UserRepo.AddAsync(newUser);
-            await _unitOfWork.SaveChangeAsync();
-
-            return new ResponseDTO("Registration successful.", 200, true);
-        }
-
-        private bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }
