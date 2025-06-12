@@ -9,12 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),
-   ServiceLifetime.Scoped
+    ServiceLifetime.Scoped
 );
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// **Thêm dòng này: ??ng ký EventService**
+builder.Services.AddScoped<IEventService, EventService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
