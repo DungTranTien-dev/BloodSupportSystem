@@ -12,4 +12,5 @@ namespace BLL.Services.Interface
     {
         Task<ResponseDTO> Login(LoginDTO loginDTO);
     }
+    //ADD GOOGLE LOG IN 
 }
