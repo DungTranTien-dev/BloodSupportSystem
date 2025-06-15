@@ -9,8 +9,6 @@ bin/
 obj/
 
 # Ignore cache files
-*.cache
-*.props
-*.json
-*.cs
-*.csproj
+/BloodSupportSystemProject/obj
+/BloodSupportSystemProject/obj/Debug
+/BloodSupportSystemProject/obj

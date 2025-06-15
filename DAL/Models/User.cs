@@ -15,7 +15,7 @@ namespace DAL.Models
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public UserRole Role { get; set; }
         public int BloodTypeId { get; set; }
         public int LocationId { get; set; }
@@ -24,6 +24,7 @@ namespace DAL.Models
         public BloodType BloodType { get; set; }
         public Location Location { get; set; }
         public ICollection<BloodRequest> BloodRequests { get; set; }
+
         public ICollection<Donation> Donations { get; set; }
         public ICollection<Blog> Blogs { get; set; }
         public ICollection<Reminder> Reminders { get; set; }

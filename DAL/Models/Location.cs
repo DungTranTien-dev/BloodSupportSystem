@@ -10,8 +10,8 @@ namespace DAL.Models
     {
         public int Id { get; set; }
         public string Address { get; set; }
-        public float Latitude { get; set; }
-        public float Longitude { get; set; }
+        public float ?Latitude { get; set; }
+        public float ?Longitude { get; set; }
 
         // Navigation property
         public ICollection<User> Users { get; set; }
