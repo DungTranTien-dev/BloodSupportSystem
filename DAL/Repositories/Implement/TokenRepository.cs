@@ -39,5 +39,27 @@ namespace DAL.Repositories.Implement
 
             return refreshTokenEntity;
         }
+
+        public async Task<RefreshToken> GetActiveTokenAsync(Guid userId)
+        {
+            return await _context.RefreshTokens
+                .FirstOrDefaultAsync(t =>
+                    t.UserId == userId &&
+                    !t.IsRevoked &&
+                    t.CreatedAt.AddDays(30) > DateTime.UtcNow);
+        }
+
+        public async Task CreateTokenAsync(RefreshToken token)
+        {
+            await _context.RefreshTokens.AddAsync(token);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RevokeTokenAsync(RefreshToken token)
+        {
+            token.IsRevoked = true;
+            _context.RefreshTokens.Update(token);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -11,5 +11,9 @@ namespace DAL.Repositories.Interface
     {
         Task<RefreshToken> GetRefreshTokenByUserID(Guid userId);
         Task<RefreshToken?> GetRefreshTokenByKey(string refreshTokenKey);
+
+        Task CreateTokenAsync(RefreshToken token);
+        Task RevokeTokenAsync(RefreshToken token);
+        Task<RefreshToken> GetActiveTokenAsync(Guid userId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BLL.Services.Interface;
+using Common.DTO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,20 @@ namespace BloodSupportSystemProject.Controllers
             var respone = await _authService.Login(loginDTO);
 
             return StatusCode(respone.StatusCode, respone);
+        }
+
+        [HttpPost("google")]
+        public async Task<IActionResult> GoogleSignIn([FromBody] GoogleSignInDTO dto)
+        {
+            var response = await _authService.GoogleSignInAsync(dto);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPost("google/complete")]
+        public async Task<IActionResult> CompleteGoogleSignUp([FromBody] GoogleSignUpCompleteDTO dto)
+        {
+            var response = await _authService.CompleteGoogleSignUpAsync(dto);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }

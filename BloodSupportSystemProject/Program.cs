@@ -21,9 +21,14 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBloodTypeRepository, BloodTypeRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
-builder.Services.AddScoped<IUserService, UserService>();
-
+builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<IBloodTypeRepository, BloodTypeRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
 
 
