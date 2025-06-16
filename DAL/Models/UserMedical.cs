@@ -9,7 +9,7 @@ namespace DAL.Models
 {
     public class UserMedical
     {
-        public Guid UserBloodId { get; set; }
+        public Guid UserMedicalId { get; set; }
         public Guid BloodId { get; set; }
         public Blood Blood { get; set; }
         public string Weight { get; set; }

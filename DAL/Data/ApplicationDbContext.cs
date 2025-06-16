@@ -22,14 +22,17 @@ namespace DAL.Data
         public DbSet<BloodRegistration> BloodRegistrations { get; set; }
         public DbSet<DonationHistory> DonationHistorys { get; set; }
 
+        public DbSet<BloodRequest> BloodRequests { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //PRIMARY KEY
             modelBuilder.Entity<User>().HasKey(u => u.UserId);
             modelBuilder.Entity<RefreshToken>().HasKey(rt => rt.RefreshTokenId);
-            modelBuilder.Entity<UserMedical>().HasKey(um => um.UserBloodId);
+            modelBuilder.Entity<UserMedical>().HasKey(um => um.UserMedicalId);
             modelBuilder.Entity<BloodRegistration>().HasKey(um => um.BloodRegistrationId);
             modelBuilder.Entity<DonationHistory>().HasKey(um => um.DonationHistoryId);
+            modelBuilder.Entity<BloodRequest>().HasKey(um => um.BloodRequestId);
 
             //User-Token (1-n)
             modelBuilder.Entity<RefreshToken>()
@@ -39,25 +42,30 @@ namespace DAL.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             //User - UserMedical (1-n)
+            // Đúng:
             modelBuilder.Entity<UserMedical>()
-                .HasOne<User>()
+                .HasOne(um => um.User)
                 .WithMany(u => u.UserMedicals)
-                .HasForeignKey(um => um.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(um => um.UserId);
 
             //User - BloodRegistration (1-n)
             modelBuilder.Entity<BloodRegistration>()
-                .HasOne<User>()
-                .WithMany(u => u.BloodRegistrations)
-                .HasForeignKey(um => um.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+    .HasOne(br => br.User)
+    .WithMany(u => u.BloodRegistrations)
+    .HasForeignKey(br => br.UserId);
 
             //User - DonationHistory (1-n)
             modelBuilder.Entity<DonationHistory>()
-                .HasOne<User>()
-                .WithMany(u => u.DonationHistorys)
-                .HasForeignKey(um => um.UserId)
-                .OnDelete(DeleteBehavior.SetNull);
+     .HasOne(dh => dh.User)
+     .WithMany(u => u.DonationHistorys)
+     .HasForeignKey(dh => dh.UserId);
+            //UserMedical Blood (1-1)
+            modelBuilder.Entity<UserMedical>()
+                .HasOne(um => um.Blood)
+                .WithOne(b => b.UserMedicals)
+                .HasForeignKey<UserMedical>(um => um.BloodId);
+
+
 
 
             base.OnModelCreating(modelBuilder);

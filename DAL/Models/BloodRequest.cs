@@ -9,25 +9,19 @@ namespace DAL.Models
 {
     public class BloodRequest
     {
-        public int Id { get; set; }
+        public Guid BloodRequestId { get; set; }
 
-        public string PatientName { get; set; } = string.Empty;
-        public int PatientAge { get; set; }
-        public string BloodType { get; set; } = string.Empty;
+        public Guid RequestedByUserId { get; set; }     // Người yêu cầu (bệnh nhân hoặc bác sĩ)
+        public string PatientName { get; set; }         // Tên người cần máu
+        public string HospitalName { get; set; }        // Nơi cần máu (nếu khác bệnh viện hệ thống)
 
-        public string LocationName { get; set; } = string.Empty;
+        public string BloodGroup { get; set; }          // Nhóm máu yêu cầu (A+, O-, ...)
+        public BloodComponentType ComponentType { get; set; } // Loại máu: RBC, Plasma,...
+        public double VolumeInML { get; set; }          // Lượng cần (VD: 350ml, 500ml)
 
-        // Dùng enum ở đây
-        public LocationType LocationType { get; set; } = LocationType.HOSPITAL;
-
-        public int QuantityInUnits { get; set; }
-        public string UrgencyLevel { get; set; } = "Normal";
-        public DateTime RequestedTime { get; set; }
-
-        public string RequestedBy { get; set; } = string.Empty;
-        public string ContactPhone { get; set; } = string.Empty;
-
-        public string Notes { get; set; } = string.Empty;
+        public string Reason { get; set; }              // Lý do (vd: tai nạn, truyền định kỳ,…)
+        public DateTime RequestedDate { get; set; }     // Ngày yêu cầu
+        public BloodRequestStatus Status { get; set; }  // Pending, Approved, Rejected, Fulfilled
     }
 
 }

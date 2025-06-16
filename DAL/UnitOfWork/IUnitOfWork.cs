@@ -12,6 +12,7 @@ namespace DAL.UnitOfWork
         IUserRepository UserRepo { get; }
         ITokenRepository TokenRepo { get; }
         IBloodRegistrationRepository BloodRegistrationRepo { get; }
+        IEventRepository EventRepo { get; }
         Task<int> SaveAsync();
         Task<bool> SaveChangeAsync();
     }
