@@ -23,7 +23,7 @@ namespace BloodSupportSystemProject.Controllers
             var result = await _userService.CreateUserAsync(createUserDTO);
             return StatusCode(result.StatusCode, result);
         }
-
+        //logs
         [HttpGet("all")]
         public async Task<IActionResult> GetAllUsers()
         {

@@ -11,12 +11,14 @@ namespace DAL.Models
     {
         public Guid BloodId { get; set; }
         public string BloodName { get; set; }
+
         public double? VolumeInML { get; set; } 
         public BloodComponentType ComponentType { get; set; } // RBC, Plasma, etc.
         public DateTime? CollectedDate { get; set; }
         public DateTime? ExpiryDate { get; set; } 
         public bool? IsAvailable { get; set; }
         public UserMedical UserMedicals { get; set; }
+
 
 
 
