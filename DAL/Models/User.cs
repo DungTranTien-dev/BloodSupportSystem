@@ -23,6 +23,9 @@ namespace DAL.Models
         public DateTime CreatedAt { get; set; }
         public BloodType BloodType { get; set; }
         public Location Location { get; set; }
+
+        public bool IsActive { get; set; } = true; // Default to active
+        public DateTime? DeactivatedAt { get; set; } // Nullable for active users
         public ICollection<BloodRequest> BloodRequests { get; set; }
 
         public ICollection<Donation> Donations { get; set; }
