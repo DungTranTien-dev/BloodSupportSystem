@@ -8,8 +8,10 @@ namespace Common.Enum
 {
     public enum BloodRequestStatus
     {
-        Pending,
-        Matched,
-        Completed
+        PENDING,
+        APPROVED,
+        REJECTED,
+        FULFILLED      // Đã cấp máu thành công
     }
+
 }

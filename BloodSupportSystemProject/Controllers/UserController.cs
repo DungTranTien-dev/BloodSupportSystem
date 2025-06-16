@@ -1,11 +1,11 @@
-﻿using BLL.DTOs;
-using BLL.Services.Interface;
-using DAL.Models;
+﻿using BLL.Services.Interface;
+using Common.DTO;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace BloodSupportSystemProject.Controllers
 {
+    
+
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -17,23 +17,41 @@ namespace BloodSupportSystemProject.Controllers
             _userService = userService;
         }
 
-        // POST: api/User
-        [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] UserCreateDto dto)
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserDTO createUserDTO)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var user = await _userService.CreateUserAsync(dto);
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            var result = await _userService.CreateUserAsync(createUserDTO);
+            return StatusCode(result.StatusCode, result);
+        }
+        //logs
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var result = await _userService.GetAllUserAsync();
+            return StatusCode(result.StatusCode, result);
         }
 
-        // Example GET method for CreatedAtAction
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
-            // You can implement this as needed
-            return Ok(); // Placeholder
+            var result = await _userService.GetUserByIdAsync(id);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDTO updateUserDTO)
+        {
+           
+            
+            var result = await _userService.UpdateUserAsync(updateUserDTO);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            var result = await _userService.DeleteUserAsync(id);
+            return StatusCode(result.StatusCode, result);
         }
     }
 }

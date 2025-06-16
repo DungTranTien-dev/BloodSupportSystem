@@ -32,7 +32,7 @@ namespace Common.Constants
 
             public const string Email = nameof(Email);
             public const string Password = nameof(Password);
-            public const string Role = nameof(Role);
+            //public const string Role = nameof(Role);
             public const string UserId = nameof(UserId);
             public const string UserName = nameof(UserName);
         }

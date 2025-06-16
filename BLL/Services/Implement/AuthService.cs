@@ -1,9 +1,8 @@
-﻿using BLL.Services.Interface;
+﻿using Azure.Identity;
+using BLL.Services.Interface;
 using Common.Constants;
 using Common.DTO;
-using Common.Enum;
 using DAL.Models;
-using DAL.Repositories.Interface;
 using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -17,31 +16,16 @@ namespace BLL.Services.Implement
 {
     public class AuthService : IAuthService
     {
-        private readonly IUserRepository _userRepo;
-        private readonly ITokenRepository _tokenRepo;
-        private readonly IGoogleAuthService _googleAuthService;
-        private readonly IBloodTypeRepository _bloodTypeRepo;
-        private readonly ILocationRepository _locationRepo;
         private readonly IUnitOfWork _unitOfWork;
-
-        public AuthService(
-            IUserRepository userRepo,
-            ITokenRepository tokenRepo,
-            IUnitOfWork unitOfWork,
-            IGoogleAuthService googleAuthService,
-            IBloodTypeRepository bloodTypeRepo,
-            ILocationRepository locationRepo)
+        public AuthService (IUnitOfWork unitOfWork)
         {
-            _userRepo = userRepo;
-            _tokenRepo = tokenRepo;
             _unitOfWork = unitOfWork;
-            _googleAuthService = googleAuthService;
-            _bloodTypeRepo = bloodTypeRepo;
-            _locationRepo = locationRepo;
         }
         public async Task<ResponseDTO> Login(LoginDTO loginDTO)
         {
+
             var user = await _unitOfWork.UserRepo.FindByEmailAsync(loginDTO.Email);
+            
 
             if (user == null)
             {
@@ -49,7 +33,7 @@ namespace BLL.Services.Implement
             }
 
             // kiem tra password
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.PasswordHash);
+            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.Password);
 
             if (!isPasswordValid)
             {
@@ -57,7 +41,7 @@ namespace BLL.Services.Implement
             }
 
             //kiểm tra refreshToken
-            var exitsRefreshToken = await _unitOfWork.TokenRepo.GetRefreshTokenByUserID(user.Id);
+            var exitsRefreshToken = await _unitOfWork.TokenRepo.GetRefreshTokenByUserID(user.UserId);
             if (exitsRefreshToken != null)
             {
                 exitsRefreshToken.IsRevoked = true;
@@ -68,8 +52,8 @@ namespace BLL.Services.Implement
             var claims = new List<Claim>
                 {
                     new Claim(JwtConstant.KeyClaim.Email, user.Email),
-                    new Claim(JwtConstant.KeyClaim.UserId, user.Id.ToString()),
-                    new Claim(JwtConstant.KeyClaim.UserName, user.FullName),
+                    new Claim(JwtConstant.KeyClaim.UserId, user.UserId.ToString()),
+                    new Claim(JwtConstant.KeyClaim.UserName, user.UserName),
                     //new Claim(JwtConstant.KeyClaim.Role, user.Role.ToString())
                 };
 
@@ -80,7 +64,7 @@ namespace BLL.Services.Implement
             var refreshToken = new RefreshToken
             {
                 RefreshTokenId = Guid.NewGuid(),
-                UserId = user.Id,
+                UserId = user.UserId,
                 RefreshTokenKey = refreshTokenKey,
                 IsRevoked = false,
                 CreatedAt = DateTime.UtcNow
@@ -95,134 +79,81 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Error saving refresh token: {ex.Message}", 500, false);
             }
 
-            return new ResponseDTO("Đăng nhập thành công", 200, true, new
+            return new ResponseDTO("Đăng nhập thành công" ,200, true, new
             {
                 AccessToken = accessTokenKey,
                 RefeshToken = refreshTokenKey,
             });
 
         }
-        public async Task<ResponseDTO> GoogleSignInAsync(GoogleSignInDTO dto)
+
+        public async Task<ResponseDTO> Register(RegisterDTO registerDTO)
         {
-            try
+            // Kiểm tra username không được null hoặc rỗng
+            if (string.IsNullOrWhiteSpace(registerDTO.UserName ))
             {
-                // Use GoogleAuthService to validate token
-                var payload = await _googleAuthService.ValidateTokenAsync(dto.GoogleToken);
-                if (payload == null)
-                    return new ResponseDTO("Invalid Google token", 401, false);
-
-                // Check if user exists
-                var user = await _userRepo.FindByEmailAsync(payload.Email);
-                if (user != null)
-                    return await GenerateAuthResponse(user);
-
-                // New user needs to complete registration
-                return new ResponseDTO("Complete registration", 202, true, new
-                {
-                    Email = payload.Email,
-                    GoogleToken = dto.GoogleToken,
-                    SuggestedValues = new
-                    {
-                        FullName = payload.Name ?? "Your Name",
-                        PhoneNumber = "123-456-7890",
-                        BloodTypeName = "A+",
-                        Address = "Your Address"
-                    }
-                });
+                return new ResponseDTO("Username is required.",400, false);
             }
-            catch (Exception ex)
+
+            // Kiểm tra email không được null hoặc rỗng
+            if (string.IsNullOrWhiteSpace(registerDTO.Email))
             {
-                return new ResponseDTO($"Google sign-in failed: {ex.Message}", 500, false);
+                return new ResponseDTO("Email is required.", 400, false);
             }
-        }
 
-        public async Task<ResponseDTO> CompleteGoogleSignUpAsync(GoogleSignUpCompleteDTO dto)
-        {
-            try
+            // Kiểm tra định dạng email hợp lệ
+            if (!IsValidEmail(registerDTO.Email))
             {
-                // Validate Google token using GoogleAuthService
-                var payload = await _googleAuthService.ValidateTokenAsync(dto.GoogleToken);
-                if (payload == null)
-                    return new ResponseDTO("Invalid Google token", 401, false);
-
-                // Verify email matches
-                if (payload.Email != dto.Email)
-                    return new ResponseDTO("Email does not match Google account", 400, false);
-
-                // Get blood type
-                var bloodType = await _bloodTypeRepo.GetByNameAsync(dto.BloodTypeName);
-                if (bloodType == null)
-                    return new ResponseDTO("Invalid blood type", 400, false);
-
-                // Create location
-                var location = await _locationRepo.GetOrCreateAsync(dto.Address);
-
-                // Create user
-                var user = new User
-                {
-                    Id = Guid.NewGuid(),
-                    Email = dto.Email,
-                    FullName = dto.FullName,
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                    PhoneNumber = dto.PhoneNumber,
-                    BloodTypeId = bloodType.Id,
-                    LocationId = location.Id,
-                    Role = UserRole.Member,
-                    CreatedAt = DateTime.UtcNow,
-                    LastDonationDate = DateTime.MinValue
-                };
-
-                await _userRepo.CreateAsync(user);
-                return await GenerateAuthResponse(user);
+                return new ResponseDTO("Invalid email format.", 400, false);
             }
-            catch (Exception ex)
-            {
-                return new ResponseDTO($"Registration failed: {ex.Message}", 500, false);
+
+            // Kiểm tra trùng email
+            var existingUser = await _unitOfWork.UserRepo.FindByEmailAsync(registerDTO.Email);
+            if (existingUser != null)
+            { 
+
+            
+                return new ResponseDTO("Email is already registered.", 400, false);
             }
-        }
 
-        private async Task<ResponseDTO> GenerateAuthResponse(User user)
-        {
-            // Revoke existing tokens
-            var existingToken = await _tokenRepo.GetActiveTokenAsync(user.Id);
-            if (existingToken != null)
-                await _tokenRepo.RevokeTokenAsync(existingToken);
-
-            // Generate claims
-            var claims = new List<Claim>
+            // Kiểm tra mật khẩu không được null
+            if (string.IsNullOrWhiteSpace(registerDTO.Password))
             {
-                new Claim(JwtConstant.KeyClaim.UserId, user.Id.ToString()),
-                new Claim(JwtConstant.KeyClaim.Email, user.Email),
-                new Claim(JwtConstant.KeyClaim.UserName, user.FullName),
-                new Claim(JwtConstant.KeyClaim.Role, user.Role.ToString())
+                return new ResponseDTO("Password is required.", 400, false);
+            }
+
+            // Kiểm tra xác nhận mật khẩu
+            if (registerDTO.Password != registerDTO.ConfirmPassword)
+            {
+                return new ResponseDTO("Passwords do not match.", 400, false);
+            }
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDTO.Password);
+            // Tạo người dùng mới
+            var newUser = new User
+            {
+                UserId = Guid.NewGuid(),
+                UserName = registerDTO.UserName,
+                Email = registerDTO.Email,
+                Password = passwordHash
             };
 
-            // Generate tokens using your existing JwtProvider
-            var accessToken = JwtProvider.GenerateAccessToken(claims);
-            var refreshToken = JwtProvider.GenerateRefreshToken(claims);
+            await _unitOfWork.UserRepo.AddAsync(newUser);
+            await _unitOfWork.SaveChangeAsync();
 
-            // Save refresh token
-            await _tokenRepo.CreateTokenAsync(new RefreshToken
-            {
-                RefreshTokenId = Guid.NewGuid(),
-                UserId = user.Id,
-                RefreshTokenKey = refreshToken,
-                IsRevoked = false,
-                CreatedAt = DateTime.UtcNow
-            });
-
-            return new ResponseDTO("Authentication successful", 200, true, new
-            {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                UserInfo = new
-                {
-                    user.Id,
-                    user.Email,
-                    user.FullName,
-                    user.Role
-                }
-            });
+            return new ResponseDTO("Registration successful.", 200, true);
         }
-}
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
 }

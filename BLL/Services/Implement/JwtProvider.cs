@@ -1,6 +1,4 @@
 ﻿using Common.Settings;
-using Google.Apis.Auth;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -14,16 +12,6 @@ namespace BLL.Services.Implement
 {
     public class JwtProvider
     {
-        private static readonly IConfiguration _config;
-
-        static JwtProvider()
-        {
-            // In a real app, you'd get this via dependency injection
-            // For static class, we'll use a service locator pattern
-            _config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-        }
         public static string GenerateAccessToken(List<Claim> claims)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -103,35 +91,5 @@ namespace BLL.Services.Implement
             return claim?.Value ?? string.Empty; // Trả về giá trị nếu claim tồn tại, nếu không thì trả về chuỗi rỗng
         }
 
-        public static async Task<GoogleJsonWebSignature.Payload> ValidateGoogleToken(string token)
-        {
-            try
-            {
-                return await GoogleJsonWebSignature.ValidateAsync(token,
-                    new GoogleJsonWebSignature.ValidationSettings
-                    {
-                        Audience = new List<string> { _config["Google:ClientId"] }
-                    });
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        // NEW: Extract claims from Google payload
-        public static List<Claim> GetClaimsFromGooglePayload(GoogleJsonWebSignature.Payload payload)
-        {
-            return new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, payload.Subject),
-                new Claim(ClaimTypes.Email, payload.Email),
-                new Claim(ClaimTypes.Name, payload.Name ?? ""),
-                new Claim(ClaimTypes.GivenName, payload.GivenName ?? ""),
-                new Claim(ClaimTypes.Surname, payload.FamilyName ?? ""),
-                new Claim("picture", payload.Picture ?? "")
-            };
-        }
     }
 }
-

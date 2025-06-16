@@ -22,446 +22,158 @@ namespace DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DAL.Models.Blog", b =>
+            modelBuilder.Entity("DAL.Models.Blood", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("BloodId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Content")
+                    b.Property<string>("BloodName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CollectedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ComponentType")
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("AuthorId");
+                    b.Property<bool?>("IsAvailable")
+                        .HasColumnType("bit");
 
-                    b.ToTable("Blogs");
+                    b.Property<double?>("VolumeInML")
+                        .HasColumnType("float");
+
+                    b.HasKey("BloodId");
+
+                    b.ToTable("Blood");
+                });
+
+            modelBuilder.Entity("DAL.Models.BloodRegistration", b =>
+                {
+                    b.Property<Guid>("BloodRegistrationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DonationEventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BloodRegistrationId");
+
+                    b.HasIndex("DonationEventId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BloodRegistrations");
                 });
 
             modelBuilder.Entity("DAL.Models.BloodRequest", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("BloodRequestId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BloodTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ComponentType")
+                    b.Property<string>("BloodGroup")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ComponentType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HospitalName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RequestedByUserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("RequestedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RequesterId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("ResolvedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<double>("VolumeInML")
+                        .HasColumnType("float");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UrgencyLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BloodTypeId");
-
-                    b.HasIndex("RequesterId");
+                    b.HasKey("BloodRequestId");
 
                     b.ToTable("BloodRequests");
                 });
 
-            modelBuilder.Entity("DAL.Models.BloodRequestStatusLog", b =>
+            modelBuilder.Entity("DAL.Models.DonationEvent", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("DonationEventId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BloodRequestId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NewStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PreviousStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("StaffId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BloodRequestId");
-
-                    b.HasIndex("StaffId");
-
-                    b.ToTable("BloodRequestStatusLogs");
-                });
-
-            modelBuilder.Entity("DAL.Models.BloodType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CanDonateTo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CanReceiveFrom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BloodTypes");
-                });
-
-            modelBuilder.Entity("DAL.Models.BloodUnit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BloodTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ComponentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BloodTypeId");
-
-                    b.ToTable("BloodUnits");
-                });
-
-            modelBuilder.Entity("DAL.Models.Donation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BloodRequestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BloodTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DonationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("DonorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BloodRequestId");
-
-                    b.HasIndex("BloodTypeId");
-
-                    b.HasIndex("DonorId");
-
-                    b.ToTable("Donations");
-                });
-
-            modelBuilder.Entity("DAL.Models.DonationHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BloodTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DonationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("MemberId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BloodTypeId");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("DonationHistories");
-                });
-
-            modelBuilder.Entity("DAL.Models.Event", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EventDate")
+                    b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EventLocation")
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EventName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("OrganizerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizerId");
-
-                    b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("DAL.Models.EventFeedback", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comments")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EventFeedbacks");
-                });
-
-            modelBuilder.Entity("DAL.Models.EventNotification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NotificationMessage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("SentAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EventNotifications");
-                });
-
-            modelBuilder.Entity("DAL.Models.EventParticipant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EventParticipants");
-                });
-
-            modelBuilder.Entity("DAL.Models.Feedback", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SubmittedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Feedbacks");
-                });
-
-            modelBuilder.Entity("DAL.Models.Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("Latitude")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("Longitude")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Locations");
-                });
-
-            modelBuilder.Entity("DAL.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("SentAt")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasKey("DonationEventId");
+
+                    b.ToTable("DonationEvent");
+                });
+
+            modelBuilder.Entity("DAL.Models.DonationHistory", b =>
+                {
+                    b.Property<Guid>("DonationHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BloodName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("DonationHistoryId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("DonationHistorys");
                 });
 
             modelBuilder.Entity("DAL.Models.RefreshToken", b =>
@@ -490,19 +202,55 @@ namespace DAL.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("DAL.Models.Reminder", b =>
+            modelBuilder.Entity("DAL.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ReminderDate")
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DAL.Models.UserMedical", b =>
+                {
+                    b.Property<Guid>("UserMedicalId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BloodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrentHealthStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DonationCount")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasTransmissibleDisease")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTakingMedication")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastDonationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
@@ -511,254 +259,45 @@ namespace DAL.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserMedicalId");
+
+                    b.HasIndex("BloodId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reminders");
+                    b.ToTable("UserMedicals");
                 });
 
-            modelBuilder.Entity("DAL.Models.User", b =>
+            modelBuilder.Entity("DAL.Models.BloodRegistration", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("BloodTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastDonationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BloodTypeId");
-
-                    b.HasIndex("LocationId");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("DAL.Models.Blog", b =>
-                {
-                    b.HasOne("DAL.Models.User", "Author")
-                        .WithMany("Blogs")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("DAL.Models.BloodRequest", b =>
-                {
-                    b.HasOne("DAL.Models.BloodType", "BloodType")
-                        .WithMany("BloodRequests")
-                        .HasForeignKey("BloodTypeId")
+                    b.HasOne("DAL.Models.DonationEvent", "DonationEvent")
+                        .WithMany("Registrations")
+                        .HasForeignKey("DonationEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.User", "Requester")
-                        .WithMany("BloodRequests")
-                        .HasForeignKey("RequesterId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("BloodType");
-
-                    b.Navigation("Requester");
-                });
-
-            modelBuilder.Entity("DAL.Models.BloodRequestStatusLog", b =>
-                {
-                    b.HasOne("DAL.Models.BloodRequest", "BloodRequest")
-                        .WithMany("StatusLogs")
-                        .HasForeignKey("BloodRequestId")
+                    b.HasOne("DAL.Models.User", "User")
+                        .WithMany("BloodRegistrations")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.User", "Staff")
-                        .WithMany("StatusLogs")
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("DonationEvent");
 
-                    b.Navigation("BloodRequest");
-
-                    b.Navigation("Staff");
-                });
-
-            modelBuilder.Entity("DAL.Models.BloodUnit", b =>
-                {
-                    b.HasOne("DAL.Models.BloodType", "BloodType")
-                        .WithMany("BloodUnits")
-                        .HasForeignKey("BloodTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BloodType");
-                });
-
-            modelBuilder.Entity("DAL.Models.Donation", b =>
-                {
-                    b.HasOne("DAL.Models.BloodRequest", "BloodRequest")
-                        .WithMany("Donations")
-                        .HasForeignKey("BloodRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.BloodType", null)
-                        .WithMany("Donations")
-                        .HasForeignKey("BloodTypeId");
-
-                    b.HasOne("DAL.Models.User", "Donor")
-                        .WithMany("Donations")
-                        .HasForeignKey("DonorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("BloodRequest");
-
-                    b.Navigation("Donor");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DAL.Models.DonationHistory", b =>
                 {
-                    b.HasOne("DAL.Models.BloodType", "BloodType")
-                        .WithMany("DonationHistories")
-                        .HasForeignKey("BloodTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.Location", "Location")
-                        .WithMany("DonationHistories")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.User", "Member")
-                        .WithMany()
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("BloodType");
-
-                    b.Navigation("Location");
-
-                    b.Navigation("Member");
-                });
-
-            modelBuilder.Entity("DAL.Models.Event", b =>
-                {
-                    b.HasOne("DAL.Models.User", "Organizer")
-                        .WithMany("OrganizedEvents")
-                        .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Organizer");
-                });
-
-            modelBuilder.Entity("DAL.Models.EventFeedback", b =>
-                {
-                    b.HasOne("DAL.Models.Event", "Event")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DAL.Models.User", "User")
-                        .WithMany("EventFeedbacks")
+                        .WithMany("DonationHistorys")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DAL.Models.EventNotification", b =>
-                {
-                    b.HasOne("DAL.Models.Event", "Event")
-                        .WithMany("Notifications")
-                        .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.User", "User")
-                        .WithMany("EventNotifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DAL.Models.EventParticipant", b =>
-                {
-                    b.HasOne("DAL.Models.Event", "Event")
-                        .WithMany("Participants")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.User", "User")
-                        .WithMany("EventParticipants")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DAL.Models.Feedback", b =>
-                {
-                    b.HasOne("DAL.Models.User", "User")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DAL.Models.Notification", b =>
-                {
-                    b.HasOne("DAL.Models.User", "User")
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -766,106 +305,50 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.RefreshToken", b =>
                 {
+                    b.HasOne("DAL.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.UserMedical", b =>
+                {
+                    b.HasOne("DAL.Models.Blood", "Blood")
+                        .WithOne("UserMedicals")
+                        .HasForeignKey("DAL.Models.UserMedical", "BloodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DAL.Models.User", "User")
-                        .WithMany("RefreshTokens")
+                        .WithMany("UserMedicals")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DAL.Models.Reminder", b =>
-                {
-                    b.HasOne("DAL.Models.User", "User")
-                        .WithMany("Reminders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("Blood");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DAL.Models.User", b =>
+            modelBuilder.Entity("DAL.Models.Blood", b =>
                 {
-                    b.HasOne("DAL.Models.BloodType", "BloodType")
-                        .WithMany("Users")
-                        .HasForeignKey("BloodTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.Navigation("UserMedicals")
                         .IsRequired();
-
-                    b.HasOne("DAL.Models.Location", "Location")
-                        .WithMany("Users")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("BloodType");
-
-                    b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("DAL.Models.BloodRequest", b =>
+            modelBuilder.Entity("DAL.Models.DonationEvent", b =>
                 {
-                    b.Navigation("Donations");
-
-                    b.Navigation("StatusLogs");
-                });
-
-            modelBuilder.Entity("DAL.Models.BloodType", b =>
-                {
-                    b.Navigation("BloodRequests");
-
-                    b.Navigation("BloodUnits");
-
-                    b.Navigation("DonationHistories");
-
-                    b.Navigation("Donations");
-
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("DAL.Models.Event", b =>
-                {
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("Participants");
-                });
-
-            modelBuilder.Entity("DAL.Models.Location", b =>
-                {
-                    b.Navigation("DonationHistories");
-
-                    b.Navigation("Users");
+                    b.Navigation("Registrations");
                 });
 
             modelBuilder.Entity("DAL.Models.User", b =>
                 {
-                    b.Navigation("Blogs");
+                    b.Navigation("BloodRegistrations");
 
-                    b.Navigation("BloodRequests");
+                    b.Navigation("DonationHistorys");
 
-                    b.Navigation("Donations");
-
-                    b.Navigation("EventFeedbacks");
-
-                    b.Navigation("EventNotifications");
-
-                    b.Navigation("EventParticipants");
-
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("OrganizedEvents");
-
-                    b.Navigation("RefreshTokens");
-
-                    b.Navigation("Reminders");
-
-                    b.Navigation("StatusLogs");
+                    b.Navigation("UserMedicals");
                 });
 #pragma warning restore 612, 618
         }

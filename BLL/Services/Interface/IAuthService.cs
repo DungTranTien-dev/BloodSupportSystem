@@ -11,9 +11,8 @@ namespace BLL.Services.Interface
     public interface IAuthService
     {
         Task<ResponseDTO> Login(LoginDTO loginDTO);
+        Task<ResponseDTO> Register(RegisterDTO registerDTO);
 
-        Task<ResponseDTO> GoogleSignInAsync(GoogleSignInDTO dto);
-        Task<ResponseDTO> CompleteGoogleSignUpAsync(GoogleSignUpCompleteDTO dto);
     }
-    //ADD GOOGLE LOG IN 
+
 }

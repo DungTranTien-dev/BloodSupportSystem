@@ -1,15 +1,11 @@
-# Ignore Visual Studio folder
-.vs/
-
-# Ignore build output folders
-obj/
-
-# Ignore build directories
-bin/
-obj/
-
-# Ignore cache files
+/.vs
+/BLL/obj
 /BloodSupportSystemProject/obj
-/BloodSupportSystemProject/obj/Debug
-/BloodSupportSystemProject/obj
-/BLL
+/Common/obj
+/DAL/obj
+/B/node_modules
+/BLL/bin
+/Common/bin
+/BloodSupportSystemProject/bin
+/DAL/bin
+/BLL/Utilities
