@@ -17,10 +17,12 @@ namespace DAL.Data
 
         //MODELS
         public DbSet<User> Users { get; set; }
-        public DbSet<RefreshToken> RefreshTokens {get; set;}
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<UserMedical> UserMedicals { get; set; }
         public DbSet<BloodRegistration> BloodRegistrations { get; set; }
         public DbSet<DonationHistory> DonationHistorys { get; set; }
+        public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<Blood> Blood { get; set; }
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
@@ -50,28 +52,23 @@ namespace DAL.Data
 
             //User - BloodRegistration (1-n)
             modelBuilder.Entity<BloodRegistration>()
-    .HasOne(br => br.User)
-    .WithMany(u => u.BloodRegistrations)
-    .HasForeignKey(br => br.UserId);
+                .HasOne(br => br.User)
+                .WithMany(u => u.BloodRegistrations)
+                .HasForeignKey(br => br.UserId);
 
             //User - DonationHistory (1-n)
             modelBuilder.Entity<DonationHistory>()
-     .HasOne(dh => dh.User)
-     .WithMany(u => u.DonationHistorys)
-     .HasForeignKey(dh => dh.UserId);
+                .HasOne(dh => dh.User)
+                .WithMany(u => u.DonationHistorys)
+                .HasForeignKey(dh => dh.UserId);
+
             //UserMedical Blood (1-1)
             modelBuilder.Entity<UserMedical>()
                 .HasOne(um => um.Blood)
                 .WithOne(b => b.UserMedicals)
                 .HasForeignKey<UserMedical>(um => um.BloodId);
 
-
-
-
             base.OnModelCreating(modelBuilder);
         }
-
-
-
     }
 }

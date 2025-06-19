@@ -2,6 +2,9 @@
 using BLL.Services.Interface;
 using BLL.Utilities;
 using DAL.Data;
+using DAL.Repositories.Implement;
+using DAL.Repositories.Interface;
+using DAL.Repositories.Interfaces;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,12 +28,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),
    ServiceLifetime.Scoped
 );
+builder.Services.AddAutoMapper(typeof(BloodMappingProfile).Assembly);
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBloodRegistrationService, BloodRegistrationService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IBloodRepository, BloodRepository>();
+builder.Services.AddScoped<IUserMedicalRepository, UserMedicalRepository>();
+builder.Services.AddScoped<IBloodRepository, BloodRepository>();
+builder.Services.AddScoped<IBloodService, BloodService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
