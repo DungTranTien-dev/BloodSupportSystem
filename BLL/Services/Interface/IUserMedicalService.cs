@@ -9,8 +9,11 @@ namespace BLL.Services.Interface
 {
     public interface IUserMedicalService
     {
-        Task<ResponseDTO> GetAllUserMedical();
-        Task<ResponseDTO> CreateUserMedical(CreateUserMediCalDTO createUserMediCalDTO);
-
+        Task<IEnumerable<UserMedicalDTO>> GetAllAsync();
+        Task<UserMedicalDTO?> GetByIdAsync(Guid id);
+        Task<bool> AddAsync(UserMedicalDTO dto);
+        Task<bool> UpdateAsync(UserMedicalDTO dto);
+        Task<bool> DeleteAsync(Guid id);
     }
+
 }

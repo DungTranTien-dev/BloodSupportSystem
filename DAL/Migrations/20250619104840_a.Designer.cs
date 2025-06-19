@@ -4,6 +4,7 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250619104840_a")]
+    partial class a
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -361,7 +364,8 @@ namespace DAL.Migrations
 
                     b.HasKey("UserMedicalId");
 
-                    b.HasIndex("BloodId");
+                    b.HasIndex("BloodId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -428,8 +432,8 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Models.UserMedical", b =>
                 {
                     b.HasOne("DAL.Models.Blood", "Blood")
-                        .WithMany("UserMedicals")
-                        .HasForeignKey("BloodId")
+                        .WithOne("UserMedicals")
+                        .HasForeignKey("DAL.Models.UserMedical", "BloodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -465,7 +469,8 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Models.Blood", b =>
                 {
-                    b.Navigation("UserMedicals");
+                    b.Navigation("UserMedicals")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Models.ChronicDisease", b =>

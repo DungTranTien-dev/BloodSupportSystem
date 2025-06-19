@@ -2,6 +2,7 @@
 using BLL.Utilities;
 using Common.DTO;
 using DAL.Models;
+using DAL.Repositories.Interface;
 using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -14,129 +15,126 @@ namespace BLL.Services.Implement
 
     public class UserMedicalService : IUserMedicalService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly UserUtility _userUtility;
+        private readonly IUserMedicalRepository _repo;
 
-        public async Task<ResponseDTO> CreateUserMedical(CreateUserMediCalDTO dto)
+        public UserMedicalService(IUserMedicalRepository repo)
         {
-            var userId = _userUtility.GetUserIDFromToken();
-            if (userId == null)
+            _repo = repo;
+        }
+
+        public async Task<IEnumerable<UserMedicalDTO>> GetAllAsync()
+        {
+            var list = await _repo.GetAllAsync();
+
+            return list.Select(x => new UserMedicalDTO
             {
-                return new ResponseDTO("Không tìm thấy user", 400, false);
-            }
+                UserMedicalId = x.UserMedicalId,
+                FullName = x.FullName,
+                DateOfBirth = x.DateOfBirth,
+                Gender = x.Gender,
+                CitizenId = x.CitizenId,
+                BloodId = x.BloodId,
+                PhoneNumber = x.PhoneNumber,
+                Email = x.Email,
+                Province = x.Province,
+                CurrentAddress = x.CurrentAddress,
+                HasDonatedBefore = x.HasDonatedBefore,
+                DonationCount = x.DonationCount,
+                DiseaseDescription = x.DiseaseDescription,
+                Type = x.Type,
+                CreateDate = x.CreateDate,
+                UserId = x.UserId
+            });
+        }
 
-            // VALIDATE
-            if (string.IsNullOrWhiteSpace(dto.FullName))
-                return new ResponseDTO("Họ và tên không được để trống", 400, false);
+        public async Task<UserMedicalDTO?> GetByIdAsync(Guid id)
+        {
+            var x = await _repo.GetByIdAsync(id);
+            if (x == null) return null;
 
-            if (dto.DateOfBirth >= DateTime.Now)
-                return new ResponseDTO("Ngày sinh không hợp lệ", 400, false);
-
-            if (string.IsNullOrWhiteSpace(dto.CitizenId))
-                return new ResponseDTO("CMND/CCCD không được để trống", 400, false);
-
-            if (string.IsNullOrWhiteSpace(dto.PhoneNumber))
-                return new ResponseDTO("Số điện thoại không được để trống", 400, false);
-
-            if (string.IsNullOrWhiteSpace(dto.Email))
-                return new ResponseDTO("Email không được để trống", 400, false);
-
-            if (!IsValidEmail(dto.Email))
-                return new ResponseDTO("Email không hợp lệ", 400, false);
-
-            if (string.IsNullOrWhiteSpace(dto.Province))
-                return new ResponseDTO("Tỉnh/Thành phố không được để trống", 400, false);
-
-            if (string.IsNullOrWhiteSpace(dto.CurrentAddress))
-                return new ResponseDTO("Địa chỉ hiện tại không được để trống", 400, false);
-
-            if (string.IsNullOrWhiteSpace(dto.BloodName))
-                return new ResponseDTO("Nhóm máu không được để trống", 400, false);
-
-            if (dto.HasDonatedBefore && (!dto.DonationCount.HasValue || dto.DonationCount.Value <= 0))
-                return new ResponseDTO("Số lần hiến máu phải lớn hơn 0 nếu đã từng hiến", 400, false);
-
-            // Tạo mới Blood luôn
-            var newBlood = new Blood
+            return new UserMedicalDTO
             {
-                BloodId = Guid.NewGuid(),
-                BloodName = dto.BloodName,
-                IsAvailable = false,
-                CollectedDate = null,
-                ExpiryDate = null,
-                VolumeInML = null,
-                ComponentType = Common.Enum.BloodComponentType.IN_PROGESS // hoặc bạn để mặc định
+                UserMedicalId = x.UserMedicalId,
+                FullName = x.FullName,
+                DateOfBirth = x.DateOfBirth,
+                Gender = x.Gender,
+                CitizenId = x.CitizenId,
+                BloodId = x.BloodId,
+                PhoneNumber = x.PhoneNumber,
+                Email = x.Email,
+                Province = x.Province,
+                CurrentAddress = x.CurrentAddress,
+                HasDonatedBefore = x.HasDonatedBefore,
+                DonationCount = x.DonationCount,
+                DiseaseDescription = x.DiseaseDescription,
+                Type = x.Type,
+                CreateDate = x.CreateDate,
+                UserId = x.UserId
             };
+        }
 
-            await _unitOfWork.BloodRepo.AddAsync(newBlood);
-
-            var userMedical = new UserMedical
+        public async Task<bool> AddAsync(UserMedicalDTO dto)
+        {
+            var entity = new UserMedical
             {
                 UserMedicalId = Guid.NewGuid(),
                 FullName = dto.FullName,
                 DateOfBirth = dto.DateOfBirth,
                 Gender = dto.Gender,
                 CitizenId = dto.CitizenId,
+                BloodId = dto.BloodId,
                 PhoneNumber = dto.PhoneNumber,
                 Email = dto.Email,
                 Province = dto.Province,
                 CurrentAddress = dto.CurrentAddress,
                 HasDonatedBefore = dto.HasDonatedBefore,
-                DonationCount = dto.DonationCount,
+                DonationCount = dto.HasDonatedBefore ? dto.DonationCount : 0,
                 DiseaseDescription = dto.DiseaseDescription,
-                Type = Common.Enum.MedicalType.PENDING,
+                Type = dto.Type,
                 CreateDate = DateTime.Now,
-                BloodId = newBlood.BloodId,
-                UserId = userId,
+                UserId = dto.UserId
             };
 
-            await _unitOfWork.UserMedicalRepo.AddAsync(userMedical);
-            await _unitOfWork.SaveAsync();
-
-            return new ResponseDTO("Tạo hồ sơ y tế thành công", 200, true);
+            await _repo.AddAsync(entity);
+            await _repo.SaveAsync();
+            return true;
         }
 
 
-
-        public async Task<ResponseDTO> GetAllUserMedical()
+        public async Task<bool> UpdateAsync(UserMedicalDTO dto)
         {
-            var list = _unitOfWork.UserMedicalRepo.GetAll();
-            if (list == null)
-            {
-                return new ResponseDTO("not found", 400, false);
-            }
+            var existing = await _repo.GetByIdAsync(dto.UserMedicalId);
+            if (existing == null) return false;
 
-            var listDTO = list.Select(u => new UserMedicalDTO
-            {
-                UserMedicalId = u.UserMedicalId,
-                UserId = u.UserId,
-                BloodName = u.Blood.BloodName,
-                CitizenId = u.CitizenId,
-                CurrentAddress = u.CurrentAddress,
-                DateOfBirth = u.DateOfBirth,
-                DiseaseDescription = u.DiseaseDescription,
-                DonationCount = u.DonationCount,
-                Email = u.Email,
-                FullName = u.FullName,
-                Gender = u.Gender,
-                HasDonatedBefore = u.HasDonatedBefore,
-                PhoneNumber = u.PhoneNumber,
-                Province = u.Province,                              
-            });
-            return new ResponseDTO("get list successfully", 200, true, listDTO);
+            // Update fields
+            existing.FullName = dto.FullName;
+            existing.DateOfBirth = dto.DateOfBirth;
+            existing.Gender = dto.Gender;
+            existing.CitizenId = dto.CitizenId;
+            existing.BloodId = dto.BloodId;
+            existing.PhoneNumber = dto.PhoneNumber;
+            existing.Email = dto.Email;
+            existing.Province = dto.Province;
+            existing.CurrentAddress = dto.CurrentAddress;
+            existing.HasDonatedBefore = dto.HasDonatedBefore;
+            existing.DonationCount = dto.DonationCount;
+            existing.DiseaseDescription = dto.DiseaseDescription;
+            existing.Type = dto.Type;
+            existing.UserId = dto.UserId;
+
+            _repo.Update(existing);
+            await _repo.SaveAsync();
+            return true;
         }
-        private bool IsValidEmail(string email)
+
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+            var existing = await _repo.GetByIdAsync(id);
+            if (existing == null) return false;
 
+            _repo.Delete(existing);
+            await _repo.SaveAsync();
+            return true;
+        }
     }
 }

@@ -144,5 +144,23 @@ namespace DAL.Repositories.Implement
         {
             return _dbSet.ToListAsync();
         }
+
+        public async Task<T> GetAsync(
+        Expression<Func<T, bool>> filter,
+        string includeProperties = "")
+        {
+            IQueryable<T> query = _dbSet;
+
+            query = query.Where(filter);
+
+            foreach (var includeProperty in includeProperties.Split(
+                new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
     }
 }

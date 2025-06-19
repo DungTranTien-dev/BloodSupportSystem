@@ -10,15 +10,32 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implement
 {
-    public class UserMedicalRepository : GenericRepository<UserMedical>, IUserMedicalRepository
+    public class UserMedicalRepository : IUserMedicalRepository
     {
-        public readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UserMedicalRepository(ApplicationDbContext context) : base(context)
+        public UserMedicalRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        
+        public async Task<IEnumerable<UserMedical>> GetAllAsync()
+            => await _context.UserMedicals.Include(u => u.Blood).ToListAsync();
+
+        public async Task<UserMedical?> GetByIdAsync(Guid id)
+            => await _context.UserMedicals.FirstOrDefaultAsync(u => u.UserMedicalId == id);
+
+        public async Task AddAsync(UserMedical entity)
+            => await _context.UserMedicals.AddAsync(entity);
+
+        public void Update(UserMedical entity)
+            => _context.UserMedicals.Update(entity);
+
+        public void Delete(UserMedical entity)
+            => _context.UserMedicals.Remove(entity);
+
+        public async Task SaveAsync()
+            => await _context.SaveChangesAsync();
     }
+
 }

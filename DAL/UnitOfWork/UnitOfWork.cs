@@ -24,7 +24,7 @@ namespace DAL.UnitOfWork
             EventRepo = new EventRepository(_context);
             ChronicDiseaseRepo = new ChronicDiseaseRepository(_context);
             UserMedicalRepo = new UserMedicalRepository(_context);
-
+            BloodRepo = new BloodRepository(_context);
         }
 
         public IUserRepository UserRepo { get; private set; }

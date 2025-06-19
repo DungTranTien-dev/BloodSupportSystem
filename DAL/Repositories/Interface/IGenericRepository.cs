@@ -30,6 +30,8 @@ namespace DAL.Repositories.Interface
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression);
         Task<T> GetByConditionAsync(Expression<Func<T, bool>> expression);
         Task<List<T>> ToListAsync();
+        Task<T> GetAsync(Expression<Func<T, bool>> filter, string includeProperties = "");
+
 
     }
 }

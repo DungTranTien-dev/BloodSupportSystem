@@ -16,7 +16,8 @@ namespace DAL.Models
         public DateTime? CollectedDate { get; set; }
         public DateTime? ExpiryDate { get; set; } 
         public bool? IsAvailable { get; set; }
-        public UserMedical UserMedicals { get; set; }
+        public ICollection<UserMedical> UserMedicals { get; set; } = new List<UserMedical>();
+
 
 
     }
