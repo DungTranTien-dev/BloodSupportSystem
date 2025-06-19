@@ -165,6 +165,7 @@ namespace BLL.Services.Implement
             }
             // Kiểm tra trùng email
             var existingUserWithEmail = await _unitOfWork.UserRepo.FindByEmailAsync(updateUserDTO.Email);
+
             if (existingUserWithEmail != null && existingUserWithEmail.UserId != updateUserDTO.UserId)
             {
                 return new ResponseDTO("Email is already registered by another user.", 400, false);
@@ -172,7 +173,9 @@ namespace BLL.Services.Implement
 
             userToUpdate.UserName = updateUserDTO.UserName;
             userToUpdate.Email = updateUserDTO.Email;
-            userToUpdate.Password = updateUserDTO.Password;
+
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(updateUserDTO.Password);
+            userToUpdate.Password = passwordHash;
 
             try
             {

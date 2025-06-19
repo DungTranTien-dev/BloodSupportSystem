@@ -32,13 +32,20 @@ namespace BLL.Services.Implement
                 return new ResponseDTO("khong co user", 400, false);
             }
 
-            // kiem tra password
-            bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.Password);
-
-            if (!isPasswordValid)
+            try
             {
-                return new ResponseDTO("pass sai", 400, false);
+                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.Password);
+                if (!isPasswordValid)
+                {
+                    return new ResponseDTO("Sai mật khẩu", 400, false);
+                }
             }
+            catch (BCrypt.Net.SaltParseException ex)
+            {
+                
+                return new ResponseDTO("Mật khẩu lưu không hợp lệ (lỗi hệ thống)", 500, false);
+            }
+
 
             //kiểm tra refreshToken
             var exitsRefreshToken = await _unitOfWork.TokenRepo.GetRefreshTokenByUserID(user.UserId);

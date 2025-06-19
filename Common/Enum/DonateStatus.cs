@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace Common.Enum
 {
     public enum DonateStatus
+
+
     {
         COMPLETED,
         CANCEL

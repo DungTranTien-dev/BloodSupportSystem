@@ -11,7 +11,7 @@ namespace BloodSupportSystemProject.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        //asdas
+
         public AuthController(IAuthService authService)
         {
             _authService = authService;
