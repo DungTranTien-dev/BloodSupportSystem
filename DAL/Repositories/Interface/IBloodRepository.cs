@@ -1,10 +1,11 @@
 ﻿using DAL.Models;
+using DAL.Repositories.Interface;
 using System;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories.Interfaces
 {
-    public interface IBloodRepository
+    public interface IBloodRepository : IGenericRepository<Blood>
     {
         Task<Blood> CreateBloodAsync(Blood blood);
         Task<Blood> GetBloodByIdAsync(Guid id);

@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace Common.Enum
 {
-    public enum BloodComponentType
+    public enum Gender
     {
-        WHOLE_BLOOD,
-        RED_BLOOD_CELL,
-        PLASMA,
-        PLATELET,
-        IN_PROGESS
+        MALE ,
+        FEMALE,
+        OTHER
     }
-
-
 }

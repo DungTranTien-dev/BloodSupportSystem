@@ -15,23 +15,23 @@ namespace BloodSupportSystemProject.Controllers
             _bloodService = bloodService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateBloodDTO dto)
-        {
-            try
-            {
-                var createdBlood = await _bloodService.CreateBloodAsync(dto);
-                return CreatedAtAction(nameof(GetById), new { id = createdBlood.BloodId }, createdBlood);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(new { message = ex.Message });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Internal server error", detail = ex.Message });
-            }
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Create([FromBody] CreateBloodDTO dto)
+        //{
+        //    try
+        //    {
+        //        var createdBlood = await _bloodService.CreateBloodAsync(dto);
+        //        return CreatedAtAction(nameof(GetById), new { id = createdBlood.BloodId }, createdBlood);
+        //    }
+        //    catch (InvalidOperationException ex)
+        //    {
+        //        return NotFound(new { message = ex.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { message = "Internal server error", detail = ex.Message });
+        //    }
+        //}
 
         [HttpGet]
         public async Task<IActionResult> GetAll()

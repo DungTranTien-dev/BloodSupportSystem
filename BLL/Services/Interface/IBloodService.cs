@@ -10,7 +10,7 @@ namespace BLL.Services.Interface
 {
     public interface IBloodService
     {
-        Task<Blood> CreateBloodAsync(CreateBloodDTO dto);
+        //Task<Blood> CreateBloodAsync(CreateBloodDTO dto);
         Task<BloodResponseDTO> GetBloodByIdAsync(Guid id);
         Task<IEnumerable<BloodResponseDTO>> GetAllBloodsAsync();
         Task<BloodResponseDTO> UpdateBloodAsync(Guid id, UpdateBloodDTO dto);

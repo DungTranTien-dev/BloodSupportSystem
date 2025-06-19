@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implement
 {
-    public class BloodRepository : IBloodRepository
+    public class BloodRepository : GenericRepository<Blood> , IBloodRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public BloodRepository(ApplicationDbContext context)
+        public BloodRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }

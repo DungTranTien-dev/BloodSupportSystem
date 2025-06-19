@@ -4,6 +4,7 @@ using Common.DTO;
 using DAL.Models;
 using DAL.Repositories.Interface;
 using DAL.Repositories.Interfaces;
+using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,52 +16,52 @@ namespace BLL.Services.Implement
     public class BloodService : IBloodService
     {
         private readonly IBloodRepository _bloodRepo;
-        private readonly IUserMedicalRepository _userMedicalRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public BloodService(
             IBloodRepository bloodRepo,
-            IUserMedicalRepository userMedicalRepo,
+            IUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _bloodRepo = bloodRepo;
-            _userMedicalRepo = userMedicalRepo;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<Blood> CreateBloodAsync(CreateBloodDTO dto)
-        {
-            // Create blood entity without requiring user medical record
-            var blood = new Blood
-            {
-                BloodId = Guid.NewGuid(),
-                BloodName = dto.BloodName,
-                ComponentType = dto.ComponentType,
-                VolumeInML = dto.VolumeInML,
-                CollectedDate = dto.CollectedDate,
-                ExpiryDate = dto.ExpiryDate,
-                IsAvailable = dto.IsAvailable
-            };
+        //public async Task<Blood> CreateBloodAsync(CreateBloodDTO dto)
+        //{
+        //    // Create blood entity without requiring user medical record
+        //    var blood = new Blood
+        //    {
+        //        BloodId = Guid.NewGuid(),
+        //        BloodName = dto.BloodName,
+        //        ComponentType = dto.ComponentType,
+        //        VolumeInML = dto.VolumeInML,
+        //        CollectedDate = dto.CollectedDate,
+        //        ExpiryDate = dto.ExpiryDate,
+        //        IsAvailable = dto.IsAvailable
+        //    };
 
-            // Only attempt to link if userId is provided
-            if (dto.UserId != null && dto.UserId != Guid.Empty)
-            {
-                var userMedical = await _userMedicalRepo.GetByUserIdAsync(dto.UserId.Value);
+        //    // Only attempt to link if userId is provided
+        //    if (dto.UserId != null && dto.UserId != Guid.Empty)
+        //    {
+        //        var userMedical = await _userMedicalRepo.GetByUserIdAsync(dto.UserId.Value);
 
-                if (userMedical != null)
-                {
-                    // Save blood first to generate ID
-                    var createdBlood = await _bloodRepo.CreateBloodAsync(blood);
+        //        if (userMedical != null)
+        //        {
+        //            // Save blood first to generate ID
+        //            var createdBlood = await _bloodRepo.CreateBloodAsync(blood);
 
-                    // Link to medical record
-                    userMedical.BloodId = createdBlood.BloodId;
-                    await _userMedicalRepo.UpdateAsync(userMedical);
-                    return createdBlood;
-                }
-            }
+        //            // Link to medical record
+        //            userMedical.BloodId = createdBlood.BloodId;
+        //            await _userMedicalRepo.UpdateAsync(userMedical);
+        //            return createdBlood;
+        //        }
+        //    }
 
-            // If no userId or medical record not found, create without linking
-            return await _bloodRepo.CreateBloodAsync(blood);
-        }
+        //    // If no userId or medical record not found, create without linking
+        //    return await _bloodRepo.CreateBloodAsync(blood);
+        //}
         public async Task<BloodResponseDTO> GetBloodByIdAsync(Guid id)
         {
             var blood = await _bloodRepo.GetBloodByIdAsync(id);

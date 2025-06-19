@@ -1,4 +1,5 @@
 ﻿using DAL.Repositories.Interface;
+using DAL.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace DAL.UnitOfWork
         ITokenRepository TokenRepo { get; }
         IBloodRegistrationRepository BloodRegistrationRepo { get; }
         IEventRepository EventRepo { get; }
+        IChronicDiseaseRepository ChronicDiseaseRepo { get; }
+        IUserMedicalRepository UserMedicalRepo { get; }
+        IBloodRepository BloodRepo { get; }
+
         Task<int> SaveAsync();
         Task<bool> SaveChangeAsync();
     }

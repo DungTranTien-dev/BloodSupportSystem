@@ -24,7 +24,7 @@ namespace DAL.Data
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Blood> Blood { get; set; }
 
-        public DbSet<BloodRequest> BloodRequests { get; set; }
+ 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,8 @@ namespace DAL.Data
             modelBuilder.Entity<BloodRegistration>().HasKey(um => um.BloodRegistrationId);
             modelBuilder.Entity<DonationHistory>().HasKey(um => um.DonationHistoryId);
             modelBuilder.Entity<BloodRequest>().HasKey(um => um.BloodRequestId);
+            modelBuilder.Entity<UserMedicalChronicDisease>()
+                .HasKey(uc => new { uc.UserMedicalId, uc.ChronicDiseaseId });
 
             //User-Token (1-n)
             modelBuilder.Entity<RefreshToken>()
@@ -67,6 +69,21 @@ namespace DAL.Data
                 .HasOne(um => um.Blood)
                 .WithOne(b => b.UserMedicals)
                 .HasForeignKey<UserMedical>(um => um.BloodId);
+
+            
+
+            modelBuilder.Entity<UserMedicalChronicDisease>()
+                .HasOne(uc => uc.UserMedical)
+                .WithMany(u => u.UserMedicalChronicDiseases)
+                .HasForeignKey(uc => uc.UserMedicalId);
+
+            modelBuilder.Entity<UserMedicalChronicDisease>()
+                .HasOne(uc => uc.ChronicDisease)
+                .WithMany(c => c.UserMedicalChronicDiseases)
+                .HasForeignKey(uc => uc.ChronicDiseaseId);
+
+            DbSeeder.Seed(modelBuilder);
+
 
             base.OnModelCreating(modelBuilder);
         }
