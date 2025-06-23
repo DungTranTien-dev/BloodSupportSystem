@@ -22,5 +22,9 @@ namespace DAL.Repositories.Implement
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
+        public async Task<User> FindByGoogleIdAsync(string googleId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.GoogleId == googleId);
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace DAL.Models
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string? GoogleId { get; set; }
+        public bool IsProfileComplete { get; set; } = false;
         public ICollection<UserMedical> UserMedicals { get; set; } = new HashSet<UserMedical>();
         public ICollection<BloodRegistration> BloodRegistrations { get; set; } = new HashSet<BloodRegistration>();
 

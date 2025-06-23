@@ -3,6 +3,7 @@ using DAL.Models;
 using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories.Implement
@@ -22,6 +23,7 @@ namespace DAL.Repositories.Implement
             await _context.SaveChangesAsync();
             return blood;
         }
+
         public async Task<Blood> GetBloodByIdAsync(Guid id)
         {
             return await _context.Blood.FindAsync(id);
@@ -47,6 +49,11 @@ namespace DAL.Repositories.Implement
             _context.Blood.Remove(blood);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<Blood> GetByNameAsync(string name)
+        {
+            return await _context.Blood.FirstOrDefaultAsync(b => b.BloodName == name);
         }
     }
 }

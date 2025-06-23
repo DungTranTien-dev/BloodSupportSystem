@@ -279,6 +279,12 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GoogleId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsProfileComplete")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -296,6 +302,7 @@ namespace DAL.Migrations
                         {
                             UserId = new Guid("c5d6e7f8-9a0b-1c2d-3e4f-5a6b7c8d9e0f"),
                             Email = "user@gmail.com",
+                            IsProfileComplete = false,
                             Password = "$2a$11$rTz6DZiEeBqhVrzF25CgTOBPf41jpn2Tg/nnIqnX8KS6uIerB/1dm",
                             UserName = "User"
                         });
@@ -325,7 +332,6 @@ namespace DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DiseaseDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("DonationCount")

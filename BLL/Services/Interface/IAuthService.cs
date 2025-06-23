@@ -13,6 +13,9 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> Login(LoginDTO loginDTO);
         Task<ResponseDTO> Register(RegisterDTO registerDTO);
 
+        // Add these methods for Google authentication
+        Task<ResponseDTO> GoogleSignInAsync(GoogleSignInDTO dto);
+        Task<ResponseDTO> CompleteGoogleSignUpAsync(GoogleSignUpCompleteDTO dto);
     }
 
 }

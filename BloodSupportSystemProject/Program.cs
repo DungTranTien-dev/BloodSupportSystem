@@ -40,6 +40,7 @@ builder.Services.AddScoped<IBloodService, BloodService>();
 builder.Services.AddScoped<IChronicDiseaseService, ChronicDiseaseService>();
 builder.Services.AddScoped<IUserMedicalService, UserMedicalService>();
 builder.Services.AddScoped<IUserMedicalRepository, UserMedicalRepository>();
+builder.Services.AddScoped<IGoogleAuthService, GoogleAuthService>();
 
 
 builder.Services.AddControllers();

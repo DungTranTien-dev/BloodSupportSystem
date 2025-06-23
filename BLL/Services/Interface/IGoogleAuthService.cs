@@ -1,4 +1,4 @@
-﻿//using Google.Apis.Auth;
+﻿using Google.Apis.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace BLL.Services.Interface
 {
     public interface IGoogleAuthService
     {
-       // Task<GoogleJsonWebSignature.Payload> ValidateTokenAsync(string token);
+        Task<GoogleJsonWebSignature.Payload> ValidateTokenAsync(string token);
     }
 }

@@ -26,7 +26,7 @@ namespace DAL.Models
         public bool HasDonatedBefore { get; set; }
         public int? DonationCount { get; set; }
 
-        public string DiseaseDescription { get; set; }
+        public string? DiseaseDescription { get; set; }
         public MedicalType Type { get; set; }
 
         public DateTime CreateDate { get; set; }
