@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace Common.DTO
 {
-    public class BloodRequest
+    public class CreateBloodRequestDTO
     {
-        public Guid BloodRequestId { get; set; }
+        
 
-        public Guid RequestedByUserId { get; set; }     // Người yêu cầu (bệnh nhân hoặc bác sĩ)
+        
         public string PatientName { get; set; }         // Tên người cần máu
         public string HospitalName { get; set; }        // Nơi cần máu (nếu khác bệnh viện hệ thống)
 
@@ -25,5 +25,4 @@ namespace DAL.Models
         public double Latitue { get; set; }
         public double Longtitue { get; set; }
     }
-
 }

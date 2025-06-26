@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace Common.DTO
 {
     public class CreateUserMediCalDTO
-    {
-        
+    { 
         public string FullName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
         public string CitizenId { get; set; }
 
         public string BloodName { get; set; }
+
 
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
@@ -26,5 +26,13 @@ namespace Common.DTO
         public int? DonationCount { get; set; }
 
         public string DiseaseDescription { get; set; }
+
+        public List<Guid> ChronicDiseaseIds { get; set; }
+
+        public double Latitue { get; set; }
+        public double Longtitue { get; set; }
+
+        //CHỐNG CHÁY
+        //public Guid UserId { get; set; }
     }
 }

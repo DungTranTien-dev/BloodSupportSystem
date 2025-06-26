@@ -26,7 +26,9 @@ namespace BLL.Services.Implement
 
         public async Task<ResponseDTO> CreateByEvenId(Guid eventId)
         {
-            var userId = _userUtility.GetUserIDFromToken();
+            var userId = _userUtility.GetUserIdFromToken();
+
+
 
             var registration = new BloodRegistration
             {

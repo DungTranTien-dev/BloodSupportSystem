@@ -16,28 +16,14 @@ namespace BLL.Utilities
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public Guid GetUserIDFromToken()
+        public Guid GetUserIdFromToken()
         {
-            try
+            var userIdClaim = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "UserId" || c.Type == "sub");
+            if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out Guid userId))
             {
-                var token = _httpContextAccessor.HttpContext?.Request.Cookies["AccessToken"];
-                if (string.IsNullOrEmpty(token))
-                    return Guid.Empty;
-
-                var claims = JwtProvider.DecodeToken(token);
-                var userIdClaim = claims.FirstOrDefault(c => c.Type == "UserId" || c.Type == "sub");
-
-                if (userIdClaim != null && Guid.TryParse(userIdClaim.Value, out Guid userId))
-                {
-                    return userId;
-                }
-
-                return Guid.Empty;
+                return userId;
             }
-            catch
-            {
-                return Guid.Empty;
-            }
+            return Guid.Empty;
         }
     }
 }

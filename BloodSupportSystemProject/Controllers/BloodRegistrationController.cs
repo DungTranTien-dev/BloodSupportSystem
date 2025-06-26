@@ -1,4 +1,5 @@
 ﻿using BLL.Services.Implement;
+using BLL.Services.Interface;
 using Common.Enum;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,9 @@ namespace BloodSupportSystemProject.Controllers
     [Route("api/[controller]")]
     public class BloodRegistrationsController : ControllerBase
     {
-        private readonly BloodRegistrationService _registrationService;
+        private readonly IBloodRegistrationService _registrationService;
 
-        public BloodRegistrationsController(BloodRegistrationService registrationService)
+        public BloodRegistrationsController(IBloodRegistrationService registrationService)
         {
             _registrationService = registrationService;
         }

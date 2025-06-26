@@ -24,6 +24,9 @@ namespace DAL.UnitOfWork
             EventRepo = new EventRepository(_context);
             ChronicDiseaseRepo = new ChronicDiseaseRepository(_context);
             UserMedicalRepo = new UserMedicalRepository(_context);
+            BloodRepo = new BloodRepository(_context);
+            SeparatedBloodComponentRepo = new SeparatedBloodComponentRepository(_context);
+            BloodRequestRepo = new BloodRequestRepository(_context);
 
         }
 
@@ -34,6 +37,8 @@ namespace DAL.UnitOfWork
         public IChronicDiseaseRepository ChronicDiseaseRepo { get; private set; }
         public IUserMedicalRepository UserMedicalRepo { get; private set; }
         public IBloodRepository BloodRepo { get; private set; }
+        public ISeparatedBloodComponentRepository SeparatedBloodComponentRepo { get; private set; }
+        public IBloodRequestRepository BloodRequestRepo { get; private set; }
         public void Dispose()
         {
             _context.Dispose();

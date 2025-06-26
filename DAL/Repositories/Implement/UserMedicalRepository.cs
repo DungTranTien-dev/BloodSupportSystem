@@ -19,6 +19,18 @@ namespace DAL.Repositories.Implement
             _context = context;
         }
 
-        
+        public async Task<List<UserMedical>> GetAllAvailableWithBloodAsync()
+        {
+            return await _context.UserMedicals
+                .Include(um => um.Blood)
+                .Where(um => um.Blood.IsAvailable == true)
+                .ToListAsync();
+        }
+
+        public async Task<bool> HasUserMedicalAsync(Guid userId)
+        {
+            return await _context.UserMedicals
+                .AnyAsync(um => um.UserId == userId);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BLL.Services.Interface;
+using BLL.Utilities;
 using Common.DTO;
 using DAL.Models;
 using DAL.UnitOfWork;
@@ -13,20 +14,26 @@ namespace BLL.Services.Implement
     public class EventService : IEventService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public EventService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+
         }
         public async Task<ResponseDTO> CreateEventAsync(CreateEventDTO createEventDTO)
         {
+
             if (string.IsNullOrWhiteSpace(createEventDTO.Title))
                 return new ResponseDTO("Title is required.", 400, false);
 
             if (string.IsNullOrWhiteSpace(createEventDTO.Location))
                 return new ResponseDTO("Location is required.", 400, false);
 
+
+
             var newEvent = new DonationEvent
             {
+
                 DonationEventId = Guid.NewGuid(),
                 Title = createEventDTO.Title,
                 Location = createEventDTO.Location,
@@ -108,8 +115,30 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Update event successful.", 200, true);
         }
+    
+
+    public async Task<ResponseDTO> GetEventsByDateRangeAsync(DateTime startTime, DateTime endTime)
+        {
+            var filteredEvents = _unitOfWork.EventRepo.GetAll()
+                .Where(e => e.StartTime >= startTime && e.EndTime <= endTime);
+
+            if (!filteredEvents.Any())
+            {
+                return new ResponseDTO("No events found in the given date range.", 404, false);
+            }
+
+            var eventDTOs = filteredEvents.Select(e => new
+            {
+                e.DonationEventId,
+                e.Title,
+                e.Location,
+                e.StartTime,
+                e.EndTime,
+                e.Description
+            }).ToList();
+
+            return new ResponseDTO("Events retrieved successfully.", 200, true, eventDTOs);
+        }
     }
 
-    
-    
-}
+    }

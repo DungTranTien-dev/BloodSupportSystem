@@ -17,6 +17,9 @@ namespace DAL.UnitOfWork
         IChronicDiseaseRepository ChronicDiseaseRepo { get; }
         IUserMedicalRepository UserMedicalRepo { get; }
         IBloodRepository BloodRepo { get; }
+        IBloodRequestRepository BloodRequestRepo { get; }
+
+        ISeparatedBloodComponentRepository SeparatedBloodComponentRepo { get; }
 
         Task<int> SaveAsync();
         Task<bool> SaveChangeAsync();

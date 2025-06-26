@@ -11,6 +11,10 @@ namespace BLL.Services.Interface
     {
         Task<ResponseDTO> GetAllUserMedical();
         Task<ResponseDTO> CreateUserMedical(CreateUserMediCalDTO createUserMediCalDTO);
+        Task<ResponseDTO> UpdateUserMedical(UpdateUserMedicalDTO updateUserMedicalDTO);
 
+        Task<ResponseDTO> GetNearestAvailableAsync(double latitude, double longitude, double maxDistanceKm = 50);
+
+        Task<ResponseDTO> CheckUserMedical();
     }
 }

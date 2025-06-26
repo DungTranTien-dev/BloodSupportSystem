@@ -49,5 +49,13 @@ namespace BloodSupportSystemProject.Controllers
             var result = await _eventService.DeleteEventAsync(id);
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet("range")]
+        public async Task<IActionResult> GetEventsByDateRange(DateTime start, DateTime end)
+        {
+            var result = await _eventService.GetEventsByDateRangeAsync(start, end);
+            return StatusCode(result.StatusCode, result);
+        }
+
     }
 }

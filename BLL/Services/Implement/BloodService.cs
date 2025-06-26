@@ -80,7 +80,7 @@ namespace BLL.Services.Implement
             if (blood == null) return null;
 
             blood.BloodName = dto.BloodName;
-            blood.ComponentType = dto.ComponentType;
+          
             blood.VolumeInML = dto.VolumeInML;
             blood.CollectedDate = dto.CollectedDate;
             blood.ExpiryDate = dto.ExpiryDate;

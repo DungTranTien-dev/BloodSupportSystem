@@ -22,6 +22,8 @@ namespace Common.DTO
         public bool HasDonatedBefore { get; set; }
         public int? DonationCount { get; set; }
         public string DiseaseDescription { get; set; }
+        public double Latitue { get; set; }
+        public double Longtitue { get; set; }
         public Guid UserId { get; set; }
         
     }

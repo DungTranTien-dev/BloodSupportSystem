@@ -26,5 +26,18 @@ namespace BloodSupportSystemProject.Controllers
 
             return StatusCode(respone.StatusCode, respone);
         }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateUserMedical([FromBody] UpdateUserMedicalDTO updateUserMedicalDTO)
+        {
+            var response = await _userMedicalService.UpdateUserMedical(updateUserMedicalDTO);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpGet("check")]
+        public async Task<IActionResult> CheckUserMedical()
+        {
+            var response = await _userMedicalService.CheckUserMedical();
+            return StatusCode(response.StatusCode, response);
+        }
     }
 }

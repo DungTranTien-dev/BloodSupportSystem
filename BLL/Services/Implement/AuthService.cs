@@ -147,7 +147,8 @@ namespace BLL.Services.Implement
             await _unitOfWork.UserRepo.AddAsync(newUser);
             await _unitOfWork.SaveChangeAsync();
 
-            return new ResponseDTO("Registration successful.", 200, true);
+            return new ResponseDTO("Registration successful.", 200, true, new { userId = newUser.UserId });
+
         }
 
         private bool IsValidEmail(string email)

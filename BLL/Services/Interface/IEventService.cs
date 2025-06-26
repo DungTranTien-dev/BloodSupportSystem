@@ -15,5 +15,6 @@ namespace BLL.Services.Interface
 
         Task<ResponseDTO> GetAllEventAsync();
         Task<ResponseDTO> GetEventByIdAsync(Guid userId);
+        Task<ResponseDTO> GetEventsByDateRangeAsync(DateTime startTime, DateTime endTime);
     }
 }

@@ -70,7 +70,14 @@ namespace DAL.Data
                 .WithOne(b => b.UserMedicals)
                 .HasForeignKey<UserMedical>(um => um.BloodId);
 
-            
+
+            modelBuilder.Entity<Blood>()
+                .HasMany(b => b.SeparatedComponents)
+                .WithOne(sc => sc.Blood)
+                .HasForeignKey(sc => sc.BloodId);
+
+
+
 
             modelBuilder.Entity<UserMedicalChronicDisease>()
                 .HasOne(uc => uc.UserMedical)
