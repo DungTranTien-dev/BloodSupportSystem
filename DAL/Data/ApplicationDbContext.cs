@@ -24,7 +24,7 @@ namespace DAL.Data
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Blood> Blood { get; set; }
 
- 
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,12 @@ namespace DAL.Data
             modelBuilder.Entity<BloodRequest>().HasKey(um => um.BloodRequestId);
             modelBuilder.Entity<UserMedicalChronicDisease>()
                 .HasKey(uc => new { uc.UserMedicalId, uc.ChronicDiseaseId });
+
+            modelBuilder.Entity<BloodRequest>()
+                .HasOne(br => br.RequestedByUser)
+                .WithMany(u => u.BloodRequests)
+                .HasForeignKey(br => br.RequestedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //User-Token (1-n)
             modelBuilder.Entity<RefreshToken>()

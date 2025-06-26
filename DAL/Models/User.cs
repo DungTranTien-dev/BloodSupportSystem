@@ -16,6 +16,7 @@ namespace DAL.Models
         public ICollection<BloodRegistration> BloodRegistrations { get; set; } = new HashSet<BloodRegistration>();
 
         public ICollection<DonationHistory> DonationHistorys { get; set; } = new HashSet<DonationHistory>();
+        public ICollection<BloodRequest> BloodRequests { get; set; } = new HashSet<BloodRequest>();
 
     }
 }

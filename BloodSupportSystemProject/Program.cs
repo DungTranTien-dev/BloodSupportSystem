@@ -40,7 +40,9 @@ builder.Services.AddScoped<IBloodService, BloodService>();
 builder.Services.AddScoped<IChronicDiseaseService, ChronicDiseaseService>();
 builder.Services.AddScoped<IUserMedicalService, UserMedicalService>();
 builder.Services.AddScoped<IUserMedicalRepository, UserMedicalRepository>();
-
+builder.Services.AddScoped<IDonationHistoryService, DonationHistoryService>();
+builder.Services.AddScoped<IBloodRequestService, BloodRequestService>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
