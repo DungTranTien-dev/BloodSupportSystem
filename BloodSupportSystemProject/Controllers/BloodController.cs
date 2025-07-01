@@ -1,5 +1,6 @@
 ﻿using BLL.Services.Interface;
 using Common.DTO;
+using Common.Enum;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloodSupportSystemProject.Controllers
@@ -36,65 +37,50 @@ namespace BloodSupportSystemProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            try
-            {
-                var bloods = await _bloodService.GetAllBloodsAsync();
-                return Ok(bloods);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Internal server error", detail = ex.Message });
-            }
+            var response = await _bloodService.GetAllBloodsAsync();
+
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            try
-            {
-                var blood = await _bloodService.GetBloodByIdAsync(id);
-                if (blood == null)
-                    return NotFound();
-                return Ok(blood);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Internal server error", detail = ex.Message });
-            }
-        }
+            var response = await _bloodService.GetBloodByIdAsync(id);
 
+            return Ok(response);
+
+        }
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBloodDTO dto)
         {
-            try
-            {
-                var updatedBlood = await _bloodService.UpdateBloodAsync(id, dto);
-                if (updatedBlood == null)
-                    return NotFound();
-
-                return Ok(updatedBlood);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Internal server error", detail = ex.Message });
-            }
+           var response = await _bloodService.UpdateBloodAsync(id, dto);
+           
+            return Ok(response);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpPost("change-status")]
+        public async Task<IActionResult> ChangeStatus(Guid id, BloodSeparationStatus status)
         {
-            try
-            {
-                var result = await _bloodService.DeleteBloodAsync(id);
-                if (!result)
-                    return NotFound();
-
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Internal server error", detail = ex.Message });
-            }
+            var response = await _bloodService.ChangeStatus(id, status);
+            return Ok(response);
         }
+
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    try
+        //    {
+        //        var result = await _bloodService.DeleteBloodAsync(id);
+        //        if (!result)
+        //            return NotFound();
+
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { message = "Internal server error", detail = ex.Message });
+        //    }
+        //}
     }
+
 }

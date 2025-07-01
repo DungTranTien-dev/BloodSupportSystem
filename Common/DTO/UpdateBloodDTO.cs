@@ -14,8 +14,6 @@ namespace Common.DTO
         [StringLength(100, MinimumLength = 2)]
         public string BloodName { get; set; }
 
-        [Required]
-        public BloodComponentType ComponentType { get; set; }
 
         [Range(50, 1000, ErrorMessage = "Volume must be between 50-1000ml")]
         public double? VolumeInML { get; set; }
@@ -26,6 +24,5 @@ namespace Common.DTO
         [DataType(DataType.Date)]
         public DateTime? ExpiryDate { get; set; }
 
-        public bool IsAvailable { get; set; } = true;
     }
 }

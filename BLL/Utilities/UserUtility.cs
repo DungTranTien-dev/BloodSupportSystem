@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,5 +26,13 @@ namespace BLL.Utilities
             }
             return Guid.Empty;
         }
+        public string GetRoleFromToken()
+        {
+            var roleClaim = _httpContextAccessor.HttpContext?.User.Claims
+                .FirstOrDefault(c => c.Type == "Role" || c.Type == ClaimTypes.Role);
+
+            return roleClaim?.Value ?? string.Empty;
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 using BLL.Services.Interface;
 using Common.Constants;
 using Common.DTO;
+using Common.Enum;
 using DAL.Models;
 using DAL.UnitOfWork;
 using System;
@@ -61,7 +62,7 @@ namespace BLL.Services.Implement
                     new Claim(JwtConstant.KeyClaim.Email, user.Email),
                     new Claim(JwtConstant.KeyClaim.UserId, user.UserId.ToString()),
                     new Claim(JwtConstant.KeyClaim.UserName, user.UserName),
-                    //new Claim(JwtConstant.KeyClaim.Role, user.Role.ToString())
+                    new Claim(JwtConstant.KeyClaim.Role, user.Role.ToString())
                 };
 
             //tạo refesh token
@@ -141,7 +142,8 @@ namespace BLL.Services.Implement
                 UserId = Guid.NewGuid(),
                 UserName = registerDTO.UserName,
                 Email = registerDTO.Email,
-                Password = passwordHash
+                Password = passwordHash,
+                Role = RoleType.CUSTOMER, // Mặc định là User, có thể thay đổi nếu cần
             };
 
             await _unitOfWork.UserRepo.AddAsync(newUser);

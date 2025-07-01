@@ -54,13 +54,13 @@ namespace BLL.Services.Implement
             if (!IsValidEmail(dto.Email))
                 return new ResponseDTO("Email không hợp lệ", 400, false);
 
-            if (string.IsNullOrWhiteSpace(dto.Province))
-                return new ResponseDTO("Tỉnh/Thành phố không được để trống", 400, false);
+            //if (string.IsNullOrWhiteSpace(dto.Province))
+            //    return new ResponseDTO("Tỉnh/Thành phố không được để trống", 400, false);
 
             if (string.IsNullOrWhiteSpace(dto.CurrentAddress))
                 return new ResponseDTO("Địa chỉ hiện tại không được để trống", 400, false);
 
-            if (dto.HasDonatedBefore && (!dto.DonationCount.HasValue || dto.DonationCount.Value <= 0))
+            if ( dto.DonationCount.Value <= 0)
                 return new ResponseDTO("Số lần hiến máu phải lớn hơn 0 nếu đã từng hiến", 400, false);
 
 
@@ -76,6 +76,7 @@ namespace BLL.Services.Implement
                 ExpiryDate = DateTime.UtcNow,
                 VolumeInML = 1,
                 Code = await GenerateNewBloodCodeAsync(),
+                Status = BloodSeparationStatus.PROCESSING
 
             };
 
@@ -92,7 +93,7 @@ namespace BLL.Services.Implement
                 CitizenId = dto.CitizenId,
                 PhoneNumber = dto.PhoneNumber,
                 Email = dto.Email,
-                Province = dto.Province,
+                //Province = dto.Province,
                 CurrentAddress = dto.CurrentAddress,
                 HasDonatedBefore = dto.HasDonatedBefore,
                 DonationCount = dto.DonationCount,
@@ -157,10 +158,13 @@ namespace BLL.Services.Implement
                 DonationCount = u.DonationCount,
                 Email = u.Email,
                 FullName = u.FullName,
-                Gender = u.Gender,
+                Gender = u.Gender.ToString(),
                 HasDonatedBefore = u.HasDonatedBefore,
                 PhoneNumber = u.PhoneNumber,
-                Province = u.Province,
+                Type = u.Type.ToString(),
+                Latitue = u.Latitue,
+                Longtitue = u.Longtitue,
+                //Province = u.Province,
             });
             return new ResponseDTO("get list successfully", 200, true, listDTO);
         }
@@ -193,8 +197,8 @@ namespace BLL.Services.Implement
             if (!IsValidEmail(updateUserMedicalDTO.Email))
                 return new ResponseDTO("Email không hợp lệ", 400, false);
 
-            if (string.IsNullOrWhiteSpace(updateUserMedicalDTO.Province))
-                return new ResponseDTO("Tỉnh/Thành phố không được để trống", 400, false);
+            //if (string.IsNullOrWhiteSpace(updateUserMedicalDTO.Province))
+            //    return new ResponseDTO("Tỉnh/Thành phố không được để trống", 400, false);
 
             if (string.IsNullOrWhiteSpace(updateUserMedicalDTO.CurrentAddress))
                 return new ResponseDTO("Địa chỉ hiện tại không được để trống", 400, false);
@@ -213,7 +217,7 @@ namespace BLL.Services.Implement
 
             updateUserMedical.PhoneNumber = updateUserMedicalDTO.PhoneNumber;
             updateUserMedical.Email = updateUserMedicalDTO.Email;
-            updateUserMedical.Province = updateUserMedicalDTO.Province;
+            //updateUserMedical.Province = updateUserMedicalDTO.Province;
             updateUserMedical.CurrentAddress = updateUserMedicalDTO.CurrentAddress;
 
             updateUserMedical.HasDonatedBefore = updateUserMedicalDTO.HasDonatedBefore;
@@ -288,12 +292,13 @@ namespace BLL.Services.Implement
                     DonationCount = u.DonationCount,
                     Email = u.Email,
                     FullName = u.FullName,
-                    Gender = u.Gender,
+                    Gender = u.Gender.ToString(),
                     HasDonatedBefore = u.HasDonatedBefore,
                     PhoneNumber = u.PhoneNumber,
-                    Province = u.Province,
+                    //Province = u.Province,
                     Latitue = u.Latitue,
-                    Longtitue = u.Longtitue
+                    Longtitue = u.Longtitue,
+                    Type = u.Type.ToString(),
                 }).ToList();
 
                 // 4. Trả về ResponseDTO
@@ -322,6 +327,26 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("co ho so", 200, true);
 
+        }
+
+        public async Task<ResponseDTO> ChangeStatus(Guid userMedicalId, MedicalType type)
+        {
+            var userMedical = await _unitOfWork.UserMedicalRepo.GetByIdAsync(userMedicalId);
+            if (userMedical == null)
+            {
+                return new ResponseDTO("Hồ sơ y tế không tồn tại", 404, false);
+            }
+            userMedical.Type = MedicalType.AVAILABLE;
+            try
+            {
+                await _unitOfWork.UserMedicalRepo.UpdateAsync(userMedical);
+                await _unitOfWork.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO($"Lỗi khi cập nhật trạng thái: {ex.Message}", 500, false);
+            }
+            return new ResponseDTO("Cập nhật trạng thái thành công", 200, true);
         }
 
 

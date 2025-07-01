@@ -30,6 +30,19 @@ namespace BloodSupportSystemProject.Controllers
             return Ok(result);
         }
 
+        [HttpGet("user")] 
+        public async Task<IActionResult> GetRegistrationById()
+        {
+            var result = await _registrationService.GetByUserId();
+            return Ok(result);
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> GetAllRegistrations()
+        {
+            var result = await _registrationService.GetAll();
+            return Ok(result);
+        }
     }
 
 }

@@ -29,7 +29,9 @@ namespace DAL.Repositories.Implement
 
         public async Task<IEnumerable<Blood>> GetAllAsync()
         {
-            return await _context.Blood.ToListAsync();
+            return await _context.Blood
+                .Include(b => b.UserMedicals) // Include related Donor entity
+                .ToListAsync();
         }
 
         public async Task<Blood> UpdateAsync(Blood blood)

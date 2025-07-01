@@ -18,7 +18,7 @@ namespace BLL.Services.Implement
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserUtility _userUtility;
 
-        public BloodRegistrationService (IUnitOfWork unitOfWork, UserUtility userUtility)
+        public BloodRegistrationService(IUnitOfWork unitOfWork, UserUtility userUtility)
         {
             _unitOfWork = unitOfWork;
             _userUtility = userUtility;
@@ -72,5 +72,43 @@ namespace BLL.Services.Implement
             return new ResponseDTO("Change successfully ", 200, true);
 
         }
+
+        public async Task<ResponseDTO> GetByUserId()
+        {
+            var userId = _userUtility.GetUserIdFromToken();
+            var registrations = await _unitOfWork.BloodRegistrationRepo.GetByUserIdAsync(userId);
+
+            if (registrations == null || !registrations.Any())
+            {
+                return new ResponseDTO("No registrations found for this user.", 404, false);
+            }
+
+            return new ResponseDTO("Registrations retrieved successfully.", 200, true, registrations);
+        }
+
+        public async Task<ResponseDTO> GetAll()
+        {
+            var registrations = await _unitOfWork.BloodRegistrationRepo.GetAllRegistration();
+
+            if (registrations == null || !registrations.Any())
+            {
+                return new ResponseDTO("No registrations found.", 404, false);
+            }
+
+            var registrationDTOs = registrations.Select(r => new RegistrationByUserIdDTO
+            {
+                BloodRegistrationId = r.BloodRegistrationId,
+                CreateDate = r.CreateDate,
+                RegisterType = r.Type.ToString(),
+                DonationEventId = r.DonationEvent.DonationEventId,
+                EventTitle = r.DonationEvent.Title,
+                EventLocation = r.DonationEvent.Location,
+                StartTime = r.DonationEvent.StartTime,
+                EndTime = r.DonationEvent.EndTime
+            }).ToList();
+
+            return new ResponseDTO("Registrations retrieved successfully.", 200, true, registrationDTOs);
+        }
+
     }
 }

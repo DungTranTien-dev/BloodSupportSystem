@@ -1,4 +1,5 @@
 ﻿using Common.DTO;
+using Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> GetNearestAvailableAsync(double latitude, double longitude, double maxDistanceKm = 50);
 
         Task<ResponseDTO> CheckUserMedical();
+        Task<ResponseDTO> ChangeStatus(Guid userMedicalId, MedicalType type);
     }
 }

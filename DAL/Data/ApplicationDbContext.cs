@@ -24,7 +24,12 @@ namespace DAL.Data
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Blood> Blood { get; set; }
 
- 
+        public DbSet<ChronicDisease> ChronicDiseases { get; set; }
+        public DbSet<UserMedicalChronicDisease> UserMedicalChronicDiseases { get; set; }
+        public DbSet<SeparatedBloodComponent> SeparatedBloodComponents { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +42,11 @@ namespace DAL.Data
             modelBuilder.Entity<BloodRequest>().HasKey(um => um.BloodRequestId);
             modelBuilder.Entity<UserMedicalChronicDisease>()
                 .HasKey(uc => new { uc.UserMedicalId, uc.ChronicDiseaseId });
+            modelBuilder.Entity<Blood>().HasKey(b => b.BloodId);
+            modelBuilder.Entity<SeparatedBloodComponent>().HasKey(sc => sc.SeparatedBloodComponentId);
+            modelBuilder.Entity<ChronicDisease>().HasKey(c => c.ChronicDiseaseId);
+            modelBuilder.Entity<Transaction>().HasKey(t => t.TransactionId);
+
 
             //User-Token (1-n)
             modelBuilder.Entity<RefreshToken>()
@@ -88,6 +98,14 @@ namespace DAL.Data
                 .HasOne(uc => uc.ChronicDisease)
                 .WithMany(c => c.UserMedicalChronicDiseases)
                 .HasForeignKey(uc => uc.ChronicDiseaseId);
+
+
+            // User - Transaction: 1-n
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.User)
+                .WithMany(u => u.Transactions)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Restrict); // Hoặc .Cascade nếu muốn xoá User sẽ xoá hết transaction
 
             DbSeeder.Seed(modelBuilder);
 

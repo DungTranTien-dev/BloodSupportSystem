@@ -20,6 +20,7 @@ namespace DAL.UnitOfWork
         IBloodRequestRepository BloodRequestRepo { get; }
 
         ISeparatedBloodComponentRepository SeparatedBloodComponentRepo { get; }
+        ITransactionRepository TransactionRepo { get; }
 
         Task<int> SaveAsync();
         Task<bool> SaveChangeAsync();
