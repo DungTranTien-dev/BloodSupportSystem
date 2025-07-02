@@ -1,0 +1,144 @@
+﻿using BLL.Services.Interface;
+using Common.DTO;
+using Common.Enum;
+using DAL.Models;
+using DAL.Repositories.Interface;
+using DAL.Repositories.Interfaces;
+using DAL.UnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BLL.Services.Implement
+{
+    public class BloodService : IBloodService
+    {
+        private readonly IBloodRepository _bloodRepo;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public BloodService(
+            IBloodRepository bloodRepo,
+            IUnitOfWork unitOfWork)
+        {
+            _bloodRepo = bloodRepo;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<ResponseDTO> GetBloodByIdAsync(Guid id)
+        {
+            var blood = await _bloodRepo.GetBloodByIdAsync(id);
+            if (blood == null)
+                return new ResponseDTO("Blood not found.", 404, false, null);
+
+            var dto = new BloodResponseDTO
+            {
+                BloodId = blood.BloodId,
+                BloodName = blood.BloodName,
+                VolumeInML = blood.VolumeInML,
+                CollectedDate = blood.CollectedDate,
+                ExpiryDate = blood.ExpiryDate,
+                IsAvailable = blood.IsAvailable,
+                Status = blood.Status.ToString(),
+                Code = blood.Code
+            };
+
+            return new ResponseDTO("Blood retrieved successfully.", 200, true, dto);
+        }
+
+        public async Task<ResponseDTO> GetAllBloodsAsync()
+        {
+            var bloods = await _bloodRepo.GetAllAsync();
+            var dtoList = bloods.Select(b => new BloodResponseDTO
+            {
+                BloodId = b.BloodId,
+                BloodName = b.BloodName,
+                VolumeInML = b.VolumeInML,
+                CollectedDate = b.CollectedDate,
+                ExpiryDate = b.ExpiryDate,
+                IsAvailable = b.IsAvailable,
+                Status = b.Status.ToString(),
+                Code = b.Code,
+                UserName = b.UserMedicals?.FullName ?? "Unknown",
+         
+            }).ToList();
+
+            return new ResponseDTO("Bloods retrieved successfully.", 200, true, dtoList);
+        }
+
+        //public async Task<ResponseDTO> CreateBloodAsync(CreateBloodDTO dto)
+        //{
+        //    var newBlood = new Blood
+        //    {
+        //        BloodId = Guid.NewGuid(),
+        //        BloodName = dto.BloodName,
+        //        VolumeInML = dto.VolumeInML,
+        //        CollectedDate = dto.CollectedDate,
+        //        ExpiryDate = dto.ExpiryDate,
+        //        IsAvailable = dto.IsAvailable,
+        //        Status = dto.Status,
+        //        Code = dto.Code
+        //    };
+
+        //    var created = await _bloodRepo.CreateBloodAsync(newBlood);
+        //    await _unitOfWork.SaveChangeAsync();
+
+        //    var resultDTO = new BloodResponseDTO
+        //    {
+        //        BloodId = created.BloodId,
+        //        BloodName = created.BloodName,
+        //        VolumeInML = created.VolumeInML,
+        //        CollectedDate = created.CollectedDate,
+        //        ExpiryDate = created.ExpiryDate,
+        //        IsAvailable = created.IsAvailable,
+        //        Status = created.Status,
+        //        Code = created.Code
+        //    };
+
+        //    return new ResponseDTO("Blood created successfully.", 201, true, resultDTO);
+        //}
+
+        public async Task<ResponseDTO> UpdateBloodAsync(Guid id, UpdateBloodDTO dto)
+        {
+            var blood = await _bloodRepo.GetBloodByIdAsync(id);
+            if (blood == null)
+                return new ResponseDTO("Blood not found.", 404, false, null);
+
+            blood.BloodName = dto.BloodName;
+            blood.VolumeInML = dto.VolumeInML;
+            blood.CollectedDate = dto.CollectedDate;
+            blood.ExpiryDate = dto.ExpiryDate;
+            blood.IsAvailable = true;
+            blood.Status = BloodSeparationStatus.UNPROCESSED;
+
+
+            var updated = await _bloodRepo.UpdateAsync(blood);
+            await _unitOfWork.SaveChangeAsync();
+
+          
+
+            return new ResponseDTO("Blood updated successfully.", 200, true);
+        }
+
+        public async Task<ResponseDTO> ChangeStatus (Guid id, BloodSeparationStatus status)
+        {
+            var blood = await _bloodRepo.GetBloodByIdAsync(id);
+            if (blood == null)
+                return new ResponseDTO("Blood not found.", 404, false, null);
+            blood.Status = status;
+            var updated = await _bloodRepo.UpdateAsync(blood);
+            await _unitOfWork.SaveChangeAsync();
+            return new ResponseDTO("Blood status updated successfully.", 200, true);
+        }
+
+        //public async Task<ResponseDTO> DeleteBloodAsync(Guid id)
+        //{
+        //    var deleted = await _bloodRepo.DeleteAsync(id);
+        //    if (!deleted)
+        //        return new ResponseDTO("Delete failed. Blood not found.", 404, false, null);
+
+        //    await _unitOfWork.SaveChangesAsync();
+        //    return new ResponseDTO("Blood deleted successfully.", 200, true, null);
+        //}
+    }
+}
