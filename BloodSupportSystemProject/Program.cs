@@ -136,7 +136,7 @@ var securityScheme = new OpenApiSecurityScheme
         Id = "Bearer"
     }
 };
-
+  
     options.AddSecurityDefinition("Bearer", securityScheme);
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
