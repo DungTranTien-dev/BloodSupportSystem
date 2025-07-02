@@ -1,6 +1,0 @@
-@BloodSupportSystemProject_HostAddress = http://localhost:5101
-
-GET {{BloodSupportSystemProject_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
