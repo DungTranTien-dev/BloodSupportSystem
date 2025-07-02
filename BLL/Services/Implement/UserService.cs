@@ -1,5 +1,6 @@
 ﻿using BLL.Services.Interface;
 using Common.DTO;
+using Common.Enum;
 using DAL.Models;
 using DAL.UnitOfWork;
 using System;
@@ -43,29 +44,56 @@ namespace BLL.Services.Implement
             var existingUser = await _unitOfWork.UserRepo.FindByEmailAsync(createUserDTO.Email);
             if (existingUser != null)
             {
-
-
                 return new ResponseDTO("Email is already registered.", 400, false);
             }
 
             // Kiểm tra mật khẩu không được null
-            if (string.IsNullOrWhiteSpace(createUserDTO.Password))
-            {
-                return new ResponseDTO("Password is required.", 400, false);
-            }
+            if (string.IsNullOrWhiteSpace(createUserDTO.Password) || string.IsNullOrWhiteSpace(createUserDTO.ConfirmPassword))
+                return new ResponseDTO("Password and Confirm Password are required.", 400, false);
 
-            
+            if (createUserDTO.Password != createUserDTO.ConfirmPassword)
+                return new ResponseDTO("Passwords do not match.", 400, false);
+
+            if (!Enum.TryParse<Gender>(createUserDTO.Gender, true, out var genderEnum))
+                return new ResponseDTO("Invalid gender value. Must be 'Male', 'Female', or 'Other'.", 400, false);
+
+
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(createUserDTO.Password);
             // Tạo người dùng mới
+            var userId = Guid.NewGuid();
             var newUser = new User
             {
-                UserId = Guid.NewGuid(),
+                UserId = userId,
                 UserName = createUserDTO.UserName,
-                Email = createUserDTO.Email,
-                Password = passwordHash
+                Email = createUserDTO.Email.Trim().ToLower(),
+                Password = passwordHash,
+                Role = RoleType.CUSTOMER
             };
 
+            // tạo UserMedical
+            var newUserMedical = new UserMedical
+            {
+                UserMedicalId = Guid.NewGuid(),
+                Email = createUserDTO.Email.Trim().ToLower(),
+
+                FullName = createUserDTO.FullName,
+                DateOfBirth = createUserDTO.DateOfBirth ?? DateTime.MinValue,
+                Gender = genderEnum,
+                CitizenId = createUserDTO.CitizenId,
+                PhoneNumber = createUserDTO.PhoneNumber,
+                CurrentAddress = createUserDTO.CurrentAddress,
+                BloodId = createUserDTO.BloodId,
+                CreateDate = DateTime.UtcNow,
+                UserId = userId,
+                User = newUser,
+                HasDonatedBefore = false,
+                DonationCount = 0,
+                Latitue = 0,
+                Longtitue = 0,
+                DiseaseDescription = ""
+            };
             await _unitOfWork.UserRepo.AddAsync(newUser);
+            await _unitOfWork.UserMedicalRepo.AddAsync(newUserMedical);
             await _unitOfWork.SaveChangeAsync();
 
             return new ResponseDTO("Create user successful.", 200, true);
