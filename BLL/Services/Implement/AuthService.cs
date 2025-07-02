@@ -5,6 +5,7 @@ using Common.DTO;
 using Common.Enum;
 using DAL.Models;
 using DAL.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +19,14 @@ namespace BLL.Services.Implement
     public class AuthService : IAuthService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public AuthService (IUnitOfWork unitOfWork)
+        public AuthService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<ResponseDTO> Login(LoginDTO loginDTO)
         {
-
             var user = await _unitOfWork.UserRepo.FindByEmailAsync(loginDTO.Email);
-            
 
             if (user == null)
             {
@@ -43,10 +43,16 @@ namespace BLL.Services.Implement
             }
             catch (BCrypt.Net.SaltParseException ex)
             {
-                
                 return new ResponseDTO("Mật khẩu lưu không hợp lệ (lỗi hệ thống)", 500, false);
             }
 
+            // Get user medical information with chronic diseases and blood type
+            var userMedical = await _unitOfWork.UserMedicalRepo
+                .GetAll()
+                .Include(um => um.UserMedicalChronicDiseases)
+                    .ThenInclude(umcd => umcd.ChronicDisease)
+                .Include(um => um.Blood)
+                .FirstOrDefaultAsync(um => um.UserId == user.UserId);
 
             //kiểm tra refreshToken
             var exitsRefreshToken = await _unitOfWork.TokenRepo.GetRefreshTokenByUserID(user.UserId);
@@ -78,6 +84,7 @@ namespace BLL.Services.Implement
                 CreatedAt = DateTime.UtcNow
             };
             _unitOfWork.TokenRepo.Add(refreshToken);
+
             try
             {
                 await _unitOfWork.SaveChangeAsync();
@@ -87,20 +94,65 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Error saving refresh token: {ex.Message}", 500, false);
             }
 
-            return new ResponseDTO("Đăng nhập thành công" ,200, true, new
+            // Map to DTOs
+            var userInfoDTO = new UserInfoDTO
             {
-                AccessToken = accessTokenKey,
-                RefeshToken = refreshTokenKey,
-            });
+                UserId = user.UserId,
+                UserName = user.UserName,
+                Email = user.Email,
+                Role = user.Role.ToString()
+            };
 
+            UserMedicalInfoDTO userMedicalDTO = null;
+            if (userMedical != null)
+            {
+                var chronicDiseases = userMedical.UserMedicalChronicDiseases?
+                    .Select(umcd => new ChronicDiseaseInfoDTO
+                    {
+                        DiseaseName = umcd.ChronicDisease.ChronicDiseaseName
+                    })
+                    .ToList() ?? new List<ChronicDiseaseInfoDTO>();
+
+                userMedicalDTO = new UserMedicalInfoDTO
+                {
+                    UserMedicalId = userMedical.UserMedicalId,
+                    UserId = userMedical.UserId,
+                    FullName = userMedical.FullName,
+                    DateOfBirth = userMedical.DateOfBirth,
+                    Gender = userMedical.Gender.ToString(),
+                    CitizenId = userMedical.CitizenId,
+                    BloodType = userMedical.Blood?.BloodName, // Get blood name instead of ID
+                    PhoneNumber = userMedical.PhoneNumber,
+                    Email = userMedical.Email,
+                    CurrentAddress = userMedical.CurrentAddress,
+                    HasDonatedBefore = userMedical.HasDonatedBefore,
+                    DonationCount = userMedical.DonationCount,
+                    DiseaseDescription = userMedical.DiseaseDescription,
+                    Type = userMedical.Type.ToString(),
+                    CreateDate = userMedical.CreateDate,
+                    Latitude = userMedical.Latitue, // Mapping the misspelled property
+                    Longitude = userMedical.Longtitue, // Mapping the misspelled property
+                    ChronicDiseases = chronicDiseases
+                };
+            }
+
+            var loginResponseDTO = new LoginResponseDTO
+            {
+                User = userInfoDTO,
+                Medical = userMedicalDTO,
+                AccessToken = accessTokenKey,
+                RefreshToken = refreshTokenKey
+            };
+
+            return new ResponseDTO("Đăng nhập thành công", 200, true, loginResponseDTO);
         }
 
         public async Task<ResponseDTO> Register(RegisterDTO registerDTO)
         {
             // Kiểm tra username không được null hoặc rỗng
-            if (string.IsNullOrWhiteSpace(registerDTO.UserName ))
+            if (string.IsNullOrWhiteSpace(registerDTO.UserName))
             {
-                return new ResponseDTO("Username is required.",400, false);
+                return new ResponseDTO("Username is required.", 400, false);
             }
 
             // Kiểm tra email không được null hoặc rỗng
@@ -118,9 +170,7 @@ namespace BLL.Services.Implement
             // Kiểm tra trùng email
             var existingUser = await _unitOfWork.UserRepo.FindByEmailAsync(registerDTO.Email);
             if (existingUser != null)
-            { 
-
-            
+            {
                 return new ResponseDTO("Email is already registered.", 400, false);
             }
 
@@ -150,7 +200,6 @@ namespace BLL.Services.Implement
             await _unitOfWork.SaveChangeAsync();
 
             return new ResponseDTO("Registration successful.", 200, true, new { userId = newUser.UserId });
-
         }
 
         private bool IsValidEmail(string email)

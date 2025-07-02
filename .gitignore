@@ -14,3 +14,6 @@
 /DAL/obj
 /Common/obj
 /BloodSupportSystemProject/obj
+/Common/bin
+/Common/bin/Debug
+/DAL/Migrations
