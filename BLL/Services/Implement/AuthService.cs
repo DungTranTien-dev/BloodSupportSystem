@@ -195,8 +195,27 @@ namespace BLL.Services.Implement
                 Password = passwordHash,
                 Role = RoleType.CUSTOMER, // Mặc định là User, có thể thay đổi nếu cần
             };
-
             await _unitOfWork.UserRepo.AddAsync(newUser);
+
+            var userMedical = new UserMedical
+            {
+                UserMedicalId = Guid.NewGuid(),
+                UserId = newUser.UserId,
+                FullName = registerDTO.FullName,
+                DateOfBirth = registerDTO.DateOfBirth ?? DateTime.MinValue,
+                Gender = Enum.Parse<Gender>(registerDTO.Gender),
+                CitizenId = registerDTO.CitizenId,
+                PhoneNumber = registerDTO.PhoneNumber,
+                Email = registerDTO.Email,
+                CurrentAddress = registerDTO.CurrentAddress,
+                DiseaseDescription = "",
+                CreateDate = DateTime.UtcNow,
+                BloodId = registerDTO.BloodId,
+                Latitue = 0,
+                Longtitue = 0
+            };
+            await _unitOfWork.UserMedicalRepo.AddAsync(userMedical);
+
             await _unitOfWork.SaveChangeAsync();
 
             return new ResponseDTO("Registration successful.", 200, true, new { userId = newUser.UserId });
