@@ -174,6 +174,12 @@ namespace BLL.Services.Implement
                 return new ResponseDTO("Email is already registered.", 400, false);
             }
 
+            var blood = await _unitOfWork.BloodRepo.FindByNameAsync(registerDTO.BloodName);
+            if (blood == null)
+            {
+                return new ResponseDTO("Invalid blood type.", 400, false);
+            }
+
             // Kiểm tra mật khẩu không được null
             if (string.IsNullOrWhiteSpace(registerDTO.Password))
             {
@@ -210,7 +216,7 @@ namespace BLL.Services.Implement
                 CurrentAddress = registerDTO.CurrentAddress,
                 DiseaseDescription = "",
                 CreateDate = DateTime.UtcNow,
-                BloodId = registerDTO.BloodId,
+                BloodId = blood.BloodId, 
                 Latitue = 0,
                 Longtitue = 0
             };

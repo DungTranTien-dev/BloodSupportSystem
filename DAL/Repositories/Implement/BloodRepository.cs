@@ -50,5 +50,11 @@ namespace DAL.Repositories.Implement
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<Blood?> FindByNameAsync(string bloodName)
+        {
+            return await _context.Blood.FirstOrDefaultAsync(b => b.BloodName == bloodName);
+        }
+
     }
 }

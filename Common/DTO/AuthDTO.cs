@@ -25,13 +25,13 @@ namespace Common.DTO
             // Thông tin cá nhân
             public string FullName { get; set; }
             public DateTime? DateOfBirth { get; set; }
-            public string Gender { get; set; } // "Male", "Female", "Other"
+            public string Gender { get; set; }
             public string CitizenId { get; set; }
 
             // Thông tin liên hệ
             public string PhoneNumber { get; set; }
             public string CurrentAddress { get; set; }
-            public Guid BloodId { get; set; }  // Có thể để null
+            public string BloodName { get; set; } 
         }
 
         public class UserInfoDTO

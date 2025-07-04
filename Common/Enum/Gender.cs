@@ -8,7 +8,7 @@ namespace Common.Enum
 {
     public enum Gender
     {
-        MALE ,
+        MALE,
         FEMALE,
         OTHER
     }

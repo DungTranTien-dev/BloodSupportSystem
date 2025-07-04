@@ -12,5 +12,6 @@ namespace DAL.Repositories.Interfaces
         Task<IEnumerable<Blood>> GetAllAsync();
         Task<Blood> UpdateAsync(Blood blood);
         Task<bool> DeleteAsync(Guid id);
+        Task<Blood?> FindByNameAsync(string bloodName);
     }
 }
