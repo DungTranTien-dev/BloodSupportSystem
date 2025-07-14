@@ -12,7 +12,7 @@ namespace Common.DTO
         public Guid UserMedicalId { get; set; }
         public string FullName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
         public string CitizenId { get; set; }
         public string BloodName { get; set; }
         public string PhoneNumber { get; set; }
@@ -25,6 +25,7 @@ namespace Common.DTO
         public double Latitue { get; set; }
         public double Longtitue { get; set; }
         public Guid UserId { get; set; }
-        
+        public string Type { get; set; } // Changed from MedicalType enum to string for flexibility
+
     }
 }

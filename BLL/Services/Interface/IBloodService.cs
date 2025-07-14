@@ -1,4 +1,5 @@
 ﻿using Common.DTO;
+using Common.Enum;
 using DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace BLL.Services.Interface
     public interface IBloodService
     {
         //Task<Blood> CreateBloodAsync(CreateBloodDTO dto);
-        Task<BloodResponseDTO> GetBloodByIdAsync(Guid id);
-        Task<IEnumerable<BloodResponseDTO>> GetAllBloodsAsync();
-        Task<BloodResponseDTO> UpdateBloodAsync(Guid id, UpdateBloodDTO dto);
-        Task<bool> DeleteBloodAsync(Guid id);
+        Task<ResponseDTO> CreateBloodAsync(CreateBloodDTO dto);
+        Task<ResponseDTO> GetBloodByIdAsync(Guid id);
+        Task<ResponseDTO> GetAllBloodsAsync();
+        Task<ResponseDTO> UpdateBloodAsync(Guid id, UpdateBloodDTO dto);
+        Task<ResponseDTO> ChangeStatus(Guid id, BloodSeparationStatus status);
+        //Task<bool> DeleteBloodAsync(Guid id);
 
     }
 }

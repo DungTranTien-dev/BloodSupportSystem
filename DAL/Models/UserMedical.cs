@@ -15,12 +15,12 @@ namespace DAL.Models
         public Gender Gender { get; set; }
         public string CitizenId { get; set; }
 
-        public Guid BloodId { get; set; }
-        public Blood Blood { get; set; }
+        public Guid? BloodId { get; set; }
+        public Blood? Blood { get; set; }
 
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string Province { get; set; }
+        //public string Province { get; set; }
         public string CurrentAddress { get; set; }
 
         public bool HasDonatedBefore { get; set; }

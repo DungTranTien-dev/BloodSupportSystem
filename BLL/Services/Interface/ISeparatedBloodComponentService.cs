@@ -1,4 +1,5 @@
 ﻿using Common.DTO;
+using Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,8 @@ namespace BLL.Services.Interface
 
         Task<ResponseDTO> GetAllSeparatedBloodComponentAsync();
         Task<ResponseDTO> GetSeparatedBloodComponentByIdAsync(Guid SeparatedBloodComponentId);
+        Task<bool> HasSufficientAvailableBloodComponentAsync(string bloodGroup, BloodComponentType componentType, double requiredVolume);
+        Task<bool> SubtractBloodComponentVolumeAsync(string bloodGroup, BloodComponentType componentType, double requiredVolume);
     }
+
 }

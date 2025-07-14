@@ -1,5 +1,6 @@
 ﻿using BLL.Services.Interface;
 using Common.DTO;
+using Common.Enum;
 using DAL.Models;
 using DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
@@ -31,9 +32,9 @@ namespace BLL.Services.Implement
                 BloodId = dto.BloodId,
                 ComponentType = dto.ComponentType,
                 VolumeInML = dto.VolumeInML,
-                CreatedDate = dto.CreatedDate,
+                CreatedDate = DateTime.UtcNow,
                 ExpiryDate = dto.ExpiryDate,
-                IsAvailable = dto.IsAvailable,
+                IsAvailable = true,
                 Code = await GenerateNewSeparatedCodeAsync()
             };
 
@@ -57,21 +58,29 @@ namespace BLL.Services.Implement
 
         public async Task<ResponseDTO> GetAllSeparatedBloodComponentAsync()
         {
-            var components = _unitOfWork.SeparatedBloodComponentRepo.GetAll();
+            var components = await _unitOfWork.SeparatedBloodComponentRepo.GetAllWithBloodAsync();
 
             var result = components.Select(c => new
             {
-                c.SeparatedBloodComponentId,
-                c.BloodId,
-                c.ComponentType,
-                c.VolumeInML,
-                c.CreatedDate,
-                c.ExpiryDate,
-                c.IsAvailable
+                SeparatedBloodComponentId = c.SeparatedBloodComponentId,
+                BloodId = c.BloodId,
+                ComponentType = c.ComponentType,
+                VolumeInML = c.VolumeInML,
+                CreatedDate = c.CreatedDate,
+                ExpiryDate = c.ExpiryDate,
+                IsAvailable = c.IsAvailable,
+                Code = c.Code,
+
+                Blood = c.Blood != null ? new
+                {
+                    c.Blood.BloodName,
+                    // Thêm các field khác nếu cần
+                } : null
             }).ToList();
 
             return new ResponseDTO("List retrieved successfully.", 200, true, result);
         }
+
 
         public async Task<ResponseDTO> GetSeparatedBloodComponentByIdAsync(Guid id)
         {
@@ -127,5 +136,62 @@ namespace BLL.Services.Implement
             return $"SPL{(latestNumber + 1).ToString("D5")}";
         }
 
+
+        public async Task<bool> HasSufficientAvailableBloodComponentAsync(string bloodGroup, BloodComponentType componentType, double requiredVolume)
+        {
+            var now = DateTime.UtcNow;
+
+            var components = await _unitOfWork.SeparatedBloodComponentRepo
+                .GetAllAsync(c =>
+                    c.ComponentType == componentType &&
+                    c.IsAvailable &&
+                    (c.ExpiryDate == null || c.ExpiryDate > now) &&
+                    c.Blood.BloodName == bloodGroup.ToString()
+                );
+
+            var totalVolume = components.Sum(c => c.VolumeInML);
+
+            return totalVolume >= requiredVolume;
+        }
+
+        public async Task<bool> SubtractBloodComponentVolumeAsync(string bloodGroup, BloodComponentType componentType, double requiredVolume)
+        {
+            var now = DateTime.UtcNow;
+
+            var components = await _unitOfWork.SeparatedBloodComponentRepo.GetAllAsync(c =>
+                c.ComponentType == componentType &&
+                c.IsAvailable &&
+                (c.ExpiryDate == null || c.ExpiryDate > now) &&
+                c.Blood.BloodName == bloodGroup.ToString()
+            );
+
+            var sortedComponents = components.OrderBy(c => c.ExpiryDate).ToList();
+            double remaining = requiredVolume;
+
+            foreach (var component in sortedComponents)
+            {
+                if (remaining <= 0) break;
+
+                if (component.VolumeInML <= remaining)
+                {
+                    remaining -= component.VolumeInML;
+                    component.VolumeInML = 0;
+                    component.IsAvailable = false;
+                }
+                else
+                {
+                    component.VolumeInML -= remaining;
+                    remaining = 0;
+                }
+
+               await _unitOfWork.SeparatedBloodComponentRepo.UpdateAsync(component);
+            }
+
+            if (remaining > 0)
+                return false;
+
+            await _unitOfWork.SaveChangeAsync();
+            return true;
+        }
     }
 }

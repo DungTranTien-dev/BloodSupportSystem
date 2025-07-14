@@ -1,5 +1,6 @@
 ﻿using BLL.Services.Interface;
 using Common.DTO;
+using Common.Enum;
 using Microsoft.AspNetCore.Mvc;
 using static Common.DTO.AuthDTO;
 
@@ -39,5 +40,26 @@ namespace BloodSupportSystemProject.Controllers
             var response = await _userMedicalService.CheckUserMedical();
             return StatusCode(response.StatusCode, response);
         }
-    }
+
+        [HttpGet()]
+        public async Task<IActionResult> GetAllUserMedical()
+        {
+            var response = await _userMedicalService.GetAllUserMedical();
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPost("change-status")]
+        public async Task<IActionResult> ChangeStatus(Guid userMedicalId, MedicalType type)
+        {
+            var response = await _userMedicalService.ChangeStatus(userMedicalId, type);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet("nearest-available")]
+        public async Task<IActionResult> GetNearestAvailableAsync(double latitude, double longitude, double maxDistanceKm = 50)
+        {
+            var response = await _userMedicalService.GetNearestAvailableAsync(latitude, longitude, maxDistanceKm);
+            return StatusCode(response.StatusCode, response);
+        }
+    } 
 }

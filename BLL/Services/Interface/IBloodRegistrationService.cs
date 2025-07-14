@@ -12,5 +12,7 @@ namespace BLL.Services.Interface
     {
         Task<ResponseDTO> CreateByEvenId(Guid eventId);
         Task<ResponseDTO> UpdateStatus(RegisterType type, Guid id);
+        Task<ResponseDTO> GetByUserId();
+        Task<ResponseDTO> GetAll();
     }
 }

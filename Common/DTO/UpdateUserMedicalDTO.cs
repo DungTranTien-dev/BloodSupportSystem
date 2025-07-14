@@ -19,7 +19,7 @@ namespace Common.DTO
 
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string Province { get; set; }
+        //public string Province { get; set; }
         public string CurrentAddress { get; set; }
 
         public bool HasDonatedBefore { get; set; }

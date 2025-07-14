@@ -23,14 +23,19 @@ namespace DAL.Repositories.Implement
         {
             return await _context.UserMedicals
                 .Include(um => um.Blood)
-                .Where(um => um.Blood.IsAvailable == true)
+                .Where(um => um.Type == Common.Enum.MedicalType.AVAILABLE)
                 .ToListAsync();
         }
 
-        public async Task<bool> HasUserMedicalAsync(Guid userId)
+        public async Task<Guid?> GetUserMedicalIdAsync(Guid userId)
         {
-            return await _context.UserMedicals
-                .AnyAsync(um => um.UserId == userId);
+            var userMedical = await _context.UserMedicals
+                .Where(um => um.UserId == userId)
+                .Select(um => (Guid?)um.UserMedicalId) // nullable Guid
+                .FirstOrDefaultAsync();
+
+            return userMedical; // nếu không có thì trả về null
         }
+
     }
 }

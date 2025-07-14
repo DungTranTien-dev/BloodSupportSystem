@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using VNPAY.NET;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,10 +80,32 @@ builder.Services.AddScoped<IBloodRegistrationService, BloodRegistrationService>(
 
 
 
+
 //REPO
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserMedicalRepository, UserMedicalRepository>();
 builder.Services.AddScoped<IBloodRepository, BloodRepository>();
+
+//VNPay
+builder.Services.AddScoped<IVnPayService, VnPayService>();
+
+builder.Services.AddSingleton<IVnpay>(provider =>
+{
+    var config = provider.GetRequiredService<IConfiguration>();
+    var vnpay = new Vnpay();
+    vnpay.Initialize(
+        config["VNPAY:TmnCode"],
+        config["VNPAY:HashSecret"],
+        config["VNPAY:Url"], // 🔥 Sửa "BaseUrl" -> "Url"
+        config["VNPAY:ReturnUrl"] // 🔥 Đảm bảo đúng key
+    );
+    return vnpay;
+});
+
+
+//Email
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 
@@ -142,11 +165,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Đăng ký IHttpContextAccessor
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<UserUtility>();
 
 
 var app = builder.Build();
+app.UseCors("AllowReactApp"); // ⬅️ NÊN để trước Auth
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -160,10 +189,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowReactApp"); // ⬅️ NÊN để trước Auth
 
-app.UseAuthentication();
-app.UseAuthorization();
+
+
 app.MapControllers();
 
 app.Run();

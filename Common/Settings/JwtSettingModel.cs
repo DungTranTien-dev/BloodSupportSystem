@@ -11,7 +11,7 @@ namespace Common.Settings
         /// <summary>
         /// The Secret key of the jwt to generate access token.
         /// </summary>
-        public static string SecretKey { get; set; } = "MgmI*//'tx\r\nv,9u8D7HBU\r\nq\"UB~w8:OX\r\nj4#bC:5#Ia\r\nP<3h\\fjy\\'\r\nUk5kWjKF&P\r\nF@!,4wz~)w\r\nemBA^\"`8)c\r\nTXRy5QLlU)\r\nS}q^pnr\"m";
+        public static string SecretKey { get; set; } = "qwertyuiopasdfghjklzxcvbnm123456";
 
         /// <summary>
         /// The expire days of the jwt to generate access token.
