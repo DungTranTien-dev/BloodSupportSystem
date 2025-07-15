@@ -5,6 +5,7 @@ using Common.DTO;
 using Common.Enum;
 using DAL.Models;
 using DAL.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,13 @@ namespace BLL.Services.Implement
                 return new ResponseDTO("Mật khẩu lưu không hợp lệ (lỗi hệ thống)", 500, false);
             }
 
+            //lấy ra usermedical
+            var userMedical = await _unitOfWork.UserMedicalRepo
+       .GetAll()
+       .Include(um => um.UserMedicalChronicDiseases)
+           .ThenInclude(umcd => umcd.ChronicDisease)
+       .Include(um => um.Blood)
+       .FirstOrDefaultAsync(um => um.UserId == user.UserId);
 
             //kiểm tra refreshToken
             var exitsRefreshToken = await _unitOfWork.TokenRepo.GetRefreshTokenByUserID(user.UserId);
@@ -87,11 +95,60 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Error saving refresh token: {ex.Message}", 500, false);
             }
 
-            return new ResponseDTO("Đăng nhập thành công" ,200, true, new
+            var userInfoDTO = new UserInfoDTO
             {
+                UserId = user.UserId,
+                UserName = user.UserName,
+                Email = user.Email,
+                Role = user.Role.ToString()
+            };
+
+            UserMedicalInfoDTO userMedicalDTO = null;
+            if (userMedical != null)
+            {
+                var chronicDiseases = userMedical.UserMedicalChronicDiseases?
+                    .Select(umcd => new ChronicDiseaseInfoDTO
+                    {
+                        DiseaseName = umcd.ChronicDisease.ChronicDiseaseName
+                    }).ToList() ?? new List<ChronicDiseaseInfoDTO>();
+
+                userMedicalDTO = new UserMedicalInfoDTO
+                {
+                    UserMedicalId = userMedical.UserMedicalId,
+                    UserId = userMedical.UserId,
+                    FullName = userMedical.FullName,
+                    DateOfBirth = userMedical.DateOfBirth,
+                    Gender = userMedical.Gender.ToString(),
+                    CitizenId = userMedical.CitizenId,
+                    BloodType = userMedical.Blood?.BloodName,
+                    PhoneNumber = userMedical.PhoneNumber,
+                    Email = userMedical.Email,
+                    CurrentAddress = userMedical.CurrentAddress,
+                    HasDonatedBefore = userMedical.HasDonatedBefore,
+                    DonationCount = userMedical.DonationCount,
+                    DiseaseDescription = userMedical.DiseaseDescription,
+                    Type = userMedical.Type.ToString(),
+                    CreateDate = userMedical.CreateDate,
+                    Latitude = userMedical.Latitue,
+                    Longitude = userMedical.Longtitue,
+                    ChronicDiseases = chronicDiseases
+                };
+            }
+
+            var loginResponseDTO = new LoginResponseDTO
+            {
+                User = userInfoDTO,
+                Medical = userMedicalDTO,
                 AccessToken = accessTokenKey,
-                RefeshToken = refreshTokenKey,
-            });
+                RefreshToken = refreshTokenKey
+            };
+            return new ResponseDTO("Đăng nhập thành công", 200, true, loginResponseDTO);
+
+            //return new ResponseDTO("Đăng nhập thành công" ,200, true, new
+            //{
+            //    AccessToken = accessTokenKey,
+            //    RefeshToken = refreshTokenKey,
+            //});
 
         }
 

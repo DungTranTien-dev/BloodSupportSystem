@@ -22,5 +22,47 @@ namespace Common.DTO
             public string ConfirmPassword { get; set; }
         }
 
+        public class UserInfoDTO
+        {
+            public Guid UserId { get; set; }
+            public string UserName { get; set; }
+            public string Email { get; set; }
+            public string Role { get; set; }
+        }
+
+        public class UserMedicalInfoDTO
+        {
+            public Guid UserMedicalId { get; set; }
+            public Guid UserId { get; set; }
+            public string FullName { get; set; }
+            public DateTime DateOfBirth { get; set; }
+            public string Gender { get; set; }
+            public string CitizenId { get; set; }
+            public string BloodType { get; set; } // Blood name instead of BloodId
+            public string PhoneNumber { get; set; }
+            public string Email { get; set; }
+            public string CurrentAddress { get; set; }
+            public bool HasDonatedBefore { get; set; }
+            public int? DonationCount { get; set; }
+            public string DiseaseDescription { get; set; }
+            public string Type { get; set; }
+            public DateTime CreateDate { get; set; }
+            public double Latitude { get; set; } // Corrected from Latitue
+            public double Longitude { get; set; } // Corrected from Longtitue
+            public List<ChronicDiseaseInfoDTO> ChronicDiseases { get; set; }
+        }
+
+        public class ChronicDiseaseInfoDTO
+        {
+            public string DiseaseName { get; set; }
+        }
+
+        public class LoginResponseDTO
+        {
+            public UserInfoDTO User { get; set; }
+            public UserMedicalInfoDTO Medical { get; set; }
+            public string AccessToken { get; set; }
+            public string RefreshToken { get; set; }
+        }
     }
 }
