@@ -12,11 +12,8 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
 namespace BLL.Services.Implement
 {
-
     public class UserMedicalService : IUserMedicalService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -55,36 +52,29 @@ namespace BLL.Services.Implement
             if (!IsValidEmail(dto.Email))
                 return new ResponseDTO("Email không hợp lệ", 400, false);
 
-            //if (string.IsNullOrWhiteSpace(dto.Province))
-            //    return new ResponseDTO("Tỉnh/Thành phố không được để trống", 400, false);
-
             if (string.IsNullOrWhiteSpace(dto.CurrentAddress))
                 return new ResponseDTO("Địa chỉ hiện tại không được để trống", 400, false);
 
-            if ( dto.DonationCount.Value <= 0)
+            if (dto.HasDonatedBefore && (!dto.DonationCount.HasValue || dto.DonationCount.Value <= 0))
                 return new ResponseDTO("Số lần hiến máu phải lớn hơn 0 nếu đã từng hiến", 400, false);
 
-
-
-
-            //// Tạo mới Blood luôn
-            //var newBlood = new Blood
-            //{
-            //    BloodId = Guid.NewGuid(),
-            //    BloodName = dto.BloodName,
-            //    IsAvailable = false,
-            //    CollectedDate = DateTime.UtcNow,
-            //    ExpiryDate = DateTime.UtcNow,
-            //    VolumeInML = 1,
-            //    Code = await GenerateNewBloodCodeAsync(),
-            //    Status = BloodSeparationStatus.PROCESSING
-
-            //};
+            // Create new Blood record
+            var newBlood = new Blood
+            {
+                BloodId = Guid.NewGuid(),
+                BloodName = dto.BloodName, // Ensure dto.BloodName is provided from the client
+                IsAvailable = false,
+                CollectedDate = DateTime.UtcNow,
+                ExpiryDate = DateTime.UtcNow,
+                VolumeInML = 1,
+                Code = await GenerateNewBloodCodeAsync(),
+                Status = BloodSeparationStatus.PROCESSING
+            };
+            await _unitOfWork.BloodRepo.AddAsync(newBlood);
 
             (double lat, double lon) = await _addressService.GetCoordinatesFromAddress(dto.CurrentAddress);
 
-
-            // Tạo user medical
+            // Create UserMedical record
             var userMedical = new UserMedical
             {
                 UserMedicalId = Guid.NewGuid(),
@@ -94,22 +84,20 @@ namespace BLL.Services.Implement
                 CitizenId = dto.CitizenId,
                 PhoneNumber = dto.PhoneNumber,
                 Email = dto.Email,
-                //Province = dto.Province,
                 CurrentAddress = dto.CurrentAddress,
                 HasDonatedBefore = dto.HasDonatedBefore,
                 DonationCount = dto.DonationCount,
                 DiseaseDescription = dto.DiseaseDescription,
                 Type = MedicalType.PENDING,
                 CreateDate = DateTime.Now,
-                //BloodId = newBlood.BloodId,
+                BloodId = newBlood.BloodId,
                 UserId = userId,
                 Latitue = lat,
                 Longtitue = lon,
                 UserMedicalChronicDiseases = new List<UserMedicalChronicDisease>()
             };
 
-
-            // Gán danh sách bệnh mãn tính nếu có
+            // Assign chronic diseases if any
             if (dto.ChronicDiseaseIds != null && dto.ChronicDiseaseIds.Any())
             {
                 foreach (var diseaseId in dto.ChronicDiseaseIds)
@@ -126,18 +114,11 @@ namespace BLL.Services.Implement
                 }
             }
 
-            //newBlood.UserMedicals = userMedical;
-
-            //await _unitOfWork.BloodRepo.AddAsync(newBlood);
-
             await _unitOfWork.UserMedicalRepo.AddAsync(userMedical);
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO("Tạo hồ sơ y tế thành công", 200, true);
         }
-
-
-
 
         public async Task<ResponseDTO> GetAllUserMedical()
         {

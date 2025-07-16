@@ -5892,23 +5892,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {},
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
+      "projectUniqueName": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
       "projectName": "BloodSupportSystemProject",
-      "projectPath": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BloodSupportSystemProject\\obj\\",
+      "projectPath": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5923,11 +5923,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BLL\\BLL.csproj": {
-              "projectPath": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BLL\\BLL.csproj"
+            "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\BLL.csproj": {
+              "projectPath": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\BLL.csproj"
             },
-            "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj": {
-              "projectPath": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\Common\\Common.csproj"
+            "D:\\PlantU\\hold\\BloodSupportSystem\\Common\\Common.csproj": {
+              "projectPath": "D:\\PlantU\\hold\\BloodSupportSystem\\Common\\Common.csproj"
             }
           }
         }

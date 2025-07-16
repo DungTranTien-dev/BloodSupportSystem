@@ -1,33 +1,65 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\",
+  "WorkspaceRootPath": "D:\\PlantU\\hold\\BloodSupportSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|c:\\users\\admin\\source\\repos\\bloodsupportsystem\\bll\\services\\implement\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\bll\\services\\implement\\bloodregistrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\bloodregistrationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\dal\\models\\usermedical.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|solutionrelative:dal\\models\\usermedical.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\dal\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|solutionrelative:dal\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\dal\\models\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|solutionrelative:dal\\models\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\dal\\models\\donationhistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|solutionrelative:dal\\models\\donationhistory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\bll\\services\\implement\\usermedicalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\usermedicalservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\bll\\services\\implement\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|solutionrelative:bll\\services\\implement\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CF6CE019-3B08-4EB1-91A3-50F110B2A366}|Common\\Common.csproj|c:\\users\\admin\\source\\repos\\bloodsupportsystem\\common\\dto\\authdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF6CE019-3B08-4EB1-91A3-50F110B2A366}|Common\\Common.csproj|solutionrelative:common\\dto\\authdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|d:\\plantu\\hold\\bloodsupportsystem\\bloodsupportsystemproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|solutionrelative:bloodsupportsystemproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|c:\\users\\admin\\source\\repos\\bloodsupportsystem\\bloodsupportsystemproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|d:\\plantu\\hold\\bloodsupportsystem\\bloodsupportsystemproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|solutionrelative:bloodsupportsystemproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|c:\\users\\admin\\source\\repos\\bloodsupportsystem\\bloodsupportsystemproject\\bloodsupportsystemproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|d:\\plantu\\hold\\bloodsupportsystem\\bloodsupportsystemproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|solutionrelative:bloodsupportsystemproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF6CE019-3B08-4EB1-91A3-50F110B2A366}|Common\\Common.csproj|d:\\plantu\\hold\\bloodsupportsystem\\common\\dto\\authdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF6CE019-3B08-4EB1-91A3-50F110B2A366}|Common\\Common.csproj|solutionrelative:common\\dto\\authdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|d:\\plantu\\hold\\bloodsupportsystem\\bloodsupportsystemproject\\bloodsupportsystemproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{C8682628-5541-4702-985E-874D4B794883}|BloodSupportSystemProject\\BloodSupportSystemProject.csproj|solutionrelative:bloodsupportsystemproject\\bloodsupportsystemproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|c:\\users\\admin\\source\\repos\\bloodsupportsystem\\dal\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\dal\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|solutionrelative:dal\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|c:\\users\\admin\\source\\repos\\bloodsupportsystem\\bll\\bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\bll\\bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{5E8ADF45-ECD5-4A3F-9946-E4849BE1F210}|BLL\\BLL.csproj|solutionrelative:bll\\bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|c:\\users\\admin\\source\\repos\\bloodsupportsystem\\dal\\dal.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|d:\\plantu\\hold\\bloodsupportsystem\\dal\\dal.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{E8629303-B3FA-4331-8F6B-D8ED26F829B4}|DAL\\DAL.csproj|solutionrelative:dal\\dal.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -37,46 +69,176 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 243,
-          "SelectedChildIndex": 4,
+          "DockedWidth": 200,
+          "SelectedChildIndex": 14,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:332826238:0:{83107a3e-496a-485e-b455-16ddb978e55e}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserMedical.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Models\\UserMedical.cs",
+              "RelativeDocumentMoniker": "DAL\\Models\\UserMedical.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Models\\UserMedical.cs",
+              "RelativeToolTip": "DAL\\Models\\UserMedical.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:08:09.441Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Models\\User.cs",
+              "RelativeDocumentMoniker": "DAL\\Models\\User.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Models\\User.cs",
+              "RelativeToolTip": "DAL\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:07:58.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Transaction.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Models\\Transaction.cs",
+              "RelativeDocumentMoniker": "DAL\\Models\\Transaction.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Models\\Transaction.cs",
+              "RelativeToolTip": "DAL\\Models\\Transaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:07:57.779Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DonationHistory.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Models\\DonationHistory.cs",
+              "RelativeDocumentMoniker": "DAL\\Models\\DonationHistory.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Models\\DonationHistory.cs",
+              "RelativeToolTip": "DAL\\Models\\DonationHistory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:07:56.974Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BloodRegistrationService.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\Services\\Implement\\BloodRegistrationService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\BloodRegistrationService.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\Services\\Implement\\BloodRegistrationService.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\BloodRegistrationService.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAQwHsAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:02:22.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "BloodSupportSystemProject\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "BloodSupportSystemProject\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAlwCAAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T11:46:11.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserMedicalService.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\Services\\Implement\\UserMedicalService.cs",
+              "RelativeDocumentMoniker": "BLL\\Services\\Implement\\UserMedicalService.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\Services\\Implement\\UserMedicalService.cs",
+              "RelativeToolTip": "BLL\\Services\\Implement\\UserMedicalService.cs",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAqwGgAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T11:35:11.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\BloodSupportSystemProject\\appsettings.json",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\appsettings.json",
               "RelativeDocumentMoniker": "BloodSupportSystemProject\\appsettings.json",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\BloodSupportSystemProject\\appsettings.json",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\appsettings.json",
               "RelativeToolTip": "BloodSupportSystemProject\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-07-15T04:38:38.407Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 12,
               "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\DAL\\Data\\ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "DAL\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\DAL\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "DAL\\Data\\ApplicationDbContext.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-15T04:38:28.397Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-15T04:38:28.397Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 10,
               "Title": "AuthDTO.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\Common\\DTO\\AuthDTO.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\Common\\DTO\\AuthDTO.cs",
               "RelativeDocumentMoniker": "Common\\DTO\\AuthDTO.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\Common\\DTO\\AuthDTO.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\Common\\DTO\\AuthDTO.cs",
               "RelativeToolTip": "Common\\DTO\\AuthDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -85,55 +247,65 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\BLL\\Services\\Implement\\AuthService.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\Services\\Implement\\AuthService.cs",
               "RelativeDocumentMoniker": "BLL\\Services\\Implement\\AuthService.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\source\\repos\\BloodSupportSystem\\BLL\\Services\\Implement\\AuthService.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\Services\\Implement\\AuthService.cs",
               "RelativeToolTip": "BLL\\Services\\Implement\\AuthService.cs",
-              "ViewState": "AgIAAHMAAAAAAAAAAAAgwJcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAALEAAAAAAAAAAAAowMIAAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-15T04:24:51.381Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BLL",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BLL\\BLL.csproj",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\Program.cs",
+              "RelativeDocumentMoniker": "BloodSupportSystemProject\\Program.cs",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\Program.cs",
+              "RelativeToolTip": "BloodSupportSystemProject\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACUAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T11:26:15.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "BLL.csproj",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\BLL.csproj",
               "RelativeDocumentMoniker": "BLL\\BLL.csproj",
-              "ToolTip": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BLL\\BLL.csproj",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\BLL\\BLL.csproj",
               "RelativeToolTip": "BLL\\BLL.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-15T04:24:29.092Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-15T04:24:29.092Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DAL",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\DAL\\DAL.csproj",
+              "DocumentIndex": 14,
+              "Title": "DAL.csproj",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\DAL.csproj",
               "RelativeDocumentMoniker": "DAL\\DAL.csproj",
-              "ToolTip": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\DAL\\DAL.csproj",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\DAL\\DAL.csproj",
               "RelativeToolTip": "DAL\\DAL.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-15T04:24:09.02Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-15T04:24:09.02Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BloodSupportSystemProject",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
+              "DocumentIndex": 11,
+              "Title": "BloodSupportSystemProject.csproj",
+              "DocumentMoniker": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
               "RelativeDocumentMoniker": "BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
-              "ToolTip": "C:\\Users\\ADMIN\\Source\\Repos\\BloodSupportSystem\\BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
+              "ToolTip": "D:\\PlantU\\hold\\BloodSupportSystem\\BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
               "RelativeToolTip": "BloodSupportSystemProject\\BloodSupportSystemProject.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-15T04:24:07.671Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-15T04:24:07.671Z"
             }
           ]
         }

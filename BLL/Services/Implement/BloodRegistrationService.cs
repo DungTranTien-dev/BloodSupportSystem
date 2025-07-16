@@ -95,16 +95,45 @@ namespace BLL.Services.Implement
                 return new ResponseDTO("No registrations found.", 404, false);
             }
 
-            var registrationDTOs = registrations.Select(r => new RegistrationByUserIdDTO
+            // Get all user medicals once to avoid N+1 queries
+            var userIds = registrations.Select(r => r.UserId).Distinct().ToList();
+            var userMedicals = _unitOfWork.UserMedicalRepo.GetAll()
+                .Where(um => userIds.Contains(um.UserId))
+                .ToList();
+
+            var registrationDTOs = registrations.Select(r =>
             {
-                BloodRegistrationId = r.BloodRegistrationId,
-                CreateDate = r.CreateDate,
-                RegisterType = r.Type.ToString(),
-                DonationEventId = r.DonationEvent.DonationEventId,
-                EventTitle = r.DonationEvent.Title,
-                EventLocation = r.DonationEvent.Location,
-                StartTime = r.DonationEvent.StartTime,
-                EndTime = r.DonationEvent.EndTime
+                var userMedical = userMedicals.FirstOrDefault(um => um.UserId == r.UserId);
+
+                return new
+                {
+                    BloodRegistrationId = r.BloodRegistrationId,
+                    CreateDate = r.CreateDate,
+                    RegisterType = r.Type.ToString(),
+                    DonationEventId = r.DonationEvent.DonationEventId,
+                    EventTitle = r.DonationEvent.Title,
+                    EventLocation = r.DonationEvent.Location,
+                    StartTime = r.DonationEvent.StartTime,
+                    EndTime = r.DonationEvent.EndTime,
+                    UserMedical = userMedical == null ? null : new
+                    {
+                        userMedical.UserMedicalId,
+                        userMedical.FullName,
+                        userMedical.DateOfBirth,
+                        userMedical.Gender,
+                        userMedical.CitizenId,
+                        userMedical.BloodId,
+                        userMedical.PhoneNumber,
+                        userMedical.Email,
+                        userMedical.CurrentAddress,
+                        userMedical.DonationCount,
+                        userMedical.DiseaseDescription,
+                        userMedical.Type,
+                        userMedical.CreateDate,
+                        userMedical.Latitue,
+                        userMedical.Longtitue
+                    }
+                };
             }).ToList();
 
             return new ResponseDTO("Registrations retrieved successfully.", 200, true, registrationDTOs);
