@@ -14,6 +14,9 @@ namespace Common.DTO
         [StringLength(100, MinimumLength = 2)]
         public string BloodName { get; set; }
 
+        [StringLength(10)]
+        public string? BloodType { get; set; } // A+, A-, B+, B-, AB+, AB-, O+, O-
+
         [Required]
         public BloodComponentType ComponentType { get; set; }
 
