@@ -12,7 +12,7 @@ namespace DAL.Repositories.Implement
 {
     public class UserMedicalRepository : GenericRepository<UserMedical>, IUserMedicalRepository
     {
-        public readonly ApplicationDbContext _context;
+        public new readonly ApplicationDbContext _context;
 
         public UserMedicalRepository(ApplicationDbContext context) : base(context)
         {
@@ -31,6 +31,19 @@ namespace DAL.Repositories.Implement
         {
             return await _context.UserMedicals
                 .AnyAsync(um => um.UserId == userId);
+        }
+
+        public async Task<UserMedical?> GetByUserIdAsync(Guid userId)
+        {
+            return await _context.UserMedicals
+                .Include(um => um.Blood)
+                .FirstOrDefaultAsync(um => um.UserId == userId);
+        }
+
+        public new Task UpdateAsync(UserMedical userMedical)
+        {
+            _context.UserMedicals.Update(userMedical);
+            return _context.SaveChangesAsync();
         }
     }
 }

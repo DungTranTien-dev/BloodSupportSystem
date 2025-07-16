@@ -11,5 +11,7 @@ namespace DAL.Repositories.Interface
     {
         Task<List<UserMedical>> GetAllAvailableWithBloodAsync();
         Task<bool> HasUserMedicalAsync(Guid userId);
+        Task<UserMedical?> GetByUserIdAsync(Guid userId);
+        new Task UpdateAsync(UserMedical userMedical);
     }
 }
