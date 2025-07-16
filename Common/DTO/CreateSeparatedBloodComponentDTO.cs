@@ -16,7 +16,7 @@ namespace Common.DTO
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public DateTime? ExpiryDate { get; set; }
-
         public bool IsAvailable { get; set; } = true;
+
     }
 }

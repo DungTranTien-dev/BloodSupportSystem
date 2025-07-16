@@ -23,6 +23,14 @@ namespace DAL.Data
         public DbSet<DonationHistory> DonationHistorys { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<Blood> Blood { get; set; }
+        
+        // Admin Models
+        public DbSet<ContactQuery> ContactQueries { get; set; }
+        public DbSet<SystemSetting> SystemSettings { get; set; }
+        public DbSet<AdminActivityLog> AdminActivityLogs { get; set; }
+        public DbSet<BloodGroupSetting> BloodGroupSettings { get; set; }
+        public DbSet<AdminReport> AdminReports { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
  
 
@@ -37,6 +45,14 @@ namespace DAL.Data
             modelBuilder.Entity<BloodRequest>().HasKey(um => um.BloodRequestId);
             modelBuilder.Entity<UserMedicalChronicDisease>()
                 .HasKey(uc => new { uc.UserMedicalId, uc.ChronicDiseaseId });
+
+            // Admin Models Primary Keys
+            modelBuilder.Entity<ContactQuery>().HasKey(cq => cq.Id);
+            modelBuilder.Entity<SystemSetting>().HasKey(ss => ss.Key);
+            modelBuilder.Entity<AdminActivityLog>().HasKey(al => al.Id);
+            modelBuilder.Entity<BloodGroupSetting>().HasKey(bgs => bgs.BloodType);
+            modelBuilder.Entity<AdminReport>().HasKey(ar => ar.Id);
+            modelBuilder.Entity<Notification>().HasKey(n => n.Id);
 
             //User-Token (1-n)
             modelBuilder.Entity<RefreshToken>()
@@ -88,6 +104,13 @@ namespace DAL.Data
                 .HasOne(uc => uc.ChronicDisease)
                 .WithMany(c => c.UserMedicalChronicDiseases)
                 .HasForeignKey(uc => uc.ChronicDiseaseId);
+
+            // Admin model relationships
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.TargetUser)
+                .WithMany()
+                .HasForeignKey(n => n.TargetUserId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             DbSeeder.Seed(modelBuilder);
 

@@ -77,12 +77,29 @@ builder.Services.AddScoped<IBloodRequestService, BloodRequestService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IBloodRegistrationService, BloodRegistrationService>();
 
+// Admin Services - Commented out temporarily due to compilation errors
+// builder.Services.AddScoped<IAdminDashboardService, AdminDashboardService>();
+// builder.Services.AddScoped<IAdminUserManagementService, AdminUserManagementService>();
+// builder.Services.AddScoped<IContactQueryManagementService, ContactQueryManagementService>();
+// builder.Services.AddScoped<IAdminBloodRequestService, AdminBloodRequestService>();
+// builder.Services.AddScoped<IBloodGroupManagementService, BloodGroupManagementService>();
+// builder.Services.AddScoped<ISystemSettingsService, SystemSettingsService>();
+// builder.Services.AddScoped<IAdminReportService, AdminReportService>();
+// builder.Services.AddScoped<IAdminActivityLogService, AdminActivityLogService>();
+
 
 
 //REPO
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserMedicalRepository, UserMedicalRepository>();
 builder.Services.AddScoped<IBloodRepository, BloodRepository>();
+
+//VNPay - Commented out due to missing package
+//builder.Services.AddScoped<IVnPayService, VnPayService>();
+
+//Email - Commented out due to missing package
+//builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Email"));
+//builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 

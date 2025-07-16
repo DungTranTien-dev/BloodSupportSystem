@@ -24,6 +24,14 @@ namespace DAL.Models
         public BloodRequestStatus Status { get; set; }  // Pending, Approved, Rejected, Fulfilled
         public double Latitue { get; set; }
         public double Longtitue { get; set; }
+        
+        // Admin fields
+        public string? ApprovedBy { get; set; }
+        public DateTime? ApprovedAt { get; set; }
+        public string? RejectionReason { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public double Latitude { get; set; } // Fixed typo from Latitue
+        public double Longitude { get; set; } // Fixed typo from Longtitue
     }
 
 }

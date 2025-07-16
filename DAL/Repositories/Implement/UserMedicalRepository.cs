@@ -27,7 +27,17 @@ namespace DAL.Repositories.Implement
                 .ToListAsync();
         }
 
-        public async Task<bool> HasUserMedicalAsync(Guid userId)
+    public Task<UserMedical?> GetByUserIdAsync(Guid userId)
+    {
+        return _context.UserMedicals
+            .Include(um => um.User)
+            .Include(um => um.Blood)
+            .Include(um => um.UserMedicalChronicDiseases)
+                .ThenInclude(umcd => umcd.ChronicDisease)
+            .FirstOrDefaultAsync(um => um.UserId == userId);
+    }
+
+    public async Task<bool> HasUserMedicalAsync(Guid userId)
         {
             return await _context.UserMedicals
                 .AnyAsync(um => um.UserId == userId);

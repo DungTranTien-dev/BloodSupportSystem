@@ -27,7 +27,15 @@ namespace DAL.UnitOfWork
             BloodRepo = new BloodRepository(_context);
             SeparatedBloodComponentRepo = new SeparatedBloodComponentRepository(_context);
             BloodRequestRepo = new BloodRequestRepository(_context);
+            TransactionRepo = new TransactionRepository(_context);
 
+            // Admin Repositories
+            ContactQueryRepo = new ContactQueryRepository(_context);
+            SystemSettingRepo = new SystemSettingRepository(_context);
+            AdminActivityLogRepo = new AdminActivityLogRepository(_context);
+            BloodGroupSettingRepo = new BloodGroupSettingRepository(_context);
+            AdminReportRepo = new AdminReportRepository(_context);
+            NotificationRepo = new NotificationRepository(_context);
         }
 
         public IUserRepository UserRepo { get; private set; }
@@ -39,6 +47,15 @@ namespace DAL.UnitOfWork
         public IBloodRepository BloodRepo { get; private set; }
         public ISeparatedBloodComponentRepository SeparatedBloodComponentRepo { get; private set; }
         public IBloodRequestRepository BloodRequestRepo { get; private set; }
+        public ITransactionRepository TransactionRepo { get; private set; }
+        
+        // Admin Repositories
+        public IContactQueryRepository ContactQueryRepo { get; private set; }
+        public ISystemSettingRepository SystemSettingRepo { get; private set; }
+        public IAdminActivityLogRepository AdminActivityLogRepo { get; private set; }
+        public IBloodGroupSettingRepository BloodGroupSettingRepo { get; private set; }
+        public IAdminReportRepository AdminReportRepo { get; private set; }
+        public INotificationRepository NotificationRepo { get; private set; }
         public void Dispose()
         {
             _context.Dispose();

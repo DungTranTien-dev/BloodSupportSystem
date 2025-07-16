@@ -18,8 +18,16 @@ namespace DAL.UnitOfWork
         IUserMedicalRepository UserMedicalRepo { get; }
         IBloodRepository BloodRepo { get; }
         IBloodRequestRepository BloodRequestRepo { get; }
-
         ISeparatedBloodComponentRepository SeparatedBloodComponentRepo { get; }
+        ITransactionRepository TransactionRepo { get; }
+
+        // Admin Repositories
+        IContactQueryRepository ContactQueryRepo { get; }
+        ISystemSettingRepository SystemSettingRepo { get; }
+        IAdminActivityLogRepository AdminActivityLogRepo { get; }
+        IBloodGroupSettingRepository BloodGroupSettingRepo { get; }
+        IAdminReportRepository AdminReportRepo { get; }
+        INotificationRepository NotificationRepo { get; }
 
         Task<int> SaveAsync();
         Task<bool> SaveChangeAsync();

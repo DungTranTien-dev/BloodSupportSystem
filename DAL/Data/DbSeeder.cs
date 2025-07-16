@@ -56,7 +56,12 @@ namespace DAL.Data
                         UserId = UserId,
                         UserName = "User",
                         Email = "user@gmail.com",
-                        Password = fixedHashedPassword
+                        Password = fixedHashedPassword,
+                        Role = "User",
+                        Status = "Active",
+                        CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                        UpdatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                        LastLoginDate = null
                     }
                 );
         }

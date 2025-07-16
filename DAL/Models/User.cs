@@ -12,10 +12,14 @@ namespace DAL.Models
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string? Role { get; set; } = "User"; // User, Admin, SuperAdmin, MedicalStaff
+        public string? Status { get; set; } = "Active"; // Active, Inactive
+        public DateTime? LastLoginDate { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; }
+        
         public ICollection<UserMedical> UserMedicals { get; set; } = new HashSet<UserMedical>();
         public ICollection<BloodRegistration> BloodRegistrations { get; set; } = new HashSet<BloodRegistration>();
-
         public ICollection<DonationHistory> DonationHistorys { get; set; } = new HashSet<DonationHistory>();
-
     }
 }
