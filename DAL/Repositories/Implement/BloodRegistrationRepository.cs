@@ -45,7 +45,9 @@ namespace DAL.Repositories.Implement
         public async Task<List<BloodRegistration>> GetAllRegistration()
         {
             return await _context.BloodRegistrations
+
                 .Include(r => r.DonationEvent) // luôn include DonationEvent
+                .Include(r => r.User)
                 .ToListAsync();
         }
 

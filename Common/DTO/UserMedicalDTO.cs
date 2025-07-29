@@ -14,7 +14,7 @@ namespace Common.DTO
         public DateTime DateOfBirth { get; set; }
         public string Gender { get; set; }
         public string CitizenId { get; set; }
-        public string BloodName { get; set; }
+        public string? BloodName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Province { get; set; }
@@ -26,6 +26,8 @@ namespace Common.DTO
         public double Longtitue { get; set; }
         public Guid UserId { get; set; }
         public string Type { get; set; } // Changed from MedicalType enum to string for flexibility
+        public DateTime? LastDonorDate { get; set; }
+        public DateTime CreateDate { get; set; }
 
     }
 }

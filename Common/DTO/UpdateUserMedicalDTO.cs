@@ -31,6 +31,7 @@ namespace Common.DTO
         public DateTime CreateDate { get; set; }
 
         public Guid UserId { get; set; }
+        public DateTime? LastDonorDate { get; set; }
         //public string BloodName { get; set; }
         //public double? VolumeInML { get; set; }
         //public BloodComponentType ComponentType { get; set; } // RBC, Plasma, etc.

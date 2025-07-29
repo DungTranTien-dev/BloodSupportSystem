@@ -11,8 +11,9 @@ namespace Common.DTO
         public DateTime? CollectedDate { get; set; }
         public DateTime? ExpiryDate { get; set; }
         
-       
-        
+       public Guid UserMedicalId { get; set; }
+
+
     }
 
 }

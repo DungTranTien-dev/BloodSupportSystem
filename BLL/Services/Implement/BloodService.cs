@@ -1,6 +1,7 @@
 ﻿using BLL.Services.Interface;
 using Common.DTO;
 using Common.Enum;
+
 using DAL.Models;
 using DAL.Repositories.Interface;
 using DAL.Repositories.Interfaces;
@@ -42,7 +43,8 @@ namespace BLL.Services.Implement
                 ExpiryDate = blood.ExpiryDate,
                 IsAvailable = blood.IsAvailable,
                 Status = blood.Status.ToString(),
-                Code = blood.Code
+                Code = blood.Code,
+
             };
 
             return new ResponseDTO("Blood retrieved successfully.", 200, true, dto);
@@ -80,6 +82,8 @@ namespace BLL.Services.Implement
                 IsAvailable = true,
                 Status = BloodSeparationStatus.UNPROCESSED,
                 Code = await GenerateNewBloodCodeAsync(),
+                UserMedicalId = dto.UserMedicalId
+
             };
 
             var dtoResponse = new BloodResponseDTO
@@ -91,7 +95,8 @@ namespace BLL.Services.Implement
                 ExpiryDate = blood.ExpiryDate,
                 IsAvailable = blood.IsAvailable,
                 Status = blood.Status.ToString(),
-                Code = blood.Code
+                Code = blood.Code,
+                UserName = blood.UserMedicals?.FullName ?? "Unknown",
             };
 
 

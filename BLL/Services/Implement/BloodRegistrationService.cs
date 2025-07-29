@@ -104,7 +104,9 @@ namespace BLL.Services.Implement
                 EventTitle = r.DonationEvent.Title,
                 EventLocation = r.DonationEvent.Location,
                 StartTime = r.DonationEvent.StartTime,
-                EndTime = r.DonationEvent.EndTime
+                EndTime = r.DonationEvent.EndTime,
+                FullName = r.User.UserName,
+                Email = r.User.Email
             }).ToList();
 
             return new ResponseDTO("Registrations retrieved successfully.", 200, true, registrationDTOs);

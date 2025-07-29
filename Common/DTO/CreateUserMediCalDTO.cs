@@ -28,6 +28,7 @@ namespace Common.DTO
         public string DiseaseDescription { get; set; }
 
         public List<Guid> ChronicDiseaseIds { get; set; }
+        public DateTime? LastDonorDate { get; set; }
 
         public double Latitue { get; set; }
         public double Longtitue { get; set; }

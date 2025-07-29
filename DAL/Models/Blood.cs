@@ -17,7 +17,8 @@ namespace DAL.Models
         public DateTime? CollectedDate { get; set; }
         public DateTime? ExpiryDate { get; set; } 
         public bool? IsAvailable { get; set; }
-        public UserMedical UserMedicals { get; set; }
+        public UserMedical? UserMedicals { get; set; }
+        public Guid UserMedicalId { get; set; }
         // Navigation - máu đã tách
         public ICollection<SeparatedBloodComponent> SeparatedComponents { get; set; }
         public string Code { get; set; }

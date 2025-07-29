@@ -120,6 +120,35 @@ namespace BLL.Services.Implement
             {
                 request.Status = BloodRequestStatus.PENDING;
             }
+            else if (role =="STAFF")
+            {
+                // Kiểm tra kho máu
+                bool hasStock = await _bloodService.HasSufficientAvailableBloodComponentAsync(
+                    dto.BloodGroup, componentType, dto.VolumeInML);
+
+                if (!hasStock)
+                    return new ResponseDTO("Không đủ thành phần máu", 400, false);
+
+                // Trừ máu nếu đủ
+                bool deducted = await _bloodService.SubtractBloodComponentVolumeAsync(
+                    dto.BloodGroup, componentType, dto.VolumeInML);
+
+                if (!deducted)
+                    return new ResponseDTO("Không thể trừ máu trong kho", 400, false);
+
+                // Gán trạng thái chờ thanh toán
+                request.Status = BloodRequestStatus.APPROVED;
+
+                
+
+                // Lưu đơn vào DB trước khi return
+                
+                await _unitOfWork.BloodRequestRepo.AddAsync(request);
+                await _unitOfWork.SaveChangeAsync();
+
+                return new ResponseDTO("Tạo yêu cầu máu thành công", 200, true);
+            }
+
             else
             {
                 return new ResponseDTO("Vai trò không hợp lệ", 403, false);
@@ -230,6 +259,8 @@ namespace BLL.Services.Implement
             return (long)Math.Round(totalPrice, MidpointRounding.AwayFromZero);
         }
 
+
+        
 
     }
 }

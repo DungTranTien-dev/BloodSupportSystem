@@ -35,6 +35,7 @@ namespace BLL.Services.Implement
             var userId = _userUtility.GetUserIdFromToken();
             if (userId == Guid.Empty)
                 return new ResponseDTO("Không tìm thấy user", 400, false);
+            
 
             // VALIDATE INPUT
             if (string.IsNullOrWhiteSpace(dto.FullName))
@@ -67,19 +68,7 @@ namespace BLL.Services.Implement
 
 
 
-            //// Tạo mới Blood luôn
-            //var newBlood = new Blood
-            //{
-            //    BloodId = Guid.NewGuid(),
-            //    BloodName = dto.BloodName,
-            //    IsAvailable = false,
-            //    CollectedDate = DateTime.UtcNow,
-            //    ExpiryDate = DateTime.UtcNow,
-            //    VolumeInML = 1,
-            //    Code = await GenerateNewBloodCodeAsync(),
-            //    Status = BloodSeparationStatus.PROCESSING
-
-            //};
+           
 
             (double lat, double lon) = await _addressService.GetCoordinatesFromAddress(dto.CurrentAddress);
 
@@ -101,11 +90,12 @@ namespace BLL.Services.Implement
                 DiseaseDescription = dto.DiseaseDescription,
                 Type = MedicalType.PENDING,
                 CreateDate = DateTime.Now,
-                //BloodId = newBlood.BloodId,
+                BloodName = dto.BloodName,
                 UserId = userId,
                 Latitue = lat,
                 Longtitue = lon,
-                UserMedicalChronicDiseases = new List<UserMedicalChronicDisease>()
+                UserMedicalChronicDiseases = new List<UserMedicalChronicDisease>(),
+                LastDonorDate = dto.LastDonorDate ?? null,
             };
 
 
@@ -126,9 +116,7 @@ namespace BLL.Services.Implement
                 }
             }
 
-            //newBlood.UserMedicals = userMedical;
-
-            //await _unitOfWork.BloodRepo.AddAsync(newBlood);
+           
 
             await _unitOfWork.UserMedicalRepo.AddAsync(userMedical);
             await _unitOfWork.SaveAsync();
@@ -151,7 +139,8 @@ namespace BLL.Services.Implement
             {
                 UserMedicalId = u.UserMedicalId,
                 UserId = u.UserId,
-                BloodName = u.Blood.BloodName,
+                BloodName = u.BloodName,
+
                 CitizenId = u.CitizenId,
                 CurrentAddress = u.CurrentAddress,
                 DateOfBirth = u.DateOfBirth,
@@ -166,6 +155,8 @@ namespace BLL.Services.Implement
                 Latitue = u.Latitue,
                 Longtitue = u.Longtitue,
                 //Province = u.Province,
+                LastDonorDate = u.LastDonorDate ?? null,
+                CreateDate = u.CreateDate
             });
             return new ResponseDTO("get list successfully", 200, true, listDTO);
         }
@@ -230,6 +221,7 @@ namespace BLL.Services.Implement
             updateUserMedical.CreateDate = updateUserMedicalDTO.CreateDate;
 
             updateUserMedical.UserId = updateUserMedicalDTO.UserId;
+            updateUserMedical.LastDonorDate = updateUserMedicalDTO.HasDonatedBefore ? updateUserMedicalDTO.LastDonorDate : null;
 
 
 
@@ -280,12 +272,23 @@ namespace BLL.Services.Implement
                     .Select(x => x.UserMedical)
                     .ToList();
 
+                if (nearestList == null)
+                {
+                    return new ResponseDTO("Khong co ai o gan ca", 400, false);
+                }
+
+                // ✅ Check nếu không có kết quả
+                if (nearestList.Count == 0)
+                {
+                    return new ResponseDTO("Không có ai ở gần cả", 404, false);
+                }
+
                 // 3. Chuyển sang DTO
                 var listDTO = nearestList.Select(u => new UserMedicalDTO
                 {
                     UserMedicalId = u.UserMedicalId,
                     UserId = u.UserId,
-                    BloodName = u.Blood.BloodName,
+                    BloodName = u.BloodName,
                     CitizenId = u.CitizenId,
                     CurrentAddress = u.CurrentAddress,
                     DateOfBirth = u.DateOfBirth,
@@ -300,6 +303,7 @@ namespace BLL.Services.Implement
                     Latitue = u.Latitue,
                     Longtitue = u.Longtitue,
                     Type = u.Type.ToString(),
+                    LastDonorDate = u.LastDonorDate
                 }).ToList();
 
                 // 4. Trả về ResponseDTO
@@ -325,7 +329,7 @@ namespace BLL.Services.Implement
 
             //var medicalId = _unitOfWork.UserMedicalRepo.GetByIdAsync(user.)
 
-            if (userMedicalId == Guid.Empty)
+            if (userMedicalId == Guid.Empty || userMedicalId == null )
             {
                 return new ResponseDTO("khong co ho so", 400, false);
             }
@@ -333,10 +337,13 @@ namespace BLL.Services.Implement
             var medical = await _unitOfWork.UserMedicalRepo.GetByIdAsync(userMedicalId.Value);
 
             medical.Type = MedicalType.PENDING;
+            
+
 
             try
             {
                 await _unitOfWork.UserMedicalRepo.UpdateAsync(medical);
+                
                 await _unitOfWork.SaveChangeAsync();
 
             } catch (Exception ex)
@@ -355,7 +362,7 @@ namespace BLL.Services.Implement
             {
                 return new ResponseDTO("Hồ sơ y tế không tồn tại", 404, false);
             }
-            userMedical.Type = MedicalType.AVAILABLE;
+            userMedical.Type = type;
             try
             {
                 await _unitOfWork.UserMedicalRepo.UpdateAsync(userMedical);

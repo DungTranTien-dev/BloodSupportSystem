@@ -29,6 +29,7 @@ namespace DAL.Data
         //USER
         private static readonly Guid UserId = Guid.Parse("C5D6E7F8-9A0B-1C2D-3E4F-5A6B7C8D9E0F");
         private static readonly Guid HospitalId = Guid.Parse("B4567890-ABCD-EF12-3456-7890ABCDEFAC");
+        private static readonly Guid StaffId = Guid.Parse("AAAAAAAA-BBBB-CCCC-DDDD-EEEEEEEEEEEE");
 
         public static void Seed(ModelBuilder modelBuilder)
         {
@@ -76,6 +77,14 @@ namespace DAL.Data
                         Email = "dungttse160616@fpt.edu.vn",
                         Password = fixedHashedPassword,
                         Role = Common.Enum.RoleType.HOSPITAL
+                    },
+                    new User
+                    {
+                        UserId = StaffId,
+                        UserName = "Staff",
+                        Email = "staff@gmail.com",
+                        Password = fixedHashedPassword,
+                        Role = Common.Enum.RoleType.STAFF
                     }
                 );
         }

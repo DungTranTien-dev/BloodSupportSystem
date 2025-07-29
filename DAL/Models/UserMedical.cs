@@ -15,8 +15,7 @@ namespace DAL.Models
         public Gender Gender { get; set; }
         public string CitizenId { get; set; }
 
-        public Guid? BloodId { get; set; }
-        public Blood? Blood { get; set; }
+        public string BloodName { get; set; }
 
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
@@ -30,12 +29,14 @@ namespace DAL.Models
         public MedicalType Type { get; set; }
 
         public DateTime CreateDate { get; set; }
+        public DateTime? LastDonorDate { get; set; }
 
         public Guid UserId { get; set; }
         public User User { get; set; }
 
         // Many-to-Many
-        public ICollection<UserMedicalChronicDisease> UserMedicalChronicDiseases { get; set; }
+        public ICollection<UserMedicalChronicDisease>? UserMedicalChronicDiseases { get; set; }
+        public ICollection<Blood>? Bloods { get; set; }
         public double Latitue { get; set; }
         public double Longtitue { get; set; }
     }

@@ -25,4 +25,6 @@ namespace Common.DTO
         //public double Latitue { get; set; }
         //public double Longtitue { get; set; }
     }
+
+    
 }

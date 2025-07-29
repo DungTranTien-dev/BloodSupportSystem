@@ -76,9 +76,9 @@ namespace DAL.Data
 
             //UserMedical Blood (1-1)
             modelBuilder.Entity<UserMedical>()
-                .HasOne(um => um.Blood)
+                .HasMany(um => um.Bloods)
                 .WithOne(b => b.UserMedicals)
-                .HasForeignKey<UserMedical>(um => um.BloodId);
+                .HasForeignKey(um => um.UserMedicalId);
 
 
             modelBuilder.Entity<Blood>()

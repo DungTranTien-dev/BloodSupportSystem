@@ -18,5 +18,7 @@ namespace Common.DTO
         public string EventLocation { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
     }
 }

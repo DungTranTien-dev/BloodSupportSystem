@@ -22,7 +22,7 @@ namespace DAL.Repositories.Implement
         public async Task<List<UserMedical>> GetAllAvailableWithBloodAsync()
         {
             return await _context.UserMedicals
-                .Include(um => um.Blood)
+                .Include(um => um.Bloods)
                 .Where(um => um.Type == Common.Enum.MedicalType.AVAILABLE)
                 .ToListAsync();
         }
