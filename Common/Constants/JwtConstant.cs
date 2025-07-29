@@ -29,7 +29,7 @@ namespace Common.Constants
         /// </summary>
         public class KeyClaim
         {
-            //text text text text text text text text text text text text text text text text text text text 
+            
             public const string Email = nameof(Email);
             public const string Password = nameof(Password);
             //public const string Role = nameof(Role);
