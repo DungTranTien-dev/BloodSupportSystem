@@ -14,11 +14,10 @@ namespace BloodSupportSystemProject.Controllers
         {
             _bloodService = bloodService;
         }
+        
         //comment out Create method as it is not implemented in the service
         // Uncomment and implement the Create method when ready
         // Example of Create method if needed in future
-
-
         //[HttpPost]
         //public async Task<IActionResult> Create([FromBody] CreateBloodDTO dto)
         //{
