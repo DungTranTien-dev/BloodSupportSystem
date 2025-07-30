@@ -1,9 +1,12 @@
 ﻿using BLL.Services.Interface;
+using BLL.Utilities;
 using Common.DTO;
+using Common.Enum;
 using DAL.Models;
 using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +17,11 @@ namespace BLL.Services.Implement
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public UserService(IUnitOfWork unitOfWork)
+        private readonly UserUtility _userUtility;
+        public UserService(IUnitOfWork unitOfWork, UserUtility userUtility)
         {
             _unitOfWork = unitOfWork;
+            _userUtility = userUtility;
         }
 
         public async Task<ResponseDTO> CreateUserAsync(CreateUserDTO createUserDTO)
@@ -54,15 +59,21 @@ namespace BLL.Services.Implement
                 return new ResponseDTO("Password is required.", 400, false);
             }
 
-            
+
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(createUserDTO.Password);
+
+            RoleType roleValue = Enum.TryParse(createUserDTO.Role, true, out RoleType parsedRole)
+            ? parsedRole
+    : RoleType.CUSTOMER;
             // Tạo người dùng mới
             var newUser = new User
             {
                 UserId = Guid.NewGuid(),
                 UserName = createUserDTO.UserName,
                 Email = createUserDTO.Email,
-                Password = passwordHash
+                Password = passwordHash,
+                Role = roleValue
+
             };
 
             await _unitOfWork.UserRepo.AddAsync(newUser);
@@ -73,12 +84,12 @@ namespace BLL.Services.Implement
 
         public async Task<ResponseDTO> DeleteUserAsync(Guid userId)
         {
-            if(userId == null)
+            if (userId == null)
             {
                 return new ResponseDTO("not found userid.", 400, false);
             }
             var deleteUser = await _unitOfWork.UserRepo.GetByIdAsync(userId);
-            if(deleteUser == null)
+            if (deleteUser == null)
             {
                 return new ResponseDTO("not found user.", 400, false);
             }
@@ -107,28 +118,73 @@ namespace BLL.Services.Implement
             {
                 UserId = user.UserId,
                 UserName = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                Role = user.Role.ToString()
             }).ToList();
 
-            return new ResponseDTO("Users retrieved successfully.", 200, true,listUserDTO);
+            return new ResponseDTO("Users retrieved successfully.", 200, true, listUserDTO);
 
         }
 
-        public async Task<ResponseDTO> GetUserByIdAsync(Guid userId)
+        public async Task<ResponseDTO> GetUserByIdAsync()
         {
-            if (userId == null)
+            var userId = _userUtility.GetUserIdFromToken();
+            if (userId == Guid.Empty)
             {
-                return new ResponseDTO("not found userid.", 400, false);
+                return new ResponseDTO("User ID is required.", 400, false);
             }
-            var user =await _unitOfWork.UserRepo.GetByIdAsync(userId);
+
+            // Lấy User
+            var user = await _unitOfWork.UserRepo.GetByIdAsync(userId);
+            if (user == null)
+            {
+                return new ResponseDTO("User not found.", 404, false);
+            }
+
             var userDTO = new UserDTO
             {
                 UserId = user.UserId,
                 Email = user.Email,
                 UserName = user.UserName,
-
+                Role = user.Role.ToString()
             };
-            return new ResponseDTO("Users retrieved successfully.", 200, true, userDTO);
+
+            // Lấy UserMedical (nếu có)
+            var userMedical = await _unitOfWork.UserMedicalRepo.GetByUserIdAsync(userId);
+
+            UserMedicalDTO userMedicalDTO = null;
+
+            if (userMedical != null)
+            {
+                userMedicalDTO = new UserMedicalDTO
+                {
+                    UserMedicalId = userMedical.UserMedicalId,
+                    FullName = userMedical.FullName,
+                    DateOfBirth = userMedical.DateOfBirth,
+                    Gender = userMedical.Gender.ToString(),
+                    CitizenId = userMedical.CitizenId,
+                    BloodName = userMedical.BloodName,
+                    PhoneNumber = userMedical.PhoneNumber,
+                    Email = userMedical.Email,
+                    
+                    CurrentAddress = userMedical.CurrentAddress,
+                    HasDonatedBefore = userMedical.HasDonatedBefore,
+                    DonationCount = userMedical.DonationCount,
+                    DiseaseDescription = userMedical.DiseaseDescription,
+                    Latitue = userMedical.Latitue,
+                    Longtitue = userMedical.Longtitue,
+                    UserId = userMedical.UserId,
+                    Type = userMedical.Type.ToString() // Nếu Type là enum
+                };
+            }
+
+            var profileDTO = new ProfileDTO
+            {
+                UserDTO = userDTO,
+                UserMedicalDTO = userMedicalDTO
+            };
+
+            return new ResponseDTO("User profile retrieved successfully.", 200, true, profileDTO);
         }
 
         public async Task<ResponseDTO> UpdateUserAsync(UpdateUserDTO updateUserDTO)
@@ -182,9 +238,9 @@ namespace BLL.Services.Implement
                 await _unitOfWork.UserRepo.UpdateAsync(userToUpdate);
                 await _unitOfWork.SaveChangeAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new ResponseDTO("Error at update user" +  ex , 400, false);
+                return new ResponseDTO("Error at update user" + ex, 400, false);
             }
 
             return new ResponseDTO("Update user successful.", 200, true);

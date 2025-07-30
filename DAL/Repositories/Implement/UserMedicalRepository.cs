@@ -36,6 +36,11 @@ namespace DAL.Repositories.Implement
 
             return userMedical; // nếu không có thì trả về null
         }
+        public async Task<UserMedical> GetByUserIdAsync(Guid userId)
+        {
+            return await _context.UserMedicals
+                .FirstOrDefaultAsync(um => um.UserId == userId);
+        }
 
     }
 }

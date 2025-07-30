@@ -15,7 +15,7 @@ namespace BLL.Services.Interface
         Task<ResponseDTO> DeleteUserAsync(Guid userId);
 
         Task<ResponseDTO> GetAllUserAsync();
-        Task<ResponseDTO> GetUserByIdAsync(Guid userId);
+        Task<ResponseDTO> GetUserByIdAsync();
 
     }
 }

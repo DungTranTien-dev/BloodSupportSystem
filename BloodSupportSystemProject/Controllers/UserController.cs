@@ -31,10 +31,10 @@ namespace BloodSupportSystemProject.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(Guid id)
+        [HttpGet("id")]
+        public async Task<IActionResult> GetUserById()
         {
-            var result = await _userService.GetUserByIdAsync(id);
+            var result = await _userService.GetUserByIdAsync();
             return StatusCode(result.StatusCode, result);
         }
 
