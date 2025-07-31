@@ -87,12 +87,43 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Error saving refresh token: {ex.Message}", 500, false);
             }
 
-            return new ResponseDTO("Đăng nhập thành công" ,200, true, new
+            var userMedical = await _unitOfWork.UserMedicalRepo.GetByUserIdAsync(user.UserId);
+
+            UserMedicalDTO userMedicalDTO = null;
+
+            if (userMedical != null)
+            {
+                userMedicalDTO = new UserMedicalDTO
+                {
+                    UserMedicalId = userMedical.UserMedicalId,
+                    FullName = userMedical.FullName,
+                    DateOfBirth = userMedical.DateOfBirth,
+                    Gender = userMedical.Gender.ToString(),
+                    CitizenId = userMedical.CitizenId,
+                    BloodName = userMedical.BloodName,
+                    PhoneNumber = userMedical.PhoneNumber,
+                    Email = userMedical.Email,
+                    CurrentAddress = userMedical.CurrentAddress,
+                    HasDonatedBefore = userMedical.HasDonatedBefore,
+                    DonationCount = userMedical.DonationCount,
+                    DiseaseDescription = userMedical.DiseaseDescription,
+                    Latitue = userMedical.Latitue,
+                    Longtitue = userMedical.Longtitue,
+                    UserId = user.UserId,
+                    Type = userMedical.Type.ToString(),
+                    LastDonorDate = userMedical.LastDonorDate,
+                    CreateDate = userMedical.CreateDate
+                };
+            }
+
+
+            return new ResponseDTO("Đăng nhập thành công", 200, true, new
             {
                 AccessToken = accessTokenKey,
                 RefeshToken = refreshTokenKey,
+                Role = user.Role.ToString(),
+                UserMedical = userMedicalDTO
             });
-
         }
 
         public async Task<ResponseDTO> Register(RegisterDTO registerDTO)
