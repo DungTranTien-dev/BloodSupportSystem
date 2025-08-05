@@ -11,6 +11,7 @@ namespace BLL.Services.Interface
     public interface ISeparatedBloodComponentService
     {
         Task<ResponseDTO> CreateSeparatedBloodComponentAsync(CreateSeparatedBloodComponentDTO createSeparatedBloodComponentDTO);
+        Task<ResponseDTO> AutoSeparateBloodComponentAsync(Guid BloodId);
         Task<ResponseDTO> UpdateSeparatedBloodComponentAsync(UpdateSeparatedBloodComponentDTO updateSeparatedBloodComponentDTO);
         Task<ResponseDTO> DeleteSeparatedBloodComponentAsync(Guid SeparatedBloodComponentId);
 

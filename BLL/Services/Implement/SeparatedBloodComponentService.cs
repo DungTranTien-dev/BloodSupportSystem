@@ -27,7 +27,7 @@ namespace BLL.Services.Implement
 
             var newComponent = new SeparatedBloodComponent
             {
-                
+
                 SeparatedBloodComponentId = Guid.NewGuid(),
                 BloodId = dto.BloodId,
                 ComponentType = dto.ComponentType,
@@ -42,6 +42,74 @@ namespace BLL.Services.Implement
             await _unitOfWork.SaveChangeAsync();
 
             return new ResponseDTO("Separated blood component created successfully.", 200, true);
+        }
+
+        public async Task<ResponseDTO> AutoSeparateBloodComponentAsync(Guid bloodId)
+        {
+            var blood = await _unitOfWork.BloodRepo.GetByIdAsync(bloodId);
+            if (blood == null)
+                return new ResponseDTO("Blood source not found.", 404, false);
+
+            // Kiểm tra đã tách chưa
+            var existing = await _unitOfWork.SeparatedBloodComponentRepo
+                .GetAllAsync(c => c.BloodId == bloodId);
+            if (existing.Any())
+                return new ResponseDTO("This blood has already been separated.", 400, false);
+
+            // Áp dụng công thức phân tách
+            double totalVolume = (double)blood.VolumeInML; // VD: 500ml
+            double rbcVolume = Math.Round(totalVolume * 0.55, 2);
+            double plasmaVolume = Math.Round(totalVolume * 0.40, 2);
+            double plateletVolume = Math.Round(totalVolume * 0.05, 2);
+            var now = DateTime.UtcNow;
+
+            var components = new List<SeparatedBloodComponent>
+    {
+        new SeparatedBloodComponent
+        {
+            SeparatedBloodComponentId = Guid.NewGuid(),
+            BloodId = bloodId,
+            ComponentType = BloodComponentType.RED_BLOOD_CELL,
+            VolumeInML = rbcVolume,
+            CreatedDate = now,
+            ExpiryDate = now.AddDays(42),
+            IsAvailable = true,
+            Code = await GenerateNewSeparatedCodeAsync()
+        },
+        new SeparatedBloodComponent
+        {
+            SeparatedBloodComponentId = Guid.NewGuid(),
+            BloodId = bloodId,
+            ComponentType = BloodComponentType.PLASMA,
+            VolumeInML = plasmaVolume,
+            CreatedDate = now,
+            ExpiryDate = now.AddMonths(12),
+            IsAvailable = true,
+            Code = await GenerateNewSeparatedCodeAsync()
+        },
+        new SeparatedBloodComponent
+        {
+            SeparatedBloodComponentId = Guid.NewGuid(),
+            BloodId = bloodId,
+            ComponentType = BloodComponentType.PLATELET,
+            VolumeInML = plateletVolume,
+            CreatedDate = now,
+            ExpiryDate = now.AddDays(5),
+            IsAvailable = true,
+            Code = await GenerateNewSeparatedCodeAsync()
+        }
+    };
+
+            foreach (var c in components)
+                await _unitOfWork.SeparatedBloodComponentRepo.AddAsync(c);
+
+            // Cập nhật trạng thái máu đã được tách
+            blood.Status = (BloodSeparationStatus)2;
+            await _unitOfWork.BloodRepo.UpdateAsync(blood);
+
+            await _unitOfWork.SaveChangeAsync();
+
+            return new ResponseDTO($"Blood separated into 3 components (RBC: {rbcVolume}ml, Plasma: {plasmaVolume}ml, Platelet: {plateletVolume}ml)", 200, true);
         }
 
         public async Task<ResponseDTO> DeleteSeparatedBloodComponentAsync(Guid id)
@@ -120,7 +188,7 @@ namespace BLL.Services.Implement
 
             return new ResponseDTO("Component updated successfully.", 200, true);
         }
-        
+
         private async Task<string> GenerateNewSeparatedCodeAsync()
         {
             var latestSeparated = await _unitOfWork.SeparatedBloodComponentRepo.GetAll()
@@ -184,7 +252,7 @@ namespace BLL.Services.Implement
                     remaining = 0;
                 }
 
-               await _unitOfWork.SeparatedBloodComponentRepo.UpdateAsync(component);
+                await _unitOfWork.SeparatedBloodComponentRepo.UpdateAsync(component);
             }
 
             if (remaining > 0)

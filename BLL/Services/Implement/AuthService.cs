@@ -122,6 +122,7 @@ namespace BLL.Services.Implement
                 AccessToken = accessTokenKey,
                 RefeshToken = refreshTokenKey,
                 Role = user.Role.ToString(),
+                UserName = user.UserName,
                 UserMedical = userMedicalDTO
             });
         }

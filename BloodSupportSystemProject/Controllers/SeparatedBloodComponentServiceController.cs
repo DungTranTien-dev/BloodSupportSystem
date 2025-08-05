@@ -1,4 +1,5 @@
-﻿using BLL.Services.Interface;
+﻿using BLL.Services.Implement;
+using BLL.Services.Interface;
 using Common.DTO;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,14 @@ namespace BloodSupportSystemProject.Controllers
         {
             _separatedBloodService = separatedBloodService;
         }
+
+        [HttpPost("autoseparateall/{bloodId}")]
+        public async Task<IActionResult> SeparateBlood(Guid bloodId)
+        {
+            var result = await _separatedBloodService.AutoSeparateBloodComponentAsync(bloodId);
+            return StatusCode(result.StatusCode, result);
+        }
+
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateSeparatedBloodComponent([FromBody] CreateSeparatedBloodComponentDTO dto)
