@@ -1,0 +1,12 @@
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\bin\Debug\net8.0\Common.deps.json
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\bin\Debug\net8.0\Common.dll
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\bin\Debug\net8.0\Common.pdb
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\Common.AssemblyInfoInputs.cache
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\Common.AssemblyInfo.cs
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\Common.csproj.CoreCompileInputs.cache
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\Common.sourcelink.json
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\Common.dll
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\refint\Common.dll
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\Common.pdb
+C:\Users\ADMIN\OneDrive\Documents\FPT\KY5\SWP391\BE\Common\obj\Debug\net8.0\ref\Common.dll

@@ -62,7 +62,7 @@ namespace BLL.Services.Implement
             if (string.IsNullOrWhiteSpace(dto.CurrentAddress))
                 return new ResponseDTO("Địa chỉ hiện tại không được để trống", 400, false);
 
-            if ( dto.DonationCount.Value <= 0)
+            if ( dto.DonationCount.Value < 0)
                 return new ResponseDTO("Số lần hiến máu phải lớn hơn 0 nếu đã từng hiến", 400, false);
 
 

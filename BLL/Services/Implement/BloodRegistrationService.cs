@@ -28,8 +28,40 @@ namespace BLL.Services.Implement
         {
             var userId = _userUtility.GetUserIdFromToken();
 
+            // Lấy sự kiện mới chuẩn bị đăng ký
+            var newEvent = await _unitOfWork.EventRepo.GetByIdAsync(eventId);
+            if (newEvent == null)
+            {
+                return new ResponseDTO("Event not found.", 404, false);
+            }
 
+            // Kiểm tra user đã đăng ký sự kiện nào khác chưa trùng thời điểm
+            var conflict = await _unitOfWork.BloodRegistrationRepo
+                .FirstOrDefaultAsync(r =>
+                    r.UserId == userId &&
+                    r.Type != RegisterType.CANCEL && // Chỉ tính những đăng ký còn hiệu lực
+                    r.DonationEventId != eventId && // Khác với sự kiện hiện tại
+                    r.DonationEvent.StartTime < newEvent.EndTime &&
+                    r.DonationEvent.EndTime > newEvent.StartTime);
 
+            if (conflict != null)
+            {
+                return new ResponseDTO("You have already registered for another event at the same time.", 400, false);
+            }
+
+            // Kiểm tra đã đăng ký sự kiện này chưa
+            var existed = await _unitOfWork.BloodRegistrationRepo
+                .FirstOrDefaultAsync(r =>
+                    r.UserId == userId &&
+                    r.DonationEventId == eventId &&
+                    r.Type != RegisterType.CANCEL);
+
+            if (existed != null)
+            {
+                return new ResponseDTO("You have already registered for this event.", 400, false);
+            }
+
+            // Tạo đăng ký mới
             var registration = new BloodRegistration
             {
                 BloodRegistrationId = Guid.NewGuid(),
@@ -38,6 +70,7 @@ namespace BLL.Services.Implement
                 UserId = userId,
                 DonationEventId = eventId
             };
+
             try
             {
                 await _unitOfWork.BloodRegistrationRepo.AddAsync(registration);
@@ -45,10 +78,12 @@ namespace BLL.Services.Implement
             }
             catch (Exception ex)
             {
-                return new ResponseDTO($"Error saving Blood register: {ex.Message}", 500, false);
+                return new ResponseDTO($"Error saving Blood register: {ex.InnerException?.Message ?? ex.Message}", 500, false);
             }
-            return new ResponseDTO("Registration successfully !!!", 200, true);
+
+            return new ResponseDTO("Registration successful!", 200, true);
         }
+
 
         public async Task<ResponseDTO> UpdateStatus(RegisterType type, Guid id)
         {

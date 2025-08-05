@@ -78,7 +78,7 @@ namespace BLL.Services.Implement
                 BloodName = dto.BloodName,
                 VolumeInML = dto.VolumeInML,
                 CollectedDate = dto.CollectedDate,
-                ExpiryDate = dto.ExpiryDate,
+                ExpiryDate = dto.CollectedDate.HasValue ? dto.CollectedDate.Value.AddDays(42) : (DateTime?)null,
                 IsAvailable = true,
                 Status = BloodSeparationStatus.UNPROCESSED,
                 Code = await GenerateNewBloodCodeAsync(),
@@ -92,7 +92,7 @@ namespace BLL.Services.Implement
                 BloodName = blood.BloodName,
                 VolumeInML = blood.VolumeInML,
                 CollectedDate = blood.CollectedDate,
-                ExpiryDate = blood.ExpiryDate,
+                ExpiryDate = blood.CollectedDate.HasValue ? blood.CollectedDate.Value.AddDays(42) : (DateTime?)null,
                 IsAvailable = blood.IsAvailable,
                 Status = blood.Status.ToString(),
                 Code = blood.Code,
@@ -100,10 +100,18 @@ namespace BLL.Services.Implement
             };
 
 
-            var created = await _bloodRepo.CreateBloodAsync(blood);
-            await _unitOfWork.SaveChangeAsync();
+            await _bloodRepo.CreateBloodAsync(blood);
 
-            
+            // 2. Tăng số lần hiến của user
+            var user = await _unitOfWork.UserMedicalRepo.GetByIdAsync(blood.UserMedicalId);
+            if (user != null)
+            {
+                user.DonationCount += 1;
+                _unitOfWork.UserMedicalRepo.UpdateAsync(user); // hoặc EF tracking tự động
+            }
+
+            // 3. Lưu thay đổi
+            await _unitOfWork.SaveChangeAsync();
 
             return new ResponseDTO("Blood created successfully.", 201, true, dtoResponse);
         }

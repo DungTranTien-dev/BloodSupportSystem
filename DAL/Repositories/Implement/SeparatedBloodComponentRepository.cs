@@ -24,7 +24,7 @@ namespace DAL.Repositories.Implement
                 .Include(c => c.Blood)
                 .ToListAsync();
         }
-
+        
         public async Task<IEnumerable<SeparatedBloodComponent>> GetAllAsync(Expression<Func<SeparatedBloodComponent, bool>> predicate)
         {
             return await _context.Set<SeparatedBloodComponent>()
@@ -33,5 +33,5 @@ namespace DAL.Repositories.Implement
                 .ToListAsync();
         }
 
-    }
+    }  
 }

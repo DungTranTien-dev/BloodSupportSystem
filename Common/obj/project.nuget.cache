@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "nsun3rYNO7k=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ADMIN\\OneDrive\\Documents\\FPT\\KY5\\SWP391\\BE\\Common\\Common.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ADMIN\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
