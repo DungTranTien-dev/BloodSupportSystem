@@ -109,7 +109,7 @@ namespace BLL.Services.Implement
 
             await _unitOfWork.SaveChangeAsync();
 
-            return new ResponseDTO($"Blood separated into 3 components (RBC: {rbcVolume}ml, Plasma: {plasmaVolume}ml, Platelet: {plateletVolume}ml)", 200, true);
+            return new ResponseDTO($"Máu đã tách thành 3 thành phần (Hồng cầu(RBC): {rbcVolume}ml, Huyết tương: {plasmaVolume}ml, Tiểu cầu: {plateletVolume}ml)", 200, true);
         }
 
         public async Task<ResponseDTO> DeleteSeparatedBloodComponentAsync(Guid id)

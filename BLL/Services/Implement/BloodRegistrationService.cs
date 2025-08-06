@@ -1,4 +1,4 @@
-﻿    using BLL.Services.Interface;
+﻿using BLL.Services.Interface;
 using BLL.Utilities;
 using Common.DTO;
 using Common.Enum;
@@ -32,33 +32,46 @@ namespace BLL.Services.Implement
             var newEvent = await _unitOfWork.EventRepo.GetByIdAsync(eventId);
             if (newEvent == null)
             {
-                return new ResponseDTO("Event not found.", 404, false);
+                return new ResponseDTO("Không tìm thấy sự kiện.", 404, false);
             }
 
             // Kiểm tra user đã đăng ký sự kiện nào khác chưa trùng thời điểm
             var conflict = await _unitOfWork.BloodRegistrationRepo
-                .FirstOrDefaultAsync(r =>
-                    r.UserId == userId &&
-                    r.Type != RegisterType.CANCEL && // Chỉ tính những đăng ký còn hiệu lực
-                    r.DonationEventId != eventId && // Khác với sự kiện hiện tại
-                    r.DonationEvent.StartTime < newEvent.EndTime &&
-                    r.DonationEvent.EndTime > newEvent.StartTime);
+    .FirstOrDefaultAsync(r =>
+        r.UserId == userId &&
+        r.Type == RegisterType.PENDING && // Chỉ chặn nếu có đăng ký đang chờ xử lý
+        r.DonationEventId != eventId &&
+        r.DonationEvent.StartTime < newEvent.EndTime &&
+        r.DonationEvent.EndTime > newEvent.StartTime);
+
 
             if (conflict != null)
             {
-                return new ResponseDTO("You have already registered for another event at the same time.", 400, false);
+                return new ResponseDTO("Bạn đã đăng ký sự kiện khác tại thời điểm hiện tại.", 400, false);
             }
 
             // Kiểm tra đã đăng ký sự kiện này chưa
             var existed = await _unitOfWork.BloodRegistrationRepo
-                .FirstOrDefaultAsync(r =>
-                    r.UserId == userId &&
-                    r.DonationEventId == eventId &&
-                    r.Type != RegisterType.CANCEL);
+    .FirstOrDefaultAsync(r =>
+        r.UserId == userId &&
+        r.DonationEventId == eventId &&
+        r.Type == RegisterType.PENDING); // Không tính COMPLETED hay CANCEL
+
 
             if (existed != null)
             {
-                return new ResponseDTO("You have already registered for this event.", 400, false);
+                return new ResponseDTO("Bạn đã đăng ký sự kiện này rồi.", 400, false);
+            }
+
+            var lastCompleted = await _unitOfWork.BloodRegistrationRepo
+    .GetAllByListAsync(r =>
+        r.UserId == userId &&
+        r.Type == RegisterType.COMPLETED);
+
+            var latest = lastCompleted.OrderByDescending(r => r.CreateDate).FirstOrDefault();
+            if (latest != null && latest.CreateDate.AddDays(90) > DateTime.UtcNow)
+            {
+                return new ResponseDTO("Bạn phải đợi 90 ngày hồi phục để được đăng ký hiến máu.", 400, false);
             }
 
             // Tạo đăng ký mới
@@ -81,7 +94,7 @@ namespace BLL.Services.Implement
                 return new ResponseDTO($"Error saving Blood register: {ex.InnerException?.Message ?? ex.Message}", 500, false);
             }
 
-            return new ResponseDTO("Registration successful!", 200, true);
+            return new ResponseDTO("Đăng ký thành công!", 200, true);
         }
 
 
